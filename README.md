@@ -21,7 +21,7 @@ Commercial AI often treats this with dark voyeurism or clinical extraction: uplo
 
 ---
 
-## 2. The 5 Features (Locked & Final)
+## 2. The 5 Features 
 
 ### Feature 1 — The Sanctuary (Home / Portrait Shelf)
 The home screen is a quiet, dimly lit space at dusk. Each remembered person appears as a softly glowing portrait with their name, relationship (*"My father"*, *"My best friend Alex"*), and a gentle living candle flame resting beside them. Clean, peaceful, uncluttered. A single quiet `+` button to remember someone new.

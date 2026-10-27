@@ -1,0 +1,391 @@
+/* ============================================
+   MemoryReel — The Flagship Sanctuary Experience
+   Layout A: Cinematic Split & Spotify Story Bars
+   ============================================ */
+
+.memory-reel-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #070504;
+  background-image: radial-gradient(
+    ellipse 60% 50% at 50% 40%,
+    rgba(232, 168, 71, 0.07) 0%,
+    transparent 80%
+  );
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--space-lg) var(--space-xl);
+  overflow: hidden;
+}
+
+/* -------------------------------------------------------------
+   1. Top Spotify Wrapped-Style Segmented Timeline
+   ------------------------------------------------------------- */
+.reel-top-bar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  z-index: 2;
+}
+
+.reel-progress-timeline {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+  height: 4px;
+}
+
+.reel-timeline-segment {
+  flex: 1;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 2px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+}
+
+.reel-timeline-segment:hover {
+  opacity: 0.85;
+}
+
+.reel-timeline-fill {
+  height: 100%;
+  background: var(--flame);
+  box-shadow: 0 0 8px var(--flame-glow);
+  border-radius: 2px;
+  transition: width 0.05s linear;
+}
+
+/* Header Controls */
+.reel-header-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.reel-soundtrack-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background: rgba(28, 22, 17, 0.7);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-full);
+  padding: 0.3rem 0.8rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.vinyl-disc {
+  font-size: 1rem;
+  display: inline-block;
+}
+
+.vinyl-disc--spinning {
+  animation: spinVinyl 3.5s linear infinite;
+}
+
+@keyframes spinVinyl {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.soundtrack-name {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  color: var(--flame-bright);
+  max-width: 240px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.soundtrack-mute-btn {
+  background: transparent;
+  border: none;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0 2px;
+  opacity: 0.8;
+  transition: opacity var(--transition-fast);
+}
+
+.soundtrack-mute-btn:hover {
+  opacity: 1;
+}
+
+.reel-exit-btn {
+  background: rgba(28, 22, 17, 0.7);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-full);
+  width: 34px;
+  height: 34px;
+  color: var(--text-muted);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.reel-exit-btn:hover {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border-color: var(--flame);
+}
+
+/* -------------------------------------------------------------
+   2. Layout A: Cinematic Split Altar
+   ------------------------------------------------------------- */
+.reel-cinema-split {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  align-items: center;
+  gap: var(--space-2xl);
+  max-width: 1100px;
+  width: 100%;
+  margin: auto;
+  z-index: 1;
+  padding: var(--space-md) 0;
+}
+
+/* Left: Breathing Heirloom Photograph */
+.reel-photo-side {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.reel-photo-frame {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  aspect-ratio: 4 / 3;
+  max-height: 480px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(232, 168, 71, 0.35),
+    0 0 0 5px #19130F,
+    0 0 0 6px rgba(232, 168, 71, 0.2),
+    0 16px 48px rgba(0, 0, 0, 0.85);
+  background: #120D0A;
+}
+
+.reel-breathing-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: kenBurnsDrift 11s ease-out forwards;
+  will-change: transform;
+}
+
+@keyframes kenBurnsDrift {
+  0% {
+    transform: scale(1.0) translate(0, 0);
+  }
+  100% {
+    transform: scale(1.04) translate(-1.2%, -1%);
+  }
+}
+
+.reel-glass-reflection {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 50% 120%,
+    rgba(232, 168, 71, 0.24) 0%,
+    rgba(245, 197, 99, 0.08) 35%,
+    transparent 65%
+  );
+  mix-blend-mode: screen;
+}
+
+.reel-corner-flame {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  z-index: 2;
+  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.8));
+}
+
+/* Right: The Quiet Heartfelt Written Story */
+.reel-story-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.reel-story-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: 0 var(--space-md);
+}
+
+.reel-spacetime-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: 0.85rem;
+  color: var(--flame-gold);
+  font-family: var(--font-heading);
+  letter-spacing: 0.04em;
+}
+
+.spacetime-sep {
+  opacity: 0.4;
+}
+
+.reel-moment-title {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  font-weight: 400;
+  color: var(--text-primary);
+  line-height: 1.25;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.reel-story-prose {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-style: italic;
+  line-height: 1.95;
+  color: var(--flame-bright);
+  margin: 0;
+  padding: var(--space-md) var(--space-lg);
+  background: rgba(232, 168, 71, 0.04);
+  border-left: 3px solid var(--flame);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  max-width: 100%;
+  text-shadow: 0 1px 15px rgba(232, 168, 71, 0.1);
+}
+
+.reel-person-dedication {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-style: italic;
+  font-family: var(--font-heading);
+  margin: 0;
+  letter-spacing: 0.05em;
+}
+
+/* -------------------------------------------------------------
+   3. Bottom Navigation Bar
+   ------------------------------------------------------------- */
+.reel-bottom-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  z-index: 2;
+  padding-top: var(--space-xs);
+}
+
+.reel-nav-btn {
+  background: rgba(28, 22, 17, 0.6);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-md);
+  padding: 0.4rem 1rem;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  transition: all var(--transition-fast);
+}
+
+.reel-nav-btn:hover {
+  background: var(--bg-card);
+  color: var(--flame-bright);
+  border-color: var(--flame);
+}
+
+.reel-center-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.reel-play-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  opacity: 0.85;
+  transition: opacity var(--transition-fast);
+}
+
+.reel-play-btn:hover {
+  opacity: 1;
+}
+
+.reel-slide-counter {
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+/* Empty State */
+.reel-empty-sanctuary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  text-align: center;
+  margin: auto;
+  color: var(--text-muted);
+}
+
+.reel-empty-sanctuary h2 {
+  font-family: var(--font-heading);
+  color: var(--flame-bright);
+  margin: 0;
+}
+
+/* -------------------------------------------------------------
+   Responsive Breakpoints
+   ------------------------------------------------------------- */
+@media (max-width: 820px) {
+  .reel-cinema-split {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+    overflow-y: auto;
+  }
+
+  .reel-photo-frame {
+    max-height: 280px;
+  }
+
+  .reel-moment-title {
+    font-size: 1.6rem;
+  }
+
+  .reel-story-prose {
+    font-size: 1.15rem;
+    padding: var(--space-sm);
+  }
+
+  .nav-btn-text {
+    display: none;
+  }
+}

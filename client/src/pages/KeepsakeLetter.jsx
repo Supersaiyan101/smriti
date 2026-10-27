@@ -4,9 +4,12 @@ import CandleFlame from '../components/CandleFlame';
 import './KeepsakeLetter.css';
 
 /**
- * KeepsakeLetter — Feature 5
- * A single printable, beautifully formatted heirloom page
- * gathering their wisdom, photo, and words.
+ * KeepsakeLetter — Feature 5 (Screen & Print)
+ * Archival heirloom page gathering their wisdom, photo, and words.
+ * Features:
+ *  - Deckled torn-paper parchment styling with subtle fold crease
+ *  - Dimensional crimson/gold wax seal stamp with Sanskrit calligraphy (स्मृ)
+ *  - High-resolution print styling for framing and physical remembrance
  */
 export default function KeepsakeLetter() {
   const { id } = useParams();
@@ -44,7 +47,7 @@ export default function KeepsakeLetter() {
       <div className="page letter-loading-page">
         <CandleFlame size="lg" />
         <p style={{ marginTop: '1.5rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>
-          Crafting the heirloom letter...
+          Crafting the archival heirloom letter...
         </p>
       </div>
     );
@@ -83,14 +86,22 @@ export default function KeepsakeLetter() {
         </button>
       </nav>
 
-      {/* The Printable Heirloom Letter Page */}
+      {/* The Archival Heirloom Letter Page */}
       <article className="keepsake-letter" id="printable-letter">
-        {/* Decorative Inner Border */}
+        {/* Subtle Archival Fold Creases */}
+        <div className="letter-crease letter-crease--horizontal" aria-hidden="true" />
+
+        {/* Decorative Inner Archival Border */}
         <div className="letter-border">
           {/* Header Ornament */}
           <div className="letter-header">
             <span className="letter-ornament">🕯️</span>
-            <span className="letter-tagline">IN LOVING REMEMBRANCE</span>
+            <span className="letter-tagline">IN PERPETUAL REMEMBRANCE</span>
+            <div className="letter-filigree" aria-hidden="true">
+              <span>✦</span>
+              <span className="filigree-line" />
+              <span>✦</span>
+            </div>
           </div>
 
           {/* Portrait & Person Info */}
@@ -124,11 +135,19 @@ export default function KeepsakeLetter() {
             ))}
           </div>
 
-          {/* Closing & Footer */}
+          {/* Closing & Dimensional Sanskrit Wax Seal Stamp */}
           <div className="letter-footer">
             <p className="letter-closing">{closing}</p>
-            <div className="letter-seal">
-              <span className="seal-text">स्मृति • SMRITI SANCTUARY</span>
+
+            {/* Dimensional Wax Seal Stamp */}
+            <div className="wax-seal-wrapper" title="Sealed in perpetual remembrance">
+              <div className="wax-seal">
+                <div className="wax-seal__outer-ring" />
+                <div className="wax-seal__inner-disc">
+                  <span className="wax-seal__sanskrit">स्मृ</span>
+                </div>
+              </div>
+              <span className="seal-text">SMRITI SANCTUARY • ARCHIVAL SEAL</span>
             </div>
           </div>
         </div>

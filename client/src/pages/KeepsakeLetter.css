@@ -1,5 +1,6 @@
 /* ============================================
    KeepsakeLetter — Feature 5 (Screen & Print)
+   Archival Deckled Parchment with Dimensional Wax Seal
    ============================================ */
 
 .letter-page-wrapper {
@@ -29,28 +30,51 @@
   box-shadow: 0 0 20px var(--flame-glow);
 }
 
-/* The Letter Document */
+/* The Archival Parchment Document */
 .keepsake-letter {
-  background: #181410;
-  border: 1px solid var(--border-warm);
+  background: linear-gradient(180deg, #181310 0%, #130E0B 100%);
+  border: 1px solid rgba(232, 168, 71, 0.25);
   border-radius: var(--radius-md);
   padding: var(--space-2xl) var(--space-xl);
   box-shadow:
-    0 10px 40px rgba(0, 0, 0, 0.6),
-    0 0 50px rgba(232, 168, 71, 0.05);
+    0 0 0 1px rgba(232, 168, 71, 0.12),
+    inset 0 0 80px rgba(196, 109, 32, 0.05),
+    0 20px 60px rgba(0, 0, 0, 0.75);
   position: relative;
   width: 100%;
+  overflow: hidden;
 }
 
-/* Double fine border like archival parchment */
+/* Horizontal Parchment Fold Crease */
+.letter-crease--horizontal {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.5) 15%,
+    rgba(232, 168, 71, 0.12) 50%,
+    rgba(0, 0, 0, 0.5) 85%,
+    transparent 100%
+  );
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.02);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Archival Double Border Frame */
 .letter-border {
-  border: 1px solid rgba(232, 168, 71, 0.25);
+  border: 1px solid rgba(232, 168, 71, 0.22);
   padding: var(--space-2xl) var(--space-xl);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   position: relative;
+  z-index: 2;
 }
 
 .letter-header {
@@ -62,15 +86,32 @@
 }
 
 .letter-ornament {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
 }
 
 .letter-tagline {
   font-family: var(--font-body);
   font-size: 0.75rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.22em;
   color: var(--flame);
   font-weight: 500;
+  text-transform: uppercase;
+}
+
+.letter-filigree {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--flame-dim);
+  font-size: 0.65rem;
+  width: 120px;
+  margin-top: 2px;
+}
+
+.filigree-line {
+  flex: 1;
+  height: 1px;
+  background: rgba(232, 168, 71, 0.25);
 }
 
 /* Person Section */
@@ -82,10 +123,14 @@
 }
 
 .letter-portrait {
-  width: 100px;
-  height: 100px;
+  width: 104px;
+  height: 104px;
   border-radius: var(--radius-full);
-  border: 2px solid var(--flame-dim);
+  border: 2px solid var(--border-warm);
+  box-shadow:
+    0 0 0 3px #181310,
+    0 0 0 4px rgba(232, 168, 71, 0.2),
+    0 6px 20px rgba(0, 0, 0, 0.6);
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -102,19 +147,20 @@
 
 .letter-initials {
   font-family: var(--font-heading);
-  font-size: 2rem;
+  font-size: 2.2rem;
   color: var(--flame);
 }
 
 .letter-name {
-  font-size: 2.6rem;
+  font-size: 2.8rem;
   font-weight: 400;
   color: var(--text-primary);
   margin-bottom: var(--space-xs);
+  letter-spacing: 0.02em;
 }
 
 .letter-rel {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: var(--text-muted);
   font-style: italic;
   font-family: var(--font-heading);
@@ -132,9 +178,9 @@
 
 .quote-mark {
   font-family: var(--font-heading);
-  font-size: 2rem;
+  font-size: 2.2rem;
   color: var(--flame);
-  opacity: 0.6;
+  opacity: 0.7;
   line-height: 0;
   display: inline-block;
   vertical-align: -0.3em;
@@ -146,7 +192,7 @@
 
 .quote-text {
   font-family: var(--font-heading);
-  font-size: 1.4rem;
+  font-size: 1.45rem;
   font-style: italic;
   color: var(--flame-bright);
   line-height: 1.6;
@@ -164,36 +210,98 @@
 
 .letter-passage p {
   font-family: var(--font-heading);
-  font-size: 1.15rem;
-  line-height: 1.9;
+  font-size: 1.2rem;
+  line-height: 1.95;
   color: var(--text-primary);
   margin-bottom: var(--space-md);
   max-width: 100%;
 }
 
-/* Footer & Seal */
+/* Footer & Dimensional Wax Seal */
 .letter-footer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-md);
+  gap: var(--space-lg);
   width: 100%;
-  border-top: 1px dashed var(--border-warm);
-  padding-top: var(--space-lg);
+  border-top: 1px dashed rgba(232, 168, 71, 0.2);
+  padding-top: var(--space-xl);
 }
 
 .letter-closing {
   font-family: var(--font-heading);
   font-style: italic;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   color: var(--flame);
   max-width: 100%;
 }
 
-.letter-seal {
-  font-size: 0.7rem;
-  letter-spacing: 0.15em;
+/* Dimensional Crimson & Gold Wax Seal Stamp */
+.wax-seal-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  cursor: default;
+}
+
+.wax-seal {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #A62F31 0%, #7A1D1F 60%, #4B0E10 100%);
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.7),
+    inset 0 2px 4px rgba(255, 255, 255, 0.35),
+    inset 0 -3px 5px rgba(0, 0, 0, 0.6);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-fast);
+}
+
+.wax-seal:hover {
+  transform: scale(1.05);
+}
+
+.wax-seal__outer-ring {
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(232, 168, 71, 0.45);
+}
+
+.wax-seal__inner-disc {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, #831D1F 0%, #591012 100%);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wax-seal__sanskrit {
+  font-family: var(--font-heading);
+  font-size: 1.7rem;
+  color: #F5C563;
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.9),
+    0 0 8px rgba(232, 168, 71, 0.5);
+  font-weight: 600;
+  line-height: 1;
+  user-select: none;
+  transform: translateY(-1px);
+}
+
+.seal-text {
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
   color: var(--text-muted);
+  text-transform: uppercase;
+  font-family: var(--font-body);
 }
 
 /* ============================================
@@ -229,13 +337,17 @@
     background: #FFFFFF !important;
     border: none !important;
     box-shadow: none !important;
-    padding: 20mm !important;
+    padding: 15mm !important;
     color: #1A1A1A !important;
+  }
+
+  .letter-crease--horizontal {
+    display: none !important;
   }
 
   .letter-border {
     border: 1.5pt solid #8A6D3B !important;
-    padding: 15mm !important;
+    padding: 12mm !important;
   }
 
   .letter-name {
@@ -260,5 +372,25 @@
 
   .letter-portrait {
     border-color: #8A6D3B !important;
+    box-shadow: none !important;
+  }
+
+  .wax-seal {
+    background: #8A1D1F !important;
+    box-shadow: none !important;
+    border: 1pt solid #5A1012 !important;
+  }
+
+  .wax-seal__inner-disc {
+    background: #6D1416 !important;
+    box-shadow: none !important;
+  }
+
+  .wax-seal__sanskrit {
+    color: #E8A847 !important;
+  }
+
+  .seal-text {
+    color: #555555 !important;
   }
 }

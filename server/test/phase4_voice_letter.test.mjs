@@ -23,21 +23,23 @@ function request(options, data = null) {
 
 async function runVoiceLetterTests() {
   console.log('[Smriti Phase 4 Voice & Letter Test] Starting verification...\n');
+  let profileId = null;
 
-  // 1. Create a person to test
-  console.log('1. Setting up profile for voice and letter tests...');
-  const profileRes = await request({
-    host: 'localhost',
-    port: 3001,
-    path: '/api/profiles',
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-  }, {
-    name: 'Maya Lin',
-    relationship: 'Beloved Architecture Professor',
-  });
+  try {
+    // 1. Create a person to test
+    console.log('1. Setting up profile for voice and letter tests...');
+    const profileRes = await request({
+      host: 'localhost',
+      port: 3001,
+      path: '/api/profiles',
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+    }, {
+      name: 'Maya Lin',
+      relationship: 'Beloved Architecture Professor',
+    });
 
-  const profileId = profileRes.body.profile._id;
+    profileId = profileRes.body.profile._id;
 
   // Add 2 memory fragments
   await request({
@@ -116,6 +118,17 @@ async function runVoiceLetterTests() {
   }
 
   console.log('\n[Smriti Phase 4 Voice & Letter Test] ALL TESTS PASSED (100% OK)');
+  } finally {
+    if (profileId) {
+      await request({
+        host: 'localhost',
+        port: 3001,
+        path: `/api/profiles/${profileId}`,
+        method: 'DELETE',
+      });
+      console.log('✔ Phase 4 test profile cleaned up successfully.');
+    }
+  }
 }
 
 runVoiceLetterTests().catch((err) => {

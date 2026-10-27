@@ -17,6 +17,8 @@ let client = null;
 let db = null;
 let isConnectedToAtlas = false;
 
+import { getSeedData } from './scripts/seed_sanctuary.js';
+
 // Local JSON storage path for offline / zero-config fallback
 const DATA_DIR = path.join(__dirname, 'data');
 const LOCAL_DB_PATH = path.join(DATA_DIR, 'sanctuary_db.json');
@@ -26,11 +28,16 @@ function ensureDataDir() {
     fs.mkdirSync(DATA_DIR, { recursive: true });
   }
   if (!fs.existsSync(LOCAL_DB_PATH)) {
-    fs.writeFileSync(
-      LOCAL_DB_PATH,
-      JSON.stringify({ profiles: [], memories: [] }, null, 2),
-      'utf-8'
-    );
+    try {
+      const seed = getSeedData();
+      fs.writeFileSync(LOCAL_DB_PATH, JSON.stringify(seed, null, 2), 'utf-8');
+    } catch {
+      fs.writeFileSync(
+        LOCAL_DB_PATH,
+        JSON.stringify({ profiles: [], memories: [], lettersToThem: [] }, null, 2),
+        'utf-8'
+      );
+    }
   }
 }
 

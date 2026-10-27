@@ -23,20 +23,23 @@ function request(options, data = null) {
 
 async function runBrainTests() {
   console.log('[Smriti Phase 3 Brain Test] Starting verification...\n');
+  let sparseProfileId = null;
+  let denseProfileId = null;
 
-  // 1. Create a person with SPARSE memories (1 single fragment)
-  console.log('1. Testing Sparse Memory Scenario (The Solitary Flame)...');
-  const sparseProfileRes = await request({
-    host: 'localhost',
-    port: 3001,
-    path: '/api/profiles',
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-  }, {
-    name: 'David Miller',
-    relationship: 'High school debate mentor',
-  });
-  const sparseProfileId = sparseProfileRes.body.profile._id;
+  try {
+    // 1. Create a person with SPARSE memories (1 single fragment)
+    console.log('1. Testing Sparse Memory Scenario (The Solitary Flame)...');
+    const sparseProfileRes = await request({
+      host: 'localhost',
+      port: 3001,
+      path: '/api/profiles',
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+    }, {
+      name: 'David Miller',
+      relationship: 'High school debate mentor',
+    });
+    sparseProfileId = sparseProfileRes.body.profile._id;
 
   // Add exactly 1 short memory fragment
   await request({
@@ -88,53 +91,62 @@ async function runBrainTests() {
     name: 'Ananya Bose',
     relationship: 'Grandmother',
   });
-  const denseProfileId = denseProfileRes.body.profile._id;
+    denseProfileId = denseProfileRes.body.profile._id;
 
-  const memoriesList = [
-    { content: 'Ananya made cardamom sandesh every Sunday morning in her brass pot.', label: 'Sunday kitchen, 2015' },
-    { content: 'She taught me how to read Tagore poetry sitting on the balcony.', label: 'Balcony readings' },
-    { content: 'Her favorite advice: "Patience is a tree whose roots are bitter, but the fruit is very sweet."', label: 'Tagore notebook quote' },
-    { content: 'She wore a white cotton sari with a thin red border on festival days.', label: 'Diwali 2019 photo' },
-  ];
+    const memoriesList = [
+      { content: 'Ananya made cardamom sandesh every Sunday morning in her brass pot.', label: 'Sunday kitchen, 2015' },
+      { content: 'She taught me how to read Tagore poetry sitting on the balcony.', label: 'Balcony readings' },
+      { content: 'Her favorite advice: "Patience is a tree whose roots are bitter, but the fruit is very sweet."', label: 'Tagore notebook quote' },
+      { content: 'She wore a white cotton sari with a thin red border on festival days.', label: 'Diwali 2019 photo' },
+    ];
 
-  for (const m of memoriesList) {
-    await request({
+    for (const m of memoriesList) {
+      await request({
+        host: 'localhost',
+        port: 3001,
+        path: '/api/memories',
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      }, {
+        profileId: denseProfileId,
+        type: 'text',
+        content: m.content,
+        sourceLabel: m.label,
+      });
+    }
+
+    // Call /api/converse on dense profile
+    const denseConverseRes = await request({
       host: 'localhost',
       port: 3001,
-      path: '/api/memories',
+      path: '/api/converse',
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
     }, {
       profileId: denseProfileId,
-      type: 'text',
-      content: m.content,
-      sourceLabel: m.label,
+      query: 'What did grandmother tell me about patience and cooking?',
     });
+
+    console.log('   Response status:', denseConverseRes.status);
+    console.log('   Selected Mode:', denseConverseRes.body.mode);
+    console.log('   Retrieved chunks:', denseConverseRes.body.sourceChunks.length);
+    console.log('   Synthesized Message:\n', denseConverseRes.body.message);
+    console.log('   Citations:\n', denseConverseRes.body.citations);
+
+    if (denseConverseRes.body.mode !== 'conversational') {
+      throw new Error(`Expected mode to be 'conversational', got ${denseConverseRes.body.mode}`);
+    }
+
+    console.log('\n[Smriti Phase 3 Brain Test] ALL TESTS PASSED (100% OK)');
+  } finally {
+    if (sparseProfileId) {
+      await request({ host: 'localhost', port: 3001, path: `/api/profiles/${sparseProfileId}`, method: 'DELETE' });
+    }
+    if (denseProfileId) {
+      await request({ host: 'localhost', port: 3001, path: `/api/profiles/${denseProfileId}`, method: 'DELETE' });
+    }
+    console.log('✔ Phase 3 test profiles cleaned up successfully.');
   }
-
-  // Call /api/converse on dense profile
-  const denseConverseRes = await request({
-    host: 'localhost',
-    port: 3001,
-    path: '/api/converse',
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-  }, {
-    profileId: denseProfileId,
-    query: 'What did grandmother tell me about patience and cooking?',
-  });
-
-  console.log('   Response status:', denseConverseRes.status);
-  console.log('   Selected Mode:', denseConverseRes.body.mode);
-  console.log('   Retrieved chunks:', denseConverseRes.body.sourceChunks.length);
-  console.log('   Synthesized Message:\n', denseConverseRes.body.message);
-  console.log('   Citations:\n', denseConverseRes.body.citations);
-
-  if (denseConverseRes.body.mode !== 'conversational') {
-    throw new Error(`Expected mode to be 'conversational', got ${denseConverseRes.body.mode}`);
-  }
-
-  console.log('\n[Smriti Phase 3 Brain Test] ALL TESTS PASSED (100% OK)');
 }
 
 runBrainTests().catch((err) => {

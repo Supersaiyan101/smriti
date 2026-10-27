@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch --watch-path=routes --watch-path=mastra index.js",
+    "seed": "node scripts/seed_sanctuary.js",
     "test": "node test/integration.test.mjs && node test/phase3_brain.test.mjs && node test/phase4_voice_letter.test.mjs && node test/depth_features.test.mjs"
   },
   "dependencies": {

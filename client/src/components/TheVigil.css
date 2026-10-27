@@ -1,5 +1,6 @@
 /* ============================================
    TheVigil — Silent Sanctuary Mode
+   Mindful 4-7-8 Breathing Guide & Tap-to-Tend Ritual
    ============================================ */
 
 .the-vigil-overlay {
@@ -8,12 +9,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #080605;
-  background-image: radial-gradient(
-    ellipse 60% 50% at 50% 40%,
-    rgba(232, 168, 71, 0.08) 0%,
-    transparent 80%
-  );
+  background-color: #070504;
   z-index: 1000;
   display: flex;
   flex-direction: column;
@@ -23,8 +19,102 @@
   overflow: hidden;
 }
 
+/* Ambient Breathing Radial Halo */
+.vigil-ambient-halo {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    rgba(232, 168, 71, 0.16) 0%,
+    rgba(232, 168, 71, 0.06) 45%,
+    transparent 75%
+  );
+  filter: blur(40px);
+  z-index: 0;
+}
+
+.vigil-ambient-halo--inhale {
+  width: 720px;
+  height: 720px;
+  background: radial-gradient(
+    circle,
+    rgba(232, 168, 71, 0.22) 0%,
+    rgba(232, 168, 71, 0.08) 50%,
+    transparent 80%
+  );
+  transition: all 4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.vigil-ambient-halo--hold {
+  width: 720px;
+  height: 720px;
+  background: radial-gradient(
+    circle,
+    rgba(245, 197, 99, 0.24) 0%,
+    rgba(232, 168, 71, 0.1) 50%,
+    transparent 80%
+  );
+  transition: all 1s ease-in-out;
+}
+
+.vigil-ambient-halo--exhale {
+  width: 440px;
+  height: 440px;
+  background: radial-gradient(
+    circle,
+    rgba(232, 168, 71, 0.12) 0%,
+    rgba(232, 168, 71, 0.04) 40%,
+    transparent 70%
+  );
+  transition: all 8s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.vigil-ambient-halo--flare {
+  width: 880px !important;
+  height: 880px !important;
+  background: radial-gradient(
+    circle,
+    rgba(255, 220, 140, 0.32) 0%,
+    rgba(232, 168, 71, 0.18) 45%,
+    transparent 85%
+  ) !important;
+  transition: all 0.5s ease-out !important;
+}
+
+/* Top Bar Controls */
+.vigil-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 900px;
+  z-index: 2;
+}
+
+.vigil-guide-toggle {
+  background: rgba(28, 24, 20, 0.6);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-full);
+  padding: 0.35rem 0.9rem;
+  color: var(--flame-bright);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.vigil-guide-toggle:hover {
+  background: rgba(232, 168, 71, 0.15);
+  border-color: var(--flame);
+}
+
 .vigil-exit-btn {
-  align-self: flex-end;
   background: rgba(28, 24, 20, 0.6);
   border: 1px solid var(--border-warm);
   border-radius: var(--radius-md);
@@ -51,8 +141,9 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  max-width: 650px;
+  max-width: 680px;
   width: 100%;
+  z-index: 1;
 }
 
 .vigil-portrait-container {
@@ -60,26 +151,63 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-sm);
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  transition: transform 0.2s ease;
+}
+
+.vigil-portrait-container:hover {
+  transform: scale(1.02);
+}
+
+.vigil-portrait-container:active {
+  transform: scale(0.99);
 }
 
 .vigil-portrait {
-  width: 140px;
-  height: 140px;
+  width: 145px;
+  height: 145px;
   border-radius: var(--radius-full);
-  border: 3px solid var(--flame-dim);
+  border: 3px solid var(--border-warm);
+  box-shadow:
+    0 0 0 1px rgba(232, 168, 71, 0.4),
+    0 0 0 4px #1A130F,
+    0 0 50px var(--flame-glow);
   overflow: hidden;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--bg-surface);
-  box-shadow: 0 0 50px var(--flame-glow);
+  transition: all 0.5s ease-out;
+}
+
+.vigil-portrait--flare {
+  border-color: var(--flame-bright);
+  box-shadow:
+    0 0 0 2px var(--flame-bright),
+    0 0 0 6px #241A14,
+    0 0 70px rgba(232, 168, 71, 0.6);
 }
 
 .vigil-portrait img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.vigil-portrait-glass {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 50% 120%,
+    rgba(232, 168, 71, 0.3) 0%,
+    transparent 65%
+  );
+  mix-blend-mode: screen;
 }
 
 .vigil-initials {
@@ -94,11 +222,54 @@
   z-index: 2;
 }
 
+/* Tending Ripple Ring Animation */
+.vigil-tend-ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 140px;
+  height: 140px;
+  border: 2px solid var(--flame-bright);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  animation: tendRipple 2.2s cubic-bezier(0.1, 0.8, 0.25, 1) forwards;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes tendRipple {
+  0% {
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0.9;
+    box-shadow: 0 0 20px var(--flame-glow);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(3.5);
+    opacity: 0;
+    box-shadow: 0 0 50px transparent;
+  }
+}
+
+.vigil-tend-prompt {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  color: var(--flame-dim);
+  font-style: italic;
+  margin-bottom: var(--space-md);
+  letter-spacing: 0.03em;
+  transition: color 0.3s ease;
+}
+
+.vigil-portrait-container:hover ~ .vigil-tend-prompt {
+  color: var(--flame-bright);
+}
+
 .vigil-name {
   font-size: 2.6rem;
   font-weight: 300;
   margin-bottom: var(--space-xs);
   color: var(--text-primary);
+  letter-spacing: 0.02em;
 }
 
 .vigil-rel {
@@ -106,7 +277,56 @@
   color: var(--text-muted);
   font-style: italic;
   font-family: var(--font-heading);
-  margin-bottom: var(--space-2xl);
+  margin-bottom: var(--space-lg);
+}
+
+/* 4-7-8 Mindful Breath Indicator */
+.vigil-breath-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 0.35rem 1.1rem;
+  background: rgba(232, 168, 71, 0.06);
+  border: 1px solid rgba(232, 168, 71, 0.2);
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-xl);
+}
+
+.vigil-breath-puck {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--flame);
+  box-shadow: 0 0 10px var(--flame-glow);
+  transition: transform 1s ease-in-out;
+}
+
+.vigil-breath-puck--inhale {
+  transform: scale(1.6);
+  background: var(--flame-bright);
+}
+
+.vigil-breath-puck--hold {
+  transform: scale(1.6);
+  background: #FFF4D6;
+  animation: puckPulse 1s ease-in-out infinite alternate;
+}
+
+.vigil-breath-puck--exhale {
+  transform: scale(0.9);
+  background: var(--flame-dim);
+}
+
+@keyframes puckPulse {
+  0% { box-shadow: 0 0 8px var(--flame-glow); }
+  100% { box-shadow: 0 0 18px var(--flame-bright); }
+}
+
+.vigil-breath-text {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  color: var(--flame-bright);
+  letter-spacing: 0.03em;
 }
 
 /* Floating Ember Box */
@@ -156,12 +376,30 @@
 .vigil-footer {
   text-align: center;
   padding-bottom: var(--space-sm);
+  z-index: 1;
 }
 
 .vigil-hint {
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   color: var(--text-muted);
   font-style: italic;
   font-family: var(--font-heading);
   letter-spacing: 0.05em;
+}
+
+@media (max-width: 600px) {
+  .vigil-ambient-halo {
+    width: 320px;
+    height: 320px;
+  }
+  .vigil-portrait {
+    width: 110px;
+    height: 110px;
+  }
+  .vigil-name {
+    font-size: 2rem;
+  }
+  .vigil-ember-text {
+    font-size: 1.2rem;
+  }
 }

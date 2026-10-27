@@ -32,7 +32,7 @@ I built Smriti as an open-source, privacy-first sanctuary. It does not pretend t
 
 ---
 
-## 2. What Smriti Actually Does: The 5 Features
+## 2. What Smriti Actually Does: The Core Experience & The Memory Reel
 
 Smriti is intentionally designed with one defining aesthetic: **Quiet**. There are no notification badges, no social feeds, and no login walls.
 
@@ -42,21 +42,33 @@ Smriti is intentionally designed with one defining aesthetic: **Quiet**. There a
        │                                                        │
        │               🕯️  [ Living Candle Flame ]               │
        │                                                        │
-       │         [ Arjun Mehta ]            [ Sarah Chen ]      │
-       │         "My best friend"         "College roommate"    │
+       │         [ Arjun Mehta ]            [ Ananya Bose ]     │
+       │        "Best friend, college"       "Grandmother"      │
        │               🕯️                         🕯️           │
        │                                                        │
+       │          🎞️ [ THE MEMORY REEL • SPOTIFY SOUNDTRACK ]    │
        └────────────────────────────────────────────────────────┘
 ```
 
-### Feature 1 — The Sanctuary (Living Hearth)
-The home screen is a quiet room at dusk. Each remembered person appears as a softly framed portrait resting beside a living, flickering candle flame. The flame is universal across all cultures. There are no sidebars or analytics—just the people you carry with you.
+### 🎞️ The Flagship Centerpiece: The Memory Reel (स्मृति कथा)
+The defining feature of Smriti. It weaves photographs and heartfelt stories into a cinematic slideshow set to music, kept permanently on their altar:
 
-### Feature 2 — The Offering (3-Step Memory Drop)
-Adding someone is dead-simple and takes less than 60 seconds:
-1. **Who were they?** (Their name and relationship, e.g., *"Maya, my thesis advisor"*).
-2. **Their words & voice:** Drop in a voice note (recorded live in the browser), type a piece of advice, or attach a photo.
-3. **"Light their flame":** One tap. Their portrait appears on the altar.
+- **Layout A (Cinematic Split):**
+  - **Left Half:** High-resolution portrait framed in an archival brass & dark wood bezel with subtle Ken Burns drift (1.0 to 1.04 zoom over 11s), realistic glass reflections, and a corner living flame.
+  - **Right Half:** Spacetime pinning badge (`🗓️ [When] • 📍 [Where]`), moment title, and the quiet written narrative in large, elegant *Cormorant Garamond* serif prose.
+- **Spotify Wrapped-Style Story Bars:** Segmented top progress bars (`▬▬ ▬▬ ▬▬`), auto-advancing, clickable to jump, keyboard controls (`←`/`→`/`Esc`/`Space`), and pause-on-hover.
+- **Sanctuary Soundtrack Engine:** Custom MP3 audio upload ("Their Song") or procedural sanctuary acoustic melodies (*Peaceful Piano Dusk*, *Twilight Sarod*, *Warm Acoustic Strings*, *Rain & Wind Chimes*), with spinning vinyl badge and mute control.
+- **Read-Only Reverence:** Strictly human heartfelt stories with zero robotic TTS narration over the slideshow.
+
+### Feature 1 — The Sanctuary (Living Hearth)
+The home screen is a quiet room at dusk. Each remembered person appears as a softly framed portrait resting beside a living, flickering candle flame. The shelf features 3 clean sample profiles (*Arjun Mehta*, *Ananya Bose*, *David Miller*) with immediate Memory Reel playback and a built-in seed utility (`npm run seed`).
+
+### Feature 2 — The Offering & Archival Journal
+A dead-simple 3-step memory drop:
+1. **Who were they?** (Name and relationship).
+2. **Archival Linen Journal Leaf:** Margin rule, warm script font, dimensional Sanskrit wax seal stamp (`स्मृ`), spacetime pinning (`When was this?`, `Where were you?`).
+3. **Sensory Inspiration Quick-Chips:** 1-tap chips for Weather (*Monsoon rain*, *Golden hour*), Scent (*Cardamom chai*, *Woodsmoke*), and Song (*Acoustic guitar*, *Old radio*).
+4. **Quiet Local Draft Auto-Save:** In-progress reflections are automatically preserved locally so no heartfelt words are lost.
 
 #### 💡 The Sparse Memory Dilemma: "What if I only have one memory?"
 One of the most tender realities of grief is that we often have very little preserved data. For a childhood friend who passed young, you might only have **one sentence** they always said.
@@ -65,17 +77,20 @@ Smriti never shames the user with *"Profile 10% complete—add more data."* **A 
 - **Gentle Whispers:** Soft 1-tap prompts (*"A Catchphrase"*, *"A Small Joy"*, *"Life Advice"*, *"A Scent or Song"*) that offer tender starting words if grief leaves you feeling blank.
 - **Reflection Mode:** When someone has only 1–3 memories, Gemma does **not** attempt a fake conversational Q&A. Instead, it acts as a peaceful keeper of the flame, reflecting their actual preserved words and advice back to the user like a warm comforting presence.
 
-### Feature 3 — The Remembrance (Gemma Grounded Reflection)
-Clicking a portrait brings full focus to their hearth. A single handwritten note asks:
-> *"What's on your mind today?"*
+### Feature 3 — The Remembrance (Slow Ink & Citation Unfolding)
+Clicking a portrait brings full focus to their hearth:
+- **Gemma Grounded Reflection:** Strictly grounded in uploaded fragments with zero hallucinations.
+- **Slow Ink Emergence:** Gentle, typewriter-paced writing reveal with a glowing ink quill cursor.
+- **Citation Artifact Unfolding:** Clicking any bracketed citation (`[Chai stall memory, 2018]`) unfolds the original preserved artifact modal with its exact spacetime coordinates and sensory anchors.
 
-Google Gemma synthesizes a calm, second-person response grounded **strictly** in the memories you uploaded. Every fact is cited inline with clickable anchors: `[Chai stall memory, 2018]`. If you ask something not present in their preserved words, Gemma responds with gentle honesty: *"I don't have enough of their words about that yet. Would you like to add more memories?"*
+### Feature 4 — The Vigil ("Sit with Them")
+A dedicated meditation sanctuary for wordless presence with an expanding 4-7-8 mindful breathing ring and a tap-to-tend 432Hz bronze chime.
 
-### Feature 4 — The Voice (Screen-Off Listening)
-Every reflection features a soft audio player powered by **ElevenLabs**. With a single tap, ElevenLabs reads the memory aloud in a calm, human voice with citations stripped out for natural pacing. Smriti is designed for eyes-closed, screen-off listening—the digital equivalent of sitting in a quiet room with someone's wisdom.
+### Feature 5 — The Voice & Ambient Soundscapes
+ElevenLabs speech readout with studio audio ducking (-65%) and an analog warmth filter (6800Hz low-pass) for vintage vinyl warmth.
 
-### Feature 5 — The Keepsake Letter (Physical Archival Export)
-One tap on *"📜 Keepsake Letter"* generates a printable, framed heirloom document. It highlights their photo, their most meaningful preserved quote in timeless Cormorant Garamond typography, and a 2-paragraph reflection on their life. Hitting `Ctrl+P` triggers a custom `@media print` layout that strips dark backgrounds and prints a clean, archival page to be folded and kept in a pocket or framed on a desk.
+### Feature 6 — The Keepsake Letter (Physical Archival Export)
+One tap on *"📜 Keepsake Letter"* generates a printable, framed heirloom document with deckled paper borders, their featured quote, a Gemma reflection, and a Sanskrit wax seal stamp. Hitting `Ctrl+P` triggers a custom `@media print` layout.
 
 ---
 

@@ -21,34 +21,50 @@ Commercial AI often treats this with dark voyeurism or clinical extraction: uplo
 
 ---
 
-## 2. The 5 Features 
+## 2. The Features & The Flagship Memory Reel
 
-### Feature 1 — The Sanctuary (Home / Portrait Shelf)
-The home screen is a quiet, dimly lit space at dusk. Each remembered person appears as a softly glowing portrait with their name, relationship (*"My father"*, *"My best friend Alex"*), and a gentle living candle flame resting beside them. Clean, peaceful, uncluttered. A single quiet `+` button to remember someone new.
+### 🎞️ Flagship Centerpiece — The Memory Reel (स्मृति कथा)
+The game-changing heart of Smriti. The Memory Reel weaves a loved one's preserved photographs and heartfelt written stories into a cinematic, Spotify Wrapped-style slideshow that lives permanently upon their altar.
 
-### Feature 2 — The Offering (Adding Memories)
-A dead-simple, 3-step quiet form:
-1. **Their name and who they were** (free text, e.g., *"Sarah, college roommate"*).
-2. **Memory fragments** (any combination, even just one):
-   - 🎤 An audio clip, voicemail, or spoken voice note
-   - 📝 A written memory, catchphrase, or life advice
-   - 📷 A photo or letter
-3. **"Light their flame"** — one button. Their portrait appears in the sanctuary.
-*(Optional "Gentle Whispers": 1-tap prompts like "What was a catchphrase they always said?" for users who feel blank).*
+* **Layout A (Cinematic Split):**
+  - **Left Half:** High-resolution portrait framed in an archival brass & dark wood bezel with subtle Ken Burns drift (1.0 to 1.04 breathing zoom over 11 seconds), realistic glass reflection, and a corner living candle flame.
+  - **Right Half:** Spacetime pinning badge (`🗓️ [When] • 📍 [Where]`), moment title, and the quiet written narrative in large, elegant *Cormorant Garamond* serif prose.
+* **Spotify Wrapped-Style Story Bars:** Segmented progress bars at the very top (`▬▬ ▬▬ ▬▬`) indicate story progression, automatically advances to the next moment, clickable to jump, with pause-on-hover and keyboard arrow controls (`←`, `→`, `Esc`, `Space`).
+* **Sanctuary Soundtrack Engine:** Plays an uploaded MP3 of "Their Song" or curates procedural acoustic sanctuary melodies (*Peaceful Piano Dusk*, *Twilight Sarod*, *Warm Acoustic Strings*, *Rain & Wind Chimes*), accompanied by a gently rotating vinyl badge and quick mute toggle.
+* **Read-Only Reverent Dignity:** Strictly human heartfelt stories with **zero** robotic AI speech readout over the slideshow, preserving the authenticity and emotional purity of each remembered moment.
+* **Permanent Altar Placement:** Saved permanently to the profile so family members can revisit the reel anytime they need to feel close.
 
-### Feature 3 — The Remembrance (Core Experience & Adaptive Modes)
-Clicking a portrait brings full focus to them: their photo, name, and soft flame. A single quiet input:
-> *"What's on your mind today?"*
+---
 
-Smriti dynamically adapts to the depth of memories:
-* **Rich Memories (Dense):** Gemma synthesizes grounded, warm responses with source citations (`[Voicemail, Oct 2021]`).
-* **Sparse Memories (1–3 fragments):** **Reflection Mode** activates. Gemma does NOT attempt a fake conversational Q&A. Instead, it acts as a peaceful keeper of the flame, reflecting their actual words and advice back to the user with warmth.
+### Feature 1 — The Sanctuary (Living Altar Shelf)
+The home screen is a quiet room at dusk. Each remembered person rests as a softly glowing portrait beside a living candle flame on an uncluttered shelf. Shipped with 3 pristine seed profiles (*Arjun Mehta*, *Ananya Bose*, *David Miller*) with immediate Memory Reel playback and a built-in seed utility (`npm run seed`).
 
-### Feature 4 — The Voice (Audio Readout)
-Every response features a quiet play button. ElevenLabs reads the memory aloud in a calm, human voice. Designed for eyes-closed, screen-off listening — sitting quietly with their memory.
+### Feature 2 — The Offering & Archival Journal
+A tender 3-step memory drop for text, voice, and photographs:
+- **Archival Linen Journal Leaf:** Warm serif script with margin rules and dimensional Sanskrit wax seal stamp (`स्मृ`).
+- **Sensory Inspiration Quick-Chips:** One-tap chips for Weather (*Monsoon rain*, *Golden hour sunset*, *Winter frost*), Scent (*Cardamom chai*, *Woodsmoke & pine*, *Jasmine*), and Song (*Acoustic guitar*, *Late night radio*, *Slow piano*).
+- **Quiet Local Draft Auto-Save:** Automatically preserves in-progress reflections to local browser storage so not a single word is lost to tab closures or interruptions.
 
-### Feature 5 — The Keepsake Letter (Export)
-One-click: **"Generate a Memory Letter."** Formats a single printable, dignified keepsake page with their photo, their most meaningful preserved quote, and a brief passage reflecting the love and wisdom they left behind.
+### Feature 3 — The Remembrance (Adaptive Grounding & Slow Ink)
+Clicking a portrait brings full focus to their hearth:
+- **Google Gemma Grounding:** Synthesizes deeply comforted, second-person reflections anchored **strictly** to uploaded fragments with zero hallucinations.
+- **Slow Ink Emergence:** Gentle, typewriter-paced writing reveal with a glowing ink quill cursor.
+- **Citation Artifact Unfolding:** Clicking any bracketed citation (`[Chai stall memory, 2018]`) unfolds the original preserved artifact modal with its exact spacetime coordinates and sensory anchors.
+- **Reflection vs. Conversational Modes:** Dynamically adapts based on memory density (sparse solitary flame vs. dense conversation).
+
+### Feature 4 — The Vigil ("Sit with Them")
+A dedicated meditation sanctuary for wordless presence:
+- **Mindful 4-7-8 Breathing Guide:** Expanding and contracting golden ring guiding inhale, hold, and release.
+- **Tap-to-Tend 432Hz Chime:** Soft Web Audio chime tuned to 432Hz that replenishes embers.
+
+### Feature 5 — The Voice & Ambient Soundscapes
+- **Studio Audio Ducking:** Ambient rain/tanpura automatically ducks (-65%) whenever voice recordings or ElevenLabs readouts play.
+- **Analog Warmth Filter:** Web Audio low-pass filter (6800Hz) that softens digital harshness into vintage vinyl warmth.
+
+### Feature 6 — The Keepsake Letter (Heirloom Export)
+One-click generation of a single printable, frame-worthy archival letter featuring deckled paper borders, their featured quote, a Gemma-penned reflection, and a dimensional Sanskrit wax seal stamp.
+
+---
 
 ---
 

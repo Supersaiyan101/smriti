@@ -10,7 +10,12 @@ import './Remembrance.css';
 /**
  * Remembrance — The sacred core experience.
  * Powered by Google Gemma & Mastra Agent Pipeline.
- * Features: Adaptive Reflection, The Vigil Mode, Letters to Them, Sensory Anchors.
+ * Features:
+ *  - Slow Ink Emergence (calm gradual writing reveal)
+ *  - Citation Artifact Unfolding (inspecting original memory anchors)
+ *  - The Vigil Mode (silent contemplation)
+ *  - Letters to Them (unsent sealed letters shelf)
+ *  - Sensory Anchors (weather, scent, song)
  */
 export default function Remembrance() {
   const { id } = useParams();
@@ -27,15 +32,45 @@ export default function Remembrance() {
   const [response, setResponse] = useState(null);
   const [activeCitation, setActiveCitation] = useState(null);
 
+  // Slow Ink Emergence State
+  const [revealedLength, setRevealedLength] = useState(0);
+  const [isWriting, setIsWriting] = useState(false);
+
   // Depth Modals
   const [isVigilOpen, setIsVigilOpen] = useState(false);
   const [isWriteModalOpen, setIsWriteModalOpen] = useState(false);
   const [readingLetter, setReadingLetter] = useState(null);
+  const [inspectedArtifact, setInspectedArtifact] = useState(null);
 
   useEffect(() => {
     fetchProfileData();
     fetchLettersToThem();
   }, [id]);
+
+  // Slow ink emergence effect when a response arrives
+  useEffect(() => {
+    if (!response?.message) return;
+
+    const fullText = response.message;
+    setIsWriting(true);
+    setRevealedLength(0);
+
+    let currentIdx = 0;
+    const timer = setInterval(() => {
+      // Find next word boundary
+      const nextSpace = fullText.indexOf(' ', currentIdx + 3);
+      if (nextSpace === -1 || nextSpace >= fullText.length - 1) {
+        setRevealedLength(fullText.length);
+        setIsWriting(false);
+        clearInterval(timer);
+      } else {
+        currentIdx = nextSpace + 1;
+        setRevealedLength(currentIdx);
+      }
+    }, 28);
+
+    return () => clearInterval(timer);
+  }, [response?.message]);
 
   const fetchProfileData = async () => {
     try {
@@ -116,6 +151,62 @@ export default function Remembrance() {
     }
   };
 
+  // Open the unfolded artifact inspection drawer
+  const handleOpenArtifact = (citationLabel) => {
+    const clean = citationLabel.replace(/^[⚓\s\[]+|[\]\s]+$/g, '').trim();
+    setActiveCitation(clean);
+
+    const found = memories.find(
+      (m) =>
+        (m.sourceLabel && m.sourceLabel.toLowerCase() === clean.toLowerCase()) ||
+        (m.content && m.content.toLowerCase().includes(clean.toLowerCase()))
+    );
+
+    if (found) {
+      setInspectedArtifact(found);
+    } else {
+      setInspectedArtifact({
+        sourceLabel: clean,
+        content: `Direct remembrance fragment preserved in honor of ${profile.name}.`,
+        type: 'note',
+        createdAt: new Date().toISOString(),
+      });
+    }
+  };
+
+  const handleSkipInk = () => {
+    if (response?.message) {
+      setRevealedLength(response.message.length);
+      setIsWriting(false);
+    }
+  };
+
+  // Formats text so any bracketed citation e.g. [Sunday kitchen, 2015] is an interactive link
+  const renderFormattedParagraph = (paragraphText, pIndex) => {
+    const parts = paragraphText.split(/(\[[^\]]+\])/g);
+    return (
+      <p key={pIndex} className="response-paragraph">
+        {parts.map((part, i) => {
+          if (part.startsWith('[') && part.endsWith(']')) {
+            const rawLabel = part.slice(1, -1);
+            return (
+              <button
+                key={i}
+                type="button"
+                className="citation-inline-anchor"
+                onClick={() => handleOpenArtifact(rawLabel)}
+                title={`Inspect original artifact: ${rawLabel}`}
+              >
+                ⚓ [{rawLabel}]
+              </button>
+            );
+          }
+          return part;
+        })}
+      </p>
+    );
+  };
+
   if (isLoading) {
     return (
       <div className="page remembrance-page">
@@ -146,6 +237,7 @@ export default function Remembrance() {
     .toUpperCase();
 
   const isSparse = memories.length <= 3;
+  const currentDisplayedText = response?.message ? response.message.slice(0, revealedLength) : '';
 
   return (
     <div className="page remembrance-page fade-in">
@@ -194,6 +286,7 @@ export default function Remembrance() {
             ) : (
               <span className="remembrance-initials">{initials}</span>
             )}
+            <div className="remembrance-portrait__reflection" aria-hidden="true" />
           </div>
           <div className="remembrance-hearth__flame">
             <CandleFlame size="lg" />
@@ -222,25 +315,46 @@ export default function Remembrance() {
               <span className="response-engine-tag">
                 {response.engine || 'Google Gemma Sanctuary Grounding'}
               </span>
-              {response.citations && response.citations.length > 0 && (
-                <div className="response-citations">
-                  {response.citations.map((c, idx) => (
-                    <span
-                      key={idx}
-                      className={`citation-pill ${activeCitation === c ? 'citation-pill--active' : ''}`}
-                      onClick={() => setActiveCitation(activeCitation === c ? null : c)}
-                    >
-                      ⚓ {c}
-                    </span>
-                  ))}
-                </div>
-              )}
+
+              <div className="response-header-right">
+                {response.citations && response.citations.length > 0 && (
+                  <div className="response-citations">
+                    {response.citations.map((c, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        className={`citation-pill ${activeCitation === c ? 'citation-pill--active' : ''}`}
+                        onClick={() => handleOpenArtifact(c)}
+                        title={`Click to unfold preserved artifact: ${c}`}
+                      >
+                        ⚓ {c}
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {isWriting && (
+                  <button
+                    type="button"
+                    className="btn-ink-skip"
+                    onClick={handleSkipInk}
+                    title="Reveal reflection in full"
+                  >
+                    Reveal in full
+                  </button>
+                )}
+              </div>
             </div>
 
             <div className="response-body">
-              {response.message.split('\n\n').map((paragraph, i) => (
-                <p key={i}>{paragraph}</p>
-              ))}
+              {currentDisplayedText.split('\n\n').map((paragraph, i) =>
+                renderFormattedParagraph(paragraph, i)
+              )}
+
+              {/* Glowing ink tip while writing */}
+              {isWriting && (
+                <span className="ink-quill-cursor" title="Words emerging..." />
+              )}
             </div>
 
             {/* ElevenLabs Spoken Audio Readout */}
@@ -290,6 +404,9 @@ export default function Remembrance() {
                 <div
                   key={mem._id}
                   className={`ember-card ${activeCitation === mem.sourceLabel ? 'ember-card--highlight' : ''}`}
+                  onClick={() => handleOpenArtifact(mem.sourceLabel || mem.content)}
+                  title="Click to unfold full archival artifact"
+                  style={{ cursor: 'pointer' }}
                 >
                   <span className="ember-label">
                     {mem.type === 'voice' ? '🎤 ' : '📝 '}
@@ -307,7 +424,7 @@ export default function Remembrance() {
                   )}
 
                   {mem.mediaUrl && mem.type === 'voice' && (
-                    <audio controls src={mem.mediaUrl} className="ember-audio" />
+                    <audio controls src={mem.mediaUrl} className="ember-audio" onClick={(e) => e.stopPropagation()} />
                   )}
                 </div>
               ))}
@@ -345,6 +462,108 @@ export default function Remembrance() {
           </section>
         )}
       </main>
+
+      {/* Depth Modal: Archival Citation Artifact Unfolding */}
+      {inspectedArtifact && (
+        <div className="artifact-inspector-overlay fade-in" onClick={() => setInspectedArtifact(null)}>
+          <div className="artifact-inspector-card fade-in-up" onClick={(e) => e.stopPropagation()}>
+            <div className="artifact-inspector-header">
+              <div className="artifact-header-title">
+                <CandleFlame size="sm" />
+                <h3>Archival Memory Artifact</h3>
+              </div>
+              <button
+                type="button"
+                className="close-btn"
+                onClick={() => setInspectedArtifact(null)}
+                aria-label="Close artifact inspection"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="artifact-inspector-body">
+              <div className="artifact-meta-bar">
+                <span className="artifact-type-badge">
+                  {inspectedArtifact.type === 'voice' ? '🎤 Spoken Audio Fragment' : '📜 Written Recollection'}
+                </span>
+                <span className="artifact-anchor-badge">
+                  ⚓ {inspectedArtifact.sourceLabel || 'Original Source'}
+                </span>
+                {inspectedArtifact.createdAt && (
+                  <span className="artifact-date">
+                    Preserved {new Date(inspectedArtifact.createdAt).toLocaleDateString()}
+                  </span>
+                )}
+              </div>
+
+              <blockquote className="artifact-quote">
+                "{inspectedArtifact.content}"
+              </blockquote>
+
+              {/* Sensory Anchors Panel */}
+              {inspectedArtifact.sensory &&
+                (inspectedArtifact.sensory.weather ||
+                  inspectedArtifact.sensory.scent ||
+                  inspectedArtifact.sensory.song) && (
+                  <div className="artifact-sensory-panel">
+                    <h5 className="artifact-sensory-title">Sensory Atmosphere at Time of Memory</h5>
+                    <div className="artifact-sensory-items">
+                      {inspectedArtifact.sensory.weather && (
+                        <div className="artifact-sensory-item">
+                          <span className="sensory-icon">🌧️</span>
+                          <div>
+                            <span className="sensory-label">Weather</span>
+                            <span className="sensory-val">{inspectedArtifact.sensory.weather}</span>
+                          </div>
+                        </div>
+                      )}
+                      {inspectedArtifact.sensory.scent && (
+                        <div className="artifact-sensory-item">
+                          <span className="sensory-icon">☕</span>
+                          <div>
+                            <span className="sensory-label">Scent</span>
+                            <span className="sensory-val">{inspectedArtifact.sensory.scent}</span>
+                          </div>
+                        </div>
+                      )}
+                      {inspectedArtifact.sensory.song && (
+                        <div className="artifact-sensory-item">
+                          <span className="sensory-icon">🎵</span>
+                          <div>
+                            <span className="sensory-label">Song / Sound</span>
+                            <span className="sensory-val">{inspectedArtifact.sensory.song}</span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+              {/* Media or Voice player if present */}
+              {inspectedArtifact.mediaUrl && (
+                <div className="artifact-media-container">
+                  {inspectedArtifact.type === 'voice' ? (
+                    <audio controls src={inspectedArtifact.mediaUrl} className="artifact-audio-player" />
+                  ) : (
+                    <img src={inspectedArtifact.mediaUrl} alt="Memory artifact" className="artifact-img-preview" />
+                  )}
+                </div>
+              )}
+
+              <div className="artifact-footer-actions">
+                <button
+                  type="button"
+                  className="btn btn-ghost btn-sm"
+                  onClick={() => setInspectedArtifact(null)}
+                >
+                  ← Return to Reflection
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Depth Modal: Silent Vigil Mode ("Sit with Them") */}
       {isVigilOpen && (

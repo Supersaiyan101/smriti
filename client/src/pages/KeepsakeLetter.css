@@ -1,0 +1,264 @@
+/* ============================================
+   KeepsakeLetter — Feature 5 (Screen & Print)
+   ============================================ */
+
+.letter-page-wrapper {
+  max-width: 820px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.letter-loading-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Screen Action Bar */
+.letter-actions {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-xl);
+}
+
+.btn-print {
+  gap: var(--space-xs);
+  box-shadow: 0 0 20px var(--flame-glow);
+}
+
+/* The Letter Document */
+.keepsake-letter {
+  background: #181410;
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-md);
+  padding: var(--space-2xl) var(--space-xl);
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.6),
+    0 0 50px rgba(232, 168, 71, 0.05);
+  position: relative;
+  width: 100%;
+}
+
+/* Double fine border like archival parchment */
+.letter-border {
+  border: 1px solid rgba(232, 168, 71, 0.25);
+  padding: var(--space-2xl) var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.letter-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-lg);
+}
+
+.letter-ornament {
+  font-size: 1.2rem;
+}
+
+.letter-tagline {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--flame);
+  font-weight: 500;
+}
+
+/* Person Section */
+.letter-person {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--space-xl);
+}
+
+.letter-portrait {
+  width: 100px;
+  height: 100px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--flame-dim);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-surface);
+  margin-bottom: var(--space-md);
+}
+
+.letter-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.letter-initials {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  color: var(--flame);
+}
+
+.letter-name {
+  font-size: 2.6rem;
+  font-weight: 400;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xs);
+}
+
+.letter-rel {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-style: italic;
+  font-family: var(--font-heading);
+}
+
+/* Featured Quote Box */
+.letter-quote-box {
+  position: relative;
+  max-width: 580px;
+  margin: 0 auto var(--space-xl) auto;
+  padding: var(--space-md) var(--space-xl);
+  border-top: 1px solid var(--border-warm);
+  border-bottom: 1px solid var(--border-warm);
+}
+
+.quote-mark {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  color: var(--flame);
+  opacity: 0.6;
+  line-height: 0;
+  display: inline-block;
+  vertical-align: -0.3em;
+}
+
+.quote-mark--close {
+  vertical-align: 0.2em;
+}
+
+.quote-text {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-style: italic;
+  color: var(--flame-bright);
+  line-height: 1.6;
+  max-width: 100%;
+  display: inline;
+  margin: 0 var(--space-xs);
+}
+
+/* Passage */
+.letter-passage {
+  max-width: 600px;
+  text-align: left;
+  margin-bottom: var(--space-2xl);
+}
+
+.letter-passage p {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  line-height: 1.9;
+  color: var(--text-primary);
+  margin-bottom: var(--space-md);
+  max-width: 100%;
+}
+
+/* Footer & Seal */
+.letter-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  width: 100%;
+  border-top: 1px dashed var(--border-warm);
+  padding-top: var(--space-lg);
+}
+
+.letter-closing {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--flame);
+  max-width: 100%;
+}
+
+.letter-seal {
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+}
+
+/* ============================================
+   Print Layout Styles (@media print)
+   Strips dark background for clean white paper print
+   ============================================ */
+@media print {
+  /* Hide interactive screen UI */
+  .no-print,
+  .letter-actions,
+  header,
+  footer,
+  nav {
+    display: none !important;
+  }
+
+  body {
+    background: #FFFFFF !important;
+    color: #1A1A1A !important;
+  }
+
+  body::before {
+    display: none !important;
+  }
+
+  .letter-page-wrapper {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .keepsake-letter {
+    background: #FFFFFF !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 20mm !important;
+    color: #1A1A1A !important;
+  }
+
+  .letter-border {
+    border: 1.5pt solid #8A6D3B !important;
+    padding: 15mm !important;
+  }
+
+  .letter-name {
+    color: #111111 !important;
+  }
+
+  .letter-tagline {
+    color: #8A6D3B !important;
+  }
+
+  .quote-text {
+    color: #2A2520 !important;
+  }
+
+  .letter-passage p {
+    color: #222222 !important;
+  }
+
+  .letter-closing {
+    color: #5A4A28 !important;
+  }
+
+  .letter-portrait {
+    border-color: #8A6D3B !important;
+  }
+}

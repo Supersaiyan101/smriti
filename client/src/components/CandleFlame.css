@@ -1,0 +1,74 @@
+/* ============================================
+   CandleFlame — Animated living flame
+   ============================================ */
+
+.candle-flame {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* Ambient glow — soft circle of light beneath/around the flame */
+.candle-flame__glow {
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(
+    circle,
+    var(--flame-glow) 0%,
+    transparent 70%
+  );
+  border-radius: var(--radius-full);
+  animation: softPulse 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.candle-flame--sm .candle-flame__glow {
+  width: 24px;
+  height: 24px;
+}
+
+.candle-flame--lg .candle-flame__glow {
+  width: 60px;
+  height: 60px;
+}
+
+/* The SVG flame itself — flickering */
+.candle-flame__svg {
+  animation: flicker 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 6px var(--flame-glow));
+  transform-origin: bottom center;
+}
+
+.candle-flame--lg .candle-flame__svg {
+  filter: drop-shadow(0 0 12px var(--flame-glow));
+}
+
+/* Inner flame gets a slightly different flicker timing */
+.candle-flame__inner {
+  animation: flicker 2.4s ease-in-out infinite reverse;
+  transform-origin: bottom center;
+}
+
+/* Wick */
+.candle-flame__wick {
+  width: 2px;
+  height: 6px;
+  background: var(--border-warm);
+  border-radius: 1px;
+  margin-top: -2px;
+}
+
+.candle-flame--sm .candle-flame__wick {
+  height: 4px;
+}
+
+.candle-flame--lg .candle-flame__wick {
+  width: 3px;
+  height: 8px;
+}

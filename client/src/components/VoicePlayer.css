@@ -1,0 +1,55 @@
+/* ============================================
+   VoicePlayer — Gentle Audio Stream
+   ============================================ */
+
+.voice-player {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.voice-player__btn {
+  gap: var(--space-xs);
+  transition: all var(--transition-fast);
+}
+
+.voice-player--playing .voice-player__btn {
+  border-color: var(--flame);
+  color: var(--flame-bright);
+  background: rgba(232, 168, 71, 0.08);
+  box-shadow: 0 0 15px var(--flame-glow);
+}
+
+.voice-wave {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 16px;
+}
+
+.voice-wave__bar {
+  width: 3px;
+  background: var(--flame);
+  border-radius: 2px;
+  animation: wavePulse 1.2s ease-in-out infinite;
+}
+
+.bar-1 { height: 8px; animation-delay: 0.1s; }
+.bar-2 { height: 16px; animation-delay: 0.25s; }
+.bar-3 { height: 10px; animation-delay: 0.4s; }
+.bar-4 { height: 14px; animation-delay: 0.15s; }
+.bar-5 { height: 6px; animation-delay: 0.3s; }
+
+.voice-wave__hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-left: var(--space-sm);
+  font-family: var(--font-heading);
+}
+
+@keyframes wavePulse {
+  0%, 100% { transform: scaleY(0.4); opacity: 0.5; }
+  50% { transform: scaleY(1); opacity: 1; }
+}

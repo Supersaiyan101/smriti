@@ -1,0 +1,74 @@
+/* ============================================
+   GentleWhispers — Soft Prompt Chips
+   ============================================ */
+
+.gentle-whispers {
+  margin-top: var(--space-lg);
+  padding: var(--space-md) var(--space-lg);
+  background: rgba(232, 168, 71, 0.03);
+  border: 1px dashed var(--border-warm);
+  border-radius: var(--radius-md);
+}
+
+.gentle-whispers__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-sm);
+}
+
+.gentle-whispers__icon {
+  font-size: 0.95rem;
+}
+
+.gentle-whispers__title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  color: var(--flame);
+  font-weight: 500;
+}
+
+.gentle-whispers__subtitle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-left: var(--space-xs);
+}
+
+.gentle-whispers__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.whisper-chip {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: var(--space-xs) var(--space-sm);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  transition: all var(--transition-fast);
+}
+
+.whisper-chip:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--flame-dim);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.whisper-chip__label {
+  color: var(--flame-bright);
+  font-weight: 500;
+}
+
+.whisper-chip__preview {
+  color: var(--text-muted);
+  font-style: italic;
+}

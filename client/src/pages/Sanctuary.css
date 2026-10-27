@@ -1,0 +1,111 @@
+/* ============================================
+   Sanctuary — Home Screen
+   "A quiet shelf at dusk."
+   ============================================ */
+
+.sanctuary {
+  justify-content: flex-start;
+  position: relative;
+}
+
+.sanctuary__emblem {
+  margin-bottom: var(--space-lg);
+  display: flex;
+  justify-content: center;
+}
+
+/* Portrait grid */
+.sanctuary__grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-xl);
+  max-width: 900px;
+  width: 100%;
+}
+
+/* Empty state */
+.sanctuary__empty {
+  text-align: center;
+  margin-top: var(--space-2xl);
+}
+
+.sanctuary__empty p {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.sanctuary__empty-whisper {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-top: var(--space-sm);
+}
+
+/* Floating "+" button */
+.sanctuary__add-btn {
+  position: fixed;
+  bottom: var(--space-xl);
+  right: var(--space-xl);
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-full);
+  background: var(--bg-card);
+  border: 1px solid var(--border-warm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all var(--transition-medium);
+  z-index: 10;
+}
+
+.sanctuary__add-btn:hover {
+  background: var(--flame);
+  border-color: var(--flame);
+  transform: scale(1.08);
+  box-shadow: 0 0 24px var(--flame-glow);
+}
+
+.sanctuary__add-icon {
+  font-size: 1.6rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1;
+  transition: color var(--transition-fast);
+}
+
+.sanctuary__add-btn:hover .sanctuary__add-icon {
+  color: var(--bg-deep);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .sanctuary__grid {
+    gap: var(--space-lg);
+  }
+
+  .sanctuary__add-btn {
+    bottom: var(--space-lg);
+    right: var(--space-lg);
+    width: 48px;
+    height: 48px;
+  }
+}
+
+/* Quiet Sanctuary Footer */
+.sanctuary__footer {
+  margin-top: auto;
+  padding-top: var(--space-2xl);
+  padding-bottom: var(--space-md);
+  text-align: center;
+}
+
+.sanctuary__footer-note {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  max-width: 100%;
+}
+

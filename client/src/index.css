@@ -1,0 +1,296 @@
+/* ============================================
+   SMRITI (स्मृति) — Design System
+   "A quiet room at dusk."
+   ============================================ */
+
+/* --- CSS Custom Properties (Design Tokens) --- */
+:root {
+  /* Core Palette */
+  --bg-deep:       #0D0A08;
+  --bg-surface:    #161210;
+  --bg-card:       #1C1814;
+  --bg-card-hover: #241F1A;
+
+  /* Amber / Flame */
+  --flame:         #E8A847;
+  --flame-glow:    #E8A84733;
+  --flame-bright:  #F5C563;
+  --flame-dim:     #C48A30;
+
+  /* Text */
+  --text-primary:  #F5EDD6;
+  --text-secondary:#BDB5A4;
+  --text-muted:    #8A8278;
+
+  /* Borders & Dividers */
+  --border-subtle: #2A2520;
+  --border-warm:   #3D352C;
+
+  /* Typography */
+  --font-heading:  'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-body:     'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Spacing Scale */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 50%;
+
+  /* Transitions */
+  --ease-gentle: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-slow: 0.6s var(--ease-gentle);
+  --transition-medium: 0.35s var(--ease-gentle);
+  --transition-fast: 0.2s var(--ease-gentle);
+}
+
+/* --- Reset & Base --- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 300;
+  color: var(--text-primary);
+  background-color: var(--bg-deep);
+  line-height: 1.7;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Ambient radial glow — the "single flame lights the room" effect */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse 50% 40% at 50% 30%,
+    #E8A84708 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Typography --- */
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  color: var(--text-primary);
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+}
+
+h1 {
+  font-size: 2.8rem;
+  font-weight: 300;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+h3 {
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  max-width: 60ch;
+}
+
+a {
+  color: var(--flame);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--flame-bright);
+}
+
+/* --- Utility: Gentle Focus --- */
+:focus-visible {
+  outline: 2px solid var(--flame);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* --- Buttons --- */
+.btn {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  padding: 0.75rem 1.8rem;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-medium);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.btn-primary {
+  background: var(--flame);
+  color: var(--bg-deep);
+}
+
+.btn-primary:hover {
+  background: var(--flame-bright);
+  box-shadow: 0 0 30px var(--flame-glow);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-warm);
+}
+
+.btn-ghost:hover {
+  border-color: var(--flame-dim);
+  color: var(--text-primary);
+  background: var(--bg-card);
+}
+
+/* --- Layout --- */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-2xl) var(--space-lg);
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+}
+
+.page-header h1 {
+  margin-bottom: var(--space-sm);
+}
+
+.page-header .subtitle {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  font-weight: 300;
+}
+
+/* --- Animations --- */
+
+/* Gentle candle flicker */
+@keyframes flicker {
+  0%, 100% { opacity: 1; transform: scale(1) translateY(0); }
+  10% { opacity: 0.92; transform: scale(1.01) translateY(-0.5px); }
+  20% { opacity: 0.97; transform: scale(0.99) translateY(0.3px); }
+  40% { opacity: 0.88; transform: scale(1.02) translateY(-0.8px); }
+  60% { opacity: 0.95; transform: scale(1) translateY(-0.2px); }
+  80% { opacity: 0.9; transform: scale(1.01) translateY(-0.6px); }
+}
+
+/* Soft pulse for loading states */
+@keyframes softPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* Fade in from below */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade in */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in {
+  animation: fadeIn 0.8s var(--ease-gentle) forwards;
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.8s var(--ease-gentle) forwards;
+}
+
+/* Staggered entrance for children */
+.stagger > * {
+  opacity: 0;
+  animation: fadeInUp 0.7s var(--ease-gentle) forwards;
+}
+.stagger > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger > *:nth-child(2) { animation-delay: 0.25s; }
+.stagger > *:nth-child(3) { animation-delay: 0.4s; }
+.stagger > *:nth-child(4) { animation-delay: 0.55s; }
+.stagger > *:nth-child(5) { animation-delay: 0.7s; }
+.stagger > *:nth-child(6) { animation-delay: 0.85s; }
+
+/* --- Scrollbar (quiet) --- */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-warm);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.5rem; }
+  .page { padding: var(--space-xl) var(--space-md); }
+}
+
+@media (max-width: 480px) {
+  h1 { font-size: 1.6rem; }
+  .page { padding: var(--space-lg) var(--space-sm); }
+}

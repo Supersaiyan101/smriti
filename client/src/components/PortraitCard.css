@@ -1,0 +1,95 @@
+/* ============================================
+   PortraitCard — A remembered person
+   ============================================ */
+
+.portrait-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: inherit;
+  transition: all var(--transition-medium);
+  cursor: pointer;
+  width: 200px;
+  position: relative;
+}
+
+.portrait-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-warm);
+  transform: translateY(-4px);
+  box-shadow:
+    0 8px 30px rgba(232, 168, 71, 0.06),
+    0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.portrait-card__frame {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+/* Photo / Avatar */
+.portrait-card__photo {
+  width: 100px;
+  height: 100px;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  border: 2px solid var(--border-warm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-surface);
+  transition: border-color var(--transition-medium);
+}
+
+.portrait-card:hover .portrait-card__photo {
+  border-color: var(--flame-dim);
+}
+
+.portrait-card__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portrait-card__initials {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+/* Flame position */
+.portrait-card__flame {
+  display: flex;
+  justify-content: center;
+}
+
+/* Info */
+.portrait-card__info {
+  text-align: center;
+}
+
+.portrait-card__name {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xs);
+}
+
+.portrait-card__relationship {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin: 0;
+}

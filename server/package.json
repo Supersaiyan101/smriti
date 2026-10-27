@@ -1,0 +1,19 @@
+{
+  "name": "smriti-server",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch --watch-path=routes --watch-path=mastra index.js",
+    "test": "node test/integration.test.mjs && node test/phase3_brain.test.mjs && node test/phase4_voice_letter.test.mjs"
+  },
+  "dependencies": {
+    "@mastra/core": "^1.79.0",
+    "@sentry/node": "^11.9.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.1",
+    "mongodb": "^6.10.0",
+    "multer": "^1.4.5-lts.1"
+  }
+}

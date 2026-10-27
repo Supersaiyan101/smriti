@@ -277,6 +277,18 @@ export default function MemoryInput({
                 value={sensory.weather || ''}
                 onChange={(e) => setSensory({ ...sensory, weather: e.target.value })}
               />
+              <div className="sensory-chips">
+                {['🌧️ Monsoon rain', '🌅 Golden hour sunset', '❄️ Winter morning frost', '☀️ Quiet sunny morning'].map((chip) => (
+                  <button
+                    key={chip}
+                    type="button"
+                    className="sensory-chip-btn"
+                    onClick={() => setSensory({ ...sensory, weather: chip })}
+                  >
+                    {chip}
+                  </button>
+                ))}
+              </div>
             </div>
             <div className="sensory-field">
               <label>☕ Scent / Taste</label>
@@ -286,6 +298,18 @@ export default function MemoryInput({
                 value={sensory.scent || ''}
                 onChange={(e) => setSensory({ ...sensory, scent: e.target.value })}
               />
+              <div className="sensory-chips">
+                {['☕ Cardamom chai', '🪵 Woodsmoke & pine', '🌸 Jasmine & sandalwood', '📖 Old books'].map((chip) => (
+                  <button
+                    key={chip}
+                    type="button"
+                    className="sensory-chip-btn"
+                    onClick={() => setSensory({ ...sensory, scent: chip })}
+                  >
+                    {chip}
+                  </button>
+                ))}
+              </div>
             </div>
             <div className="sensory-field">
               <label>🎵 Song / Ambient Sound</label>
@@ -295,6 +319,18 @@ export default function MemoryInput({
                 value={sensory.song || ''}
                 onChange={(e) => setSensory({ ...sensory, song: e.target.value })}
               />
+              <div className="sensory-chips">
+                {['🎵 Acoustic guitar', '📻 Late night radio', '🎹 Slow piano', '🪕 Classical sarod'].map((chip) => (
+                  <button
+                    key={chip}
+                    type="button"
+                    className="sensory-chip-btn"
+                    onClick={() => setSensory({ ...sensory, song: chip })}
+                  >
+                    {chip}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>

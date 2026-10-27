@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import CandleFlame from '../components/CandleFlame';
 import MemoryInput from '../components/MemoryInput';
@@ -24,10 +24,40 @@ export default function Offering() {
   const [photoFile, setPhotoFile] = useState(null);
   const [sensory, setSensory] = useState({ weather: '', scent: '', song: '' });
   const [timePlace, setTimePlace] = useState({ when: '', where: '' });
+  const [restoredDraftNotice, setRestoredDraftNotice] = useState(false);
 
   // Submission State
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [statusMessage, setStatusMessage] = useState('');
+
+  // Restore draft on mount
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('smriti_offering_draft');
+      if (saved) {
+        const data = JSON.parse(saved);
+        if (data.name || data.textContent) {
+          setName(data.name || '');
+          setRelationship(data.relationship || '');
+          setTextContent(data.textContent || '');
+          if (data.sensory) setSensory(data.sensory);
+          if (data.timePlace) setTimePlace(data.timePlace);
+          setRestoredDraftNotice(true);
+        }
+      }
+    } catch (e) {
+      console.warn('Could not restore draft:', e);
+    }
+  }, []);
+
+  // Quiet auto-save draft
+  useEffect(() => {
+    if (name || relationship || textContent || sensory.weather || sensory.scent || sensory.song || timePlace.when || timePlace.where) {
+      localStorage.setItem('smriti_offering_draft', JSON.stringify({
+        name, relationship, textContent, sensory, timePlace
+      }));
+    }
+  }, [name, relationship, textContent, sensory, timePlace]);
 
   // Handle prompt clicked from Gentle Whispers
   const handleSelectPrompt = (promptText) => {
@@ -112,6 +142,9 @@ export default function Offering() {
       }
 
       setStatusMessage('The flame is burning...');
+      try {
+        localStorage.removeItem('smriti_offering_draft');
+      } catch {}
       setTimeout(() => {
         navigate(`/remember/${profileId}`);
       }, 1000);
@@ -139,6 +172,30 @@ export default function Offering() {
         <p className="subtitle">
           Place someone into the sanctuary. Even one small memory is enough.
         </p>
+
+        {/* Restored Draft Banner */}
+        {restoredDraftNotice && (
+          <div className="offering-draft-banner fade-in">
+            <span>✍️ Restored your previous memory draft</span>
+            <button
+              type="button"
+              className="btn-clear-draft"
+              onClick={() => {
+                try {
+                  localStorage.removeItem('smriti_offering_draft');
+                } catch {}
+                setName('');
+                setRelationship('');
+                setTextContent('');
+                setSensory({ weather: '', scent: '', song: '' });
+                setTimePlace({ when: '', where: '' });
+                setRestoredDraftNotice(false);
+              }}
+            >
+              Start Fresh
+            </button>
+          </div>
+        )}
       </header>
 
       {/* Main Form */}

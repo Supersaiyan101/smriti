@@ -304,6 +304,30 @@
   border-color: var(--flame);
 }
 
+.sensory-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.sensory-chip-btn {
+  background: rgba(232, 168, 71, 0.08);
+  border: 1px solid rgba(232, 168, 71, 0.2);
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.sensory-chip-btn:hover {
+  background: rgba(232, 168, 71, 0.2);
+  border-color: var(--flame);
+  color: var(--flame-bright);
+}
+
 @media (max-width: 600px) {
   .journal-pinning-row {
     grid-template-columns: 1fr;

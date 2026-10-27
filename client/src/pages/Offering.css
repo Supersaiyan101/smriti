@@ -114,6 +114,33 @@
   margin-top: var(--space-sm);
 }
 
+.offering-draft-banner {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-md);
+  background: rgba(232, 168, 71, 0.12);
+  border: 1px dashed var(--border-warm);
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-full);
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--flame-bright);
+}
+
+.btn-clear-draft {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.btn-clear-draft:hover {
+  color: #e84747;
+}
+
 @media (max-width: 600px) {
   .offering-section {
     padding: var(--space-lg);

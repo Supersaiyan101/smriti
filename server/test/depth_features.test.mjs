@@ -111,6 +111,72 @@ async function runDepthTests() {
     throw new Error('Could not retrieve sealed letters for profile');
   }
 
+  // 5. Add Memory Reel Slide (Photo + Story + When/Where)
+  console.log('5. Adding a Memory Reel slide with photo story...');
+  const reelRes = await request({
+    host: 'localhost',
+    port: 3001,
+    path: '/api/memories/reel',
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+  }, {
+    profileId,
+    title: 'Rainy Twilight on the Veranda',
+    story: 'Kabir always watered his tulsi plant at twilight. We sat on the wicker chairs while the rain poured down from the eaves.',
+    mediaUrl: '/uploads/sample_photo.jpg',
+    timePlace: { when: 'July 2018', where: 'Varanasi' },
+    order: 1,
+  });
+
+  console.log('   Memory Reel slide status:', reelRes.status);
+  console.log('   Saved slide title:', reelRes.body.slide.sourceLabel);
+
+  if (reelRes.status !== 201 || !reelRes.body.slide.isReelSlide) {
+    throw new Error('Failed to create Memory Reel slide');
+  }
+
+  // 6. Set Memory Reel Soundtrack (Spotify Wrapped-style soundtrack)
+  console.log('6. Setting Memory Reel soundtrack...');
+  const trackRes = await request({
+    host: 'localhost',
+    port: 3001,
+    path: '/api/memories/reel/soundtrack',
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+  }, {
+    profileId,
+    title: 'Raag Bhairavi on Sarod',
+    presetType: 'classical_sarod',
+  });
+
+  console.log('   Soundtrack status:', trackRes.status);
+  console.log('   Soundtrack Title:', trackRes.body.soundtrack.title);
+
+  // 7. Retrieve full Memory Reel
+  console.log('7. Retrieving full Memory Reel (slides + soundtrack)...');
+  const getReelRes = await request({
+    host: 'localhost',
+    port: 3001,
+    path: `/api/memories/reel/${profileId}`,
+    method: 'GET',
+  });
+
+  console.log('   Retrieved slides count:', getReelRes.body.slides.length);
+  console.log('   Retrieved soundtrack title:', getReelRes.body.soundtrack?.title);
+
+  if (getReelRes.body.slides.length === 0 || getReelRes.body.soundtrack?.title !== 'Raag Bhairavi on Sarod') {
+    throw new Error('Memory Reel retrieval failed');
+  }
+
+  // 8. Clean up test profile to keep database hygiene
+  console.log('8. Cleaning up test profile for database hygiene...');
+  await request({
+    host: 'localhost',
+    port: 3001,
+    path: `/api/profiles/${profileId}`,
+    method: 'DELETE',
+  });
+
   console.log('\n[Smriti Depth Features Test] ALL DEPTH TESTS PASSED (100% OK)');
 }
 

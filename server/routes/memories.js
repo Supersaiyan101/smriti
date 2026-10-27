@@ -4,6 +4,93 @@ import { upload } from '../middleware/upload.js';
 
 const router = express.Router();
 
+// GET memory reel slides for a profile (must be defined before /:profileId)
+router.get('/reel/:profileId', async (req, res) => {
+  try {
+    const data = await dbService.getReelByProfile(req.params.profileId);
+    res.json({ success: true, slides: data.slides, soundtrack: data.soundtrack });
+  } catch (err) {
+    console.error('[Memory Reel GET Error]', err);
+    res.status(500).json({ success: false, error: 'Could not fetch memory reel' });
+  }
+});
+
+// POST upload or configure a soundtrack for the Memory Reel
+router.post('/reel/soundtrack', upload.single('soundtrack'), async (req, res) => {
+  try {
+    const { profileId, title, presetType } = req.body;
+    if (!profileId) {
+      return res.status(400).json({ success: false, error: 'Profile ID is required' });
+    }
+
+    let audioUrl = null;
+    if (req.file) {
+      audioUrl = `/uploads/${req.file.filename}`;
+    }
+
+    const soundtrack = {
+      title: title || (presetType ? `Sanctuary: ${presetType}` : 'Their Favorite Song'),
+      url: audioUrl || req.body.url || null,
+      presetType: presetType || (audioUrl ? 'upload' : 'ambient'),
+      updatedAt: new Date().toISOString(),
+    };
+
+    await dbService.setReelSoundtrack(profileId, soundtrack);
+    res.json({ success: true, soundtrack });
+  } catch (err) {
+    console.error('[Memory Reel Soundtrack POST Error]', err);
+    res.status(500).json({ success: false, error: 'Could not save reel soundtrack' });
+  }
+});
+
+// POST add a dedicated slide to the Memory Reel (photo + heartfelt story + time/place)
+router.post('/reel', upload.single('media'), async (req, res) => {
+  try {
+    const { profileId, story, content, title, sourceLabel, order } = req.body;
+
+    if (!profileId) {
+      return res.status(400).json({ success: false, error: 'Profile ID is required' });
+    }
+
+    let mediaUrl = req.body.mediaUrl || null;
+    if (req.file) {
+      mediaUrl = `/uploads/${req.file.filename}`;
+    }
+
+    if (!mediaUrl) {
+      return res.status(400).json({ success: false, error: 'A photograph is required for the Memory Reel' });
+    }
+
+    let timePlace = null;
+    if (req.body.timePlace) {
+      try {
+        timePlace = typeof req.body.timePlace === 'string' ? JSON.parse(req.body.timePlace) : req.body.timePlace;
+      } catch (e) {
+        timePlace = null;
+      }
+    }
+
+    const slideContent = story || content || 'A cherished photograph in the Memory Reel.';
+    const slideLabel = title || sourceLabel || 'Memory Reel Moment';
+
+    const memory = await dbService.addMemory({
+      profileId,
+      type: 'photo',
+      content: slideContent,
+      mediaUrl,
+      sourceLabel: slideLabel,
+      timePlace,
+      isReelSlide: true,
+      order: parseInt(order, 10) || 0,
+    });
+
+    res.status(201).json({ success: true, slide: memory });
+  } catch (err) {
+    console.error('[Memory Reel POST Error]', err);
+    res.status(500).json({ success: false, error: 'Could not save memory reel slide' });
+  }
+});
+
 // GET memories for a profile
 router.get('/:profileId', async (req, res) => {
   try {
@@ -18,7 +105,7 @@ router.get('/:profileId', async (req, res) => {
 // POST add memory fragment (text, audio file, or photo)
 router.post('/', upload.single('media'), async (req, res) => {
   try {
-    const { profileId, type, content, sourceLabel } = req.body;
+    const { profileId, type, content, sourceLabel, isReelSlide, order } = req.body;
 
     if (!profileId) {
       return res.status(400).json({ success: false, error: 'Profile ID is required' });
@@ -58,12 +145,51 @@ router.post('/', upload.single('media'), async (req, res) => {
       sourceLabel: sourceLabel || undefined,
       sensory,
       timePlace,
+      isReelSlide: !!isReelSlide,
+      order: parseInt(order, 10) || 0,
     });
 
     res.status(201).json({ success: true, memory });
   } catch (err) {
     console.error('[Memory POST Error]', err);
     res.status(500).json({ success: false, error: 'Could not save memory fragment' });
+  }
+});
+
+// PUT update a memory fragment
+router.put('/:id', async (req, res) => {
+  try {
+    const { content, sourceLabel, timePlace, order } = req.body;
+    const updates = {};
+    if (content !== undefined) updates.content = content;
+    if (sourceLabel !== undefined) updates.sourceLabel = sourceLabel;
+    if (timePlace !== undefined) updates.timePlace = timePlace;
+    if (order !== undefined) updates.order = order;
+
+    const updated = await dbService.updateMemory(req.params.id, updates);
+    if (!updated) {
+      return res.status(404).json({ success: false, error: 'Memory not found' });
+    }
+
+    res.json({ success: true, memory: updated });
+  } catch (err) {
+    console.error('[Memory PUT Error]', err);
+    res.status(500).json({ success: false, error: 'Could not update memory' });
+  }
+});
+
+// DELETE quietly remove a memory fragment from the altar
+router.delete('/:id', async (req, res) => {
+  try {
+    const deleted = await dbService.deleteMemory(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ success: false, error: 'Memory not found' });
+    }
+
+    res.json({ success: true, message: 'Memory quietly removed' });
+  } catch (err) {
+    console.error('[Memory DELETE Error]', err);
+    res.status(500).json({ success: false, error: 'Could not delete memory' });
   }
 });
 

@@ -138,7 +138,7 @@ export const dbService = {
   },
 
   // --- Memories ---
-  async addMemory({ profileId, type, content, mediaUrl = null, sourceLabel = null, sensory = null, timePlace = null }) {
+  async addMemory({ profileId, type, content, mediaUrl = null, sourceLabel = null, sensory = null, timePlace = null, isReelSlide = false, order = 0 }) {
     await connectDB();
     const parts = [content];
     if (timePlace?.when) parts.push(`When: ${timePlace.when}`);
@@ -157,6 +157,8 @@ export const dbService = {
       sourceLabel: sourceLabel || (type === 'voice' ? 'Voice fragment' : 'Memory fragment'),
       sensory: sensory || null, // { weather, scent, song }
       timePlace: timePlace || null, // { when, where }
+      isReelSlide: !!isReelSlide,
+      order: typeof order === 'number' ? order : 0,
       embedding,
       createdAt: new Date().toISOString(),
     };
@@ -183,6 +185,118 @@ export const dbService = {
     } else {
       const local = readLocalDb();
       return local.memories.filter(m => m.profileId === pid);
+    }
+  },
+
+  async getReelByProfile(profileId) {
+    await connectDB();
+    const pid = profileId.toString();
+    const profile = await this.getProfileById(pid);
+    const soundtrack = profile?.soundtrack || null;
+
+    if (isConnectedToAtlas && db) {
+      const docs = await db.collection('memories').find({
+        profileId: pid,
+        $or: [
+          { isReelSlide: true },
+          { type: 'photo', mediaUrl: { $ne: null } }
+        ]
+      }).sort({ order: 1, createdAt: 1 }).toArray();
+      return {
+        slides: docs.map(d => ({ ...d, _id: d._id.toString() })),
+        soundtrack,
+      };
+    } else {
+      const local = readLocalDb();
+      const filtered = local.memories.filter(m =>
+        m.profileId === pid && (m.isReelSlide || (m.type === 'photo' && m.mediaUrl))
+      );
+      return {
+        slides: filtered.sort((a, b) => (a.order || 0) - (b.order || 0)),
+        soundtrack,
+      };
+    }
+  },
+
+  async setReelSoundtrack(profileId, soundtrack) {
+    await connectDB();
+    const pid = profileId.toString();
+    if (isConnectedToAtlas && db) {
+      let query;
+      try { query = { _id: new ObjectId(pid) }; } catch { query = { _id: pid }; }
+      await db.collection('profiles').updateOne(query, { $set: { soundtrack } });
+      return soundtrack;
+    } else {
+      const local = readLocalDb();
+      const p = local.profiles.find(p => p._id === pid);
+      if (p) {
+        p.soundtrack = soundtrack;
+        writeLocalDb(local);
+      }
+      return soundtrack;
+    }
+  },
+
+  async deleteProfile(id) {
+    await connectDB();
+    const pid = id.toString();
+    if (isConnectedToAtlas && db) {
+      let query;
+      try { query = { _id: new ObjectId(pid) }; } catch { query = { _id: pid }; }
+      await db.collection('profiles').deleteOne(query);
+      await db.collection('memories').deleteMany({ profileId: pid });
+      await db.collection('lettersToThem').deleteMany({ profileId: pid });
+      return true;
+    } else {
+      const local = readLocalDb();
+      const idx = local.profiles.findIndex(p => p._id === pid);
+      if (idx !== -1) {
+        local.profiles.splice(idx, 1);
+        local.memories = local.memories.filter(m => m.profileId !== pid);
+        local.lettersToThem = (local.lettersToThem || []).filter(l => l.profileId !== pid);
+        writeLocalDb(local);
+        return true;
+      }
+      return false;
+    }
+  },
+
+  async updateMemory(id, updates) {
+    await connectDB();
+    if (isConnectedToAtlas && db) {
+      let query;
+      try { query = { _id: new ObjectId(id) }; } catch { query = { _id: id }; }
+      await db.collection('memories').updateOne(query, { $set: updates });
+      const updated = await db.collection('memories').findOne(query);
+      return updated ? { ...updated, _id: updated._id.toString() } : null;
+    } else {
+      const local = readLocalDb();
+      const mem = local.memories.find(m => m._id === id);
+      if (mem) {
+        Object.assign(mem, updates);
+        writeLocalDb(local);
+        return mem;
+      }
+      return null;
+    }
+  },
+
+  async deleteMemory(id) {
+    await connectDB();
+    if (isConnectedToAtlas && db) {
+      let query;
+      try { query = { _id: new ObjectId(id) }; } catch { query = { _id: id }; }
+      const res = await db.collection('memories').deleteOne(query);
+      return res.deletedCount > 0;
+    } else {
+      const local = readLocalDb();
+      const idx = local.memories.findIndex(m => m._id === id);
+      if (idx !== -1) {
+        local.memories.splice(idx, 1);
+        writeLocalDb(local);
+        return true;
+      }
+      return false;
     }
   },
 

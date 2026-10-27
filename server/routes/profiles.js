@@ -56,4 +56,18 @@ router.post('/', upload.single('photo'), async (req, res) => {
   }
 });
 
+// DELETE remove profile and all associated memories
+router.delete('/:id', async (req, res) => {
+  try {
+    const deleted = await dbService.deleteProfile(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ success: false, error: 'Profile not found' });
+    }
+    res.json({ success: true, message: 'Profile and associated memories quietly removed' });
+  } catch (err) {
+    console.error('[Profile DELETE Error]', err);
+    res.status(500).json({ success: false, error: 'Could not delete profile' });
+  }
+});
+
 export default router;

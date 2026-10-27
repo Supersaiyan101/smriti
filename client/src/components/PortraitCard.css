@@ -1,5 +1,6 @@
 /* ============================================
    PortraitCard — A remembered person
+   Archival Heirloom Bezel with Candlelight Reflection
    ============================================ */
 
 .portrait-card {
@@ -7,25 +8,27 @@
   flex-direction: column;
   align-items: center;
   gap: var(--space-md);
-  padding: var(--space-lg);
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
+  padding: 1.5rem 1.25rem 1.75rem;
+  background: linear-gradient(180deg, #16120F 0%, #120D0A 100%);
+  border: 1px solid rgba(232, 168, 71, 0.15);
   border-radius: var(--radius-lg);
   text-decoration: none;
   color: inherit;
   transition: all var(--transition-medium);
   cursor: pointer;
-  width: 200px;
+  width: 210px;
   position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }
 
 .portrait-card:hover {
-  background: var(--bg-card-hover);
-  border-color: var(--border-warm);
+  background: linear-gradient(180deg, #1C1612 0%, #140E0A 100%);
+  border-color: rgba(232, 168, 71, 0.35);
   transform: translateY(-4px);
   box-shadow:
-    0 8px 30px rgba(232, 168, 71, 0.06),
-    0 2px 8px rgba(0, 0, 0, 0.3);
+    0 12px 36px rgba(0, 0, 0, 0.6),
+    0 0 24px rgba(232, 168, 71, 0.12),
+    inset 0 1px 0 rgba(232, 168, 71, 0.2);
 }
 
 .portrait-card__frame {
@@ -36,60 +39,107 @@
   gap: var(--space-sm);
 }
 
-/* Photo / Avatar */
+/* Photo / Avatar — Archival Heirloom Bezel */
 .portrait-card__photo {
-  width: 100px;
-  height: 100px;
+  width: 104px;
+  height: 104px;
   border-radius: var(--radius-full);
   overflow: hidden;
-  border: 2px solid var(--border-warm);
+  position: relative;
+  /* Multi-ring burnished brass & dark walnut rim */
+  box-shadow:
+    0 0 0 1px rgba(232, 168, 71, 0.3),
+    0 0 0 3px #18120E,
+    0 0 0 4px rgba(232, 168, 71, 0.18),
+    0 4px 16px rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg-surface);
-  transition: border-color var(--transition-medium);
+  background: radial-gradient(circle at center, #231B15 0%, #15100C 100%);
+  transition: all var(--transition-medium);
 }
 
 .portrait-card:hover .portrait-card__photo {
-  border-color: var(--flame-dim);
+  box-shadow:
+    0 0 0 1px rgba(232, 168, 71, 0.5),
+    0 0 0 3px #1F1712,
+    0 0 0 5px rgba(232, 168, 71, 0.3),
+    0 6px 22px rgba(232, 168, 71, 0.15);
 }
 
 .portrait-card__photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  filter: contrast(1.02) brightness(0.96);
+  transition: transform var(--transition-medium), filter var(--transition-medium);
+}
+
+.portrait-card:hover .portrait-card__photo img {
+  filter: contrast(1.05) brightness(1);
+  transform: scale(1.03);
+}
+
+/* Candlelight bounce reflection on portrait glass */
+.portrait-card__glass-reflection {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 50% 115%,
+    rgba(232, 168, 71, 0.22) 0%,
+    rgba(245, 197, 99, 0.08) 35%,
+    transparent 65%
+  );
+  mix-blend-mode: screen;
+  transition: background var(--transition-medium);
+}
+
+.portrait-card:hover .portrait-card__glass-reflection {
+  background: radial-gradient(
+    circle at 50% 115%,
+    rgba(232, 168, 71, 0.34) 0%,
+    rgba(245, 197, 99, 0.14) 40%,
+    transparent 70%
+  );
 }
 
 .portrait-card__initials {
   font-family: var(--font-heading);
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: 400;
-  color: var(--text-muted);
+  color: var(--flame-gold);
   letter-spacing: 0.05em;
+  opacity: 0.85;
 }
 
 /* Flame position */
 .portrait-card__flame {
   display: flex;
   justify-content: center;
+  margin-top: 2px;
 }
 
 /* Info */
 .portrait-card__info {
   text-align: center;
+  padding: 0 var(--space-xs);
 }
 
 .portrait-card__name {
   font-family: var(--font-heading);
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   font-weight: 500;
   color: var(--text-primary);
-  margin-bottom: var(--space-xs);
+  margin-bottom: 3px;
+  letter-spacing: 0.02em;
 }
 
 .portrait-card__relationship {
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   color: var(--text-muted);
   font-style: italic;
+  font-family: var(--font-serif);
   margin: 0;
+  letter-spacing: 0.02em;
 }

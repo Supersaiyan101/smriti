@@ -4,7 +4,7 @@ import './PortraitCard.css';
 
 /**
  * PortraitCard — A single remembered person on the Sanctuary shelf.
- * Shows their photo (or initials), name, relationship, and a living flame.
+ * Encased in an archival heirloom bezel with warm candlelight reflection.
  * 
  * @param {Object} props
  * @param {string} props.id - Profile ID
@@ -24,13 +24,15 @@ export default function PortraitCard({ id, name, relationship, photoUrl }) {
   return (
     <Link to={`/remember/${id}`} className="portrait-card" aria-label={`Remember ${name}`}>
       <div className="portrait-card__frame">
-        {/* Photo or initials fallback */}
+        {/* Archival heirloom bezel */}
         <div className="portrait-card__photo">
           {photoUrl ? (
             <img src={photoUrl} alt={name} loading="lazy" />
           ) : (
             <span className="portrait-card__initials">{initials}</span>
           )}
+          {/* Candlelight bounce reflection on glass */}
+          <div className="portrait-card__glass-reflection" aria-hidden="true" />
         </div>
 
         {/* The living flame */}

@@ -1,5 +1,5 @@
 /* ============================================
-   CandleFlame — Animated living flame
+   CandleFlame — Animated living flame & embers
    ============================================ */
 
 .candle-flame {
@@ -10,18 +10,29 @@
   justify-content: flex-end;
 }
 
+/* Living Canvas Embers floating up from flame into the dark */
+.candle-flame__canvas {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 3;
+}
+
 /* Ambient glow — soft circle of light beneath/around the flame */
 .candle-flame__glow {
   position: absolute;
   bottom: -4px;
   left: 50%;
   transform: translateX(-50%);
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   background: radial-gradient(
     circle,
     var(--flame-glow) 0%,
-    transparent 70%
+    rgba(232, 168, 71, 0.12) 40%,
+    transparent 75%
   );
   border-radius: var(--radius-full);
   animation: softPulse 3s ease-in-out infinite;
@@ -29,39 +40,43 @@
 }
 
 .candle-flame--sm .candle-flame__glow {
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
 }
 
 .candle-flame--lg .candle-flame__glow {
-  width: 60px;
-  height: 60px;
+  width: 76px;
+  height: 76px;
 }
 
-/* The SVG flame itself — flickering */
+/* The SVG flame itself — flickering & reactive to air drafts */
 .candle-flame__svg {
   animation: flicker 3s ease-in-out infinite;
   filter: drop-shadow(0 0 6px var(--flame-glow));
-  transform-origin: bottom center;
+  transform-origin: 50% 90%;
+  transition: transform 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+  z-index: 2;
 }
 
 .candle-flame--lg .candle-flame__svg {
-  filter: drop-shadow(0 0 12px var(--flame-glow));
+  filter: drop-shadow(0 0 14px var(--flame-glow)) drop-shadow(0 0 4px rgba(255, 248, 231, 0.4));
 }
 
 /* Inner flame gets a slightly different flicker timing */
 .candle-flame__inner {
   animation: flicker 2.4s ease-in-out infinite reverse;
-  transform-origin: bottom center;
+  transform-origin: 50% 90%;
 }
 
 /* Wick */
 .candle-flame__wick {
   width: 2px;
   height: 6px;
-  background: var(--border-warm);
+  background: #3A2E28;
   border-radius: 1px;
   margin-top: -2px;
+  z-index: 1;
 }
 
 .candle-flame--sm .candle-flame__wick {

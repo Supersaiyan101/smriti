@@ -3,13 +3,16 @@ import './AmbientSoundscape.css';
 
 /**
  * AmbientSoundscape — Generative Web Audio API soundscape generator.
- * Zero external audio downloads; procedural soothing acoustic sanctuary presence.
- * Modes: Rain on Window, Night Breeze, Warm Tape Hiss, or Silent.
+ * Features:
+ *  - Studio Audio Ducking (automatically ducks volume by 65% when VoicePlayer speaks)
+ *  - Procedural pink/brown noise rain, breeze, and warm tape hiss
+ *  - Zero external assets or bandwidth consumed
  */
 export default function AmbientSoundscape() {
   const [mode, setMode] = useState('off'); // 'off' | 'rain' | 'breeze' | 'tape'
   const [volume, setVolume] = useState(0.25);
   const [isOpen, setIsOpen] = useState(false);
+  const [isDucked, setIsDucked] = useState(false);
 
   const audioCtxRef = useRef(null);
   const gainNodeRef = useRef(null);
@@ -25,16 +28,31 @@ export default function AmbientSoundscape() {
     };
   }, []);
 
-  // Update volume
+  // Studio Audio Ducking Listener: ducks when voice speaks, swells back when finished
+  useEffect(() => {
+    const handleVoiceState = (e) => {
+      setIsDucked(!!e.detail?.isPlaying);
+    };
+
+    window.addEventListener('smriti-voice-playing', handleVoiceState);
+    return () => window.removeEventListener('smriti-voice-playing', handleVoiceState);
+  }, []);
+
+  // Update volume with smooth crossfades and ducking support
   useEffect(() => {
     if (gainNodeRef.current && audioCtxRef.current) {
+      const baseVol = mode === 'off' ? 0 : volume;
+      // Duck by ~65% when voice is active
+      const targetGain = isDucked ? baseVol * 0.32 : baseVol;
+      const rampTime = isDucked ? 0.25 : 0.8; // Duck promptly, swell back softly
+
       gainNodeRef.current.gain.setTargetAtTime(
-        mode === 'off' ? 0 : volume,
+        targetGain,
         audioCtxRef.current.currentTime,
-        0.05
+        rampTime
       );
     }
-  }, [volume, mode]);
+  }, [volume, mode, isDucked]);
 
   const initContext = () => {
     if (!audioCtxRef.current) {
@@ -151,14 +169,16 @@ export default function AmbientSoundscape() {
     <div className="ambient-soundscape">
       <button
         type="button"
-        className={`ambient-toggle-btn ${mode !== 'off' ? 'ambient-toggle-btn--active' : ''}`}
+        className={`ambient-toggle-btn ${mode !== 'off' ? 'ambient-toggle-btn--active' : ''} ${isDucked ? 'ambient-toggle-btn--ducked' : ''}`}
         onClick={() => setIsOpen(!isOpen)}
         title="Sanctuary Ambient Audio"
       >
         <span className="ambient-icon">
           {mode === 'off' ? '🔇' : mode === 'rain' ? '🌧️' : mode === 'breeze' ? '🌙' : '📻'}
         </span>
-        <span className="ambient-label">{mode === 'off' ? 'Quiet Room' : modeLabels[mode]}</span>
+        <span className="ambient-label">
+          {mode === 'off' ? 'Quiet Room' : isDucked ? `${modeLabels[mode]} (Ducked)` : modeLabels[mode]}
+        </span>
       </button>
 
       {isOpen && (
@@ -175,7 +195,7 @@ export default function AmbientSoundscape() {
           </div>
 
           <p className="popover-hint">
-            Gentle acoustic presence for sitting quietly with memories.
+            Gentle acoustic presence for sitting quietly with memories. Automatically ducks when voice speaks.
           </p>
 
           <div className="ambient-modes">
@@ -221,6 +241,12 @@ export default function AmbientSoundscape() {
                 onChange={(e) => setVolume(parseFloat(e.target.value))}
                 className="ambient-slider"
               />
+            </div>
+          )}
+
+          {isDucked && mode !== 'off' && (
+            <div className="ambient-ducking-indicator">
+              <span>✦ Studio ducking active for spoken voice</span>
             </div>
           )}
         </div>

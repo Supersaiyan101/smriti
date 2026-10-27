@@ -3,8 +3,10 @@ import './VoicePlayer.css';
 
 /**
  * VoicePlayer — Screen-off audio listener component.
- * Streams speech from ElevenLabs TTS or falls back smoothly
- * to gentle native speech synthesis.
+ * Features:
+ *  - Studio Audio Ducking (dispatches 'smriti-voice-playing' event)
+ *  - Analog Warmth Filter (gentle lowpass at 6800Hz + vocal presence boost)
+ *  - Streams speech from ElevenLabs TTS or falls back to Web Speech API
  * 
  * @param {Object} props
  * @param {string} props.text - The remembrance response to read aloud
@@ -16,6 +18,18 @@ export default function VoicePlayer({ text }) {
 
   const audioRef = useRef(null);
   const utteranceRef = useRef(null);
+  const voiceAudioCtxRef = useRef(null);
+  const audioSourceNodeRef = useRef(null);
+
+  // Broadcast voice state to ambient soundscape for studio ducking
+  const notifyVoiceState = (playing) => {
+    setIsPlaying(playing);
+    try {
+      window.dispatchEvent(
+        new CustomEvent('smriti-voice-playing', { detail: { isPlaying: playing } })
+      );
+    } catch {}
+  };
 
   // Stop playback on unmount or when text changes
   useEffect(() => {
@@ -32,7 +46,43 @@ export default function VoicePlayer({ text }) {
     if (window.speechSynthesis && window.speechSynthesis.speaking) {
       window.speechSynthesis.cancel();
     }
-    setIsPlaying(false);
+    notifyVoiceState(false);
+  };
+
+  // Route HTML5 audio through Web Audio API analog warmth filter
+  const applyAnalogWarmth = (audioEl) => {
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (AudioCtx) {
+        if (!voiceAudioCtxRef.current) {
+          voiceAudioCtxRef.current = new AudioCtx();
+        }
+        const ctx = voiceAudioCtxRef.current;
+        if (ctx.state === 'suspended') ctx.resume();
+
+        if (!audioSourceNodeRef.current) {
+          const source = ctx.createMediaElementSource(audioEl);
+
+          // Low-pass filter at 6800Hz removes digital harshness / sibilance
+          const lowPass = ctx.createBiquadFilter();
+          lowPass.type = 'lowpass';
+          lowPass.frequency.setValueAtTime(6800, ctx.currentTime);
+
+          // Vocal warmth boost around 2400Hz
+          const warmth = ctx.createBiquadFilter();
+          warmth.type = 'peaking';
+          warmth.frequency.setValueAtTime(2400, ctx.currentTime);
+          warmth.gain.setValueAtTime(1.5, ctx.currentTime);
+
+          source.connect(warmth);
+          warmth.connect(lowPass);
+          lowPass.connect(ctx.destination);
+          audioSourceNodeRef.current = source;
+        }
+      }
+    } catch {
+      // In case element is already connected or browser restricts
+    }
   };
 
   const handleTogglePlay = async () => {
@@ -41,13 +91,14 @@ export default function VoicePlayer({ text }) {
       return;
     }
 
-    // If we already have the ElevenLabs audio blob, resume playback
+    // If we already have the ElevenLabs audio element, resume playback
     if (audioRef.current && audioUrl) {
       try {
+        applyAnalogWarmth(audioRef.current);
         await audioRef.current.play();
-        setIsPlaying(true);
+        notifyVoiceState(true);
       } catch (e) {
-        console.warn('Audio play error:', e);
+        console.warn('Audio resume error:', e);
       }
       return;
     }
@@ -73,15 +124,16 @@ export default function VoicePlayer({ text }) {
         audioRef.current = audio;
 
         audio.onended = () => {
-          setIsPlaying(false);
+          notifyVoiceState(false);
         };
         audio.onerror = () => {
-          setIsPlaying(false);
+          notifyVoiceState(false);
           setIsLoading(false);
         };
 
+        applyAnalogWarmth(audio);
         await audio.play();
-        setIsPlaying(true);
+        notifyVoiceState(true);
       } else {
         // Fallback: Web Speech API
         const data = await res.json();
@@ -92,16 +144,23 @@ export default function VoicePlayer({ text }) {
 
           const utterance = new SpeechSynthesisUtterance(cleanText);
           utterance.rate = 0.88; // Gentle, calm pacing
-          utterance.pitch = 0.95; // Warm, dignified pitch
+          utterance.pitch = 0.94; // Warm, thoughtful pitch
 
           // Pick natural English voice if available
           const voices = window.speechSynthesis.getVoices();
-          const warmVoice = voices.find(v => v.lang.startsWith('en') && (v.name.includes('Natural') || v.name.includes('Samantha') || v.name.includes('Serena')));
+          const warmVoice = voices.find(
+            (v) =>
+              v.lang.startsWith('en') &&
+              (v.name.includes('Natural') ||
+                v.name.includes('Samantha') ||
+                v.name.includes('Serena') ||
+                v.name.includes('Google UK English Female'))
+          );
           if (warmVoice) utterance.voice = warmVoice;
 
-          utterance.onstart = () => setIsPlaying(true);
-          utterance.onend = () => setIsPlaying(false);
-          utterance.onerror = () => setIsPlaying(false);
+          utterance.onstart = () => notifyVoiceState(true);
+          utterance.onend = () => notifyVoiceState(false);
+          utterance.onerror = () => notifyVoiceState(false);
 
           utteranceRef.current = utterance;
           window.speechSynthesis.speak(utterance);
@@ -145,7 +204,7 @@ export default function VoicePlayer({ text }) {
           <span className="voice-wave__bar bar-3" />
           <span className="voice-wave__bar bar-4" />
           <span className="voice-wave__bar bar-5" />
-          <span className="voice-wave__hint">Sit quietly and listen</span>
+          <span className="voice-wave__hint">Analog warmth active • Ambient ducked</span>
         </div>
       )}
     </div>

@@ -9,6 +9,7 @@ import memoriesRouter from './routes/memories.js';
 import converseRouter from './routes/converse.js';
 import voiceRouter from './routes/voice.js';
 import letterRouter from './routes/letter.js';
+import lettersToThemRouter from './routes/lettersToThem.js';
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ app.use('/api/memories', memoriesRouter);
 app.use('/api/converse', converseRouter);
 app.use('/api/voice', voiceRouter);
 app.use('/api/letter', letterRouter);
+app.use('/api/letters-to-them', lettersToThemRouter);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

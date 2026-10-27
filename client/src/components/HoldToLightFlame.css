@@ -1,0 +1,123 @@
+/* ============================================
+   HoldToLightFlame — Sacred Lighting Ritual
+   ============================================ */
+
+.hold-flame-wrapper {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hold-flame-btn {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-lg);
+  padding: 0.9rem 2.2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-md);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  transition: all var(--transition-medium);
+  overflow: hidden;
+}
+
+.hold-flame-btn:hover:not(:disabled) {
+  background: var(--bg-card-hover);
+  border-color: var(--flame-dim);
+  box-shadow: 0 0 25px rgba(232, 168, 71, 0.1);
+}
+
+.is-holding .hold-flame-btn {
+  border-color: var(--flame);
+  transform: scale(0.98);
+  box-shadow: 0 0 35px var(--flame-glow);
+}
+
+.is-lit .hold-flame-btn {
+  border-color: var(--flame-bright);
+  background: rgba(232, 168, 71, 0.15);
+  box-shadow: 0 0 45px var(--flame-glow);
+}
+
+/* SVG Progress Ring */
+.hold-flame-ring {
+  position: absolute;
+  left: 12px;
+  width: 44px;
+  height: 44px;
+  transform: rotate(-90deg);
+  pointer-events: none;
+}
+
+.ring-bg {
+  fill: none;
+  stroke: var(--border-subtle);
+  stroke-width: 4;
+}
+
+.ring-fill {
+  fill: none;
+  stroke: var(--flame-bright);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 276.46;
+  transition: stroke-dashoffset 0.05s linear;
+}
+
+.hold-flame-center {
+  margin-left: 2px;
+}
+
+.hold-flame-texts {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.hold-flame-title {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.hold-flame-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.is-holding .hold-flame-hint {
+  color: var(--flame-bright);
+}
+
+/* Ignition Flare Animation */
+.ignition-flare {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(
+    circle,
+    rgba(245, 197, 99, 0.8) 0%,
+    rgba(232, 168, 71, 0.4) 40%,
+    transparent 80%
+  );
+  border-radius: var(--radius-full);
+  animation: flareBurst 1.2s ease-out forwards;
+  pointer-events: none;
+  z-index: 20;
+}
+
+@keyframes flareBurst {
+  0% { transform: translate(-50%, -50%) scale(0.2); opacity: 0; }
+  40% { transform: translate(-50%, -50%) scale(2.4); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(3.5); opacity: 0; }
+}

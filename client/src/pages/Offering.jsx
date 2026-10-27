@@ -3,13 +3,15 @@ import { useNavigate, Link } from 'react-router-dom';
 import CandleFlame from '../components/CandleFlame';
 import MemoryInput from '../components/MemoryInput';
 import GentleWhispers from '../components/GentleWhispers';
+import HoldToLightFlame from '../components/HoldToLightFlame';
+import AmbientSoundscape from '../components/AmbientSoundscape';
 import './Offering.css';
 
 /**
  * Offering — The quiet 3-step form to remember someone.
  * 1. Name & relationship
- * 2. Memories (text / voice / photo + Gentle Whispers)
- * 3. Light their flame
+ * 2. Memories (text / voice / photo + sensory anchors + Gentle Whispers)
+ * 3. Hold-to-light ceremony
  */
 export default function Offering() {
   const navigate = useNavigate();
@@ -20,6 +22,7 @@ export default function Offering() {
   const [textContent, setTextContent] = useState('');
   const [audioBlob, setAudioBlob] = useState(null);
   const [photoFile, setPhotoFile] = useState(null);
+  const [sensory, setSensory] = useState({ weather: '', scent: '', song: '' });
 
   // Submission State
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -33,10 +36,9 @@ export default function Offering() {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleIgnited = async () => {
     if (!name.trim()) {
-      alert('Please enter their name.');
+      alert('Please enter their name before lighting the flame.');
       return;
     }
 
@@ -64,6 +66,10 @@ export default function Offering() {
 
       const profileId = profileData.profile._id;
 
+      // Clean sensory object
+      const hasSensory = sensory.weather || sensory.scent || sensory.song;
+      const sensoryPayload = hasSensory ? sensory : null;
+
       // Step 2: Upload Memory Fragments (if provided)
       if (textContent.trim()) {
         setStatusMessage('Preserving written words...');
@@ -75,6 +81,7 @@ export default function Offering() {
             type: 'text',
             content: textContent.trim(),
             sourceLabel: 'Written memory',
+            sensory: sensoryPayload,
           }),
         });
       }
@@ -86,6 +93,9 @@ export default function Offering() {
         audioFormData.append('type', 'voice');
         audioFormData.append('media', audioBlob, 'voicenote.webm');
         audioFormData.append('sourceLabel', 'Spoken voice note');
+        if (sensoryPayload) {
+          audioFormData.append('sensory', JSON.stringify(sensoryPayload));
+        }
 
         await fetch('/api/memories', {
           method: 'POST',
@@ -93,10 +103,10 @@ export default function Offering() {
         });
       }
 
-      setStatusMessage('Lighting their flame...');
+      setStatusMessage('The flame is burning...');
       setTimeout(() => {
         navigate(`/remember/${profileId}`);
-      }, 1200);
+      }, 1000);
     } catch (err) {
       console.error('Offering submission failed:', err);
       alert('Could not save offering: ' + err.message);
@@ -106,11 +116,12 @@ export default function Offering() {
 
   return (
     <div className="page offering-page fade-in">
-      {/* Top Navigation */}
+      {/* Top Navigation with Ambient Audio */}
       <nav className="offering-nav">
         <Link to="/" className="btn btn-ghost btn-sm">
           ← Back to Sanctuary
         </Link>
+        <AmbientSoundscape />
       </nav>
 
       {/* Header */}
@@ -123,7 +134,7 @@ export default function Offering() {
       </header>
 
       {/* Main Form */}
-      <form onSubmit={handleSubmit} className="offering-form">
+      <form onSubmit={(e) => e.preventDefault()} className="offering-form">
         {/* Step 1: Who */}
         <section className="offering-section">
           <div className="section-badge">1. Who are we remembering?</div>
@@ -155,7 +166,7 @@ export default function Offering() {
           </div>
         </section>
 
-        {/* Step 2: Memories */}
+        {/* Step 2: Memories & Sensory Anchors */}
         <section className="offering-section">
           <div className="section-badge">2. Their words, voice, or memory</div>
           <MemoryInput
@@ -165,20 +176,22 @@ export default function Offering() {
             setAudioBlob={setAudioBlob}
             photoFile={photoFile}
             setPhotoFile={setPhotoFile}
+            sensory={sensory}
+            setSensory={setSensory}
           />
           <GentleWhispers onSelectPrompt={handleSelectPrompt} />
         </section>
 
-        {/* Step 3: Action */}
+        {/* Step 3: Sacred Hold-to-Light Ceremony */}
         <section className="offering-section offering-section--submit">
-          <button
-            type="submit"
-            className="btn btn-primary btn-light-flame"
+          <HoldToLightFlame
+            onIgnited={handleIgnited}
             disabled={isSubmitting || !name.trim()}
-          >
-            <CandleFlame size="sm" />
-            <span>{isSubmitting ? statusMessage : 'Light their flame'}</span>
-          </button>
+            label="Hold to light their flame"
+          />
+          {statusMessage && (
+            <p className="offering-status-msg fade-in">{statusMessage}</p>
+          )}
           <p className="offering-privacy-note">
             🔒 Privacy guarantee: Memories are stored securely and never shared with corporate ad networks or public models.
           </p>

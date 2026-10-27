@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PortraitCard from '../components/PortraitCard';
 import CandleFlame from '../components/CandleFlame';
+import AmbientSoundscape from '../components/AmbientSoundscape';
 import './Sanctuary.css';
 
 /**
@@ -33,6 +34,12 @@ export default function Sanctuary() {
 
   return (
     <div className="page sanctuary">
+      {/* Top Bar with Ambient Audio */}
+      <div className="sanctuary-top-bar">
+        <div />
+        <AmbientSoundscape />
+      </div>
+
       {/* Header */}
       <header className="page-header fade-in">
         <div className="sanctuary__emblem">

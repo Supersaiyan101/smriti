@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch --watch-path=routes --watch-path=mastra index.js",
-    "test": "node test/integration.test.mjs && node test/phase3_brain.test.mjs && node test/phase4_voice_letter.test.mjs"
+    "test": "node test/integration.test.mjs && node test/phase3_brain.test.mjs && node test/phase4_voice_letter.test.mjs && node test/depth_features.test.mjs"
   },
   "dependencies": {
     "@mastra/core": "^1.79.0",

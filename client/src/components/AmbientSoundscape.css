@@ -1,0 +1,135 @@
+/* ============================================
+   AmbientSoundscape — Generative Audio Controls
+   ============================================ */
+
+.ambient-soundscape {
+  position: relative;
+  z-index: 50;
+}
+
+.ambient-toggle-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-md);
+  padding: 0.35rem 0.75rem;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  transition: all var(--transition-fast);
+}
+
+.ambient-toggle-btn:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--flame-dim);
+  color: var(--text-primary);
+}
+
+.ambient-toggle-btn--active {
+  border-color: var(--flame);
+  color: var(--flame-bright);
+  background: rgba(232, 168, 71, 0.08);
+  box-shadow: 0 0 12px var(--flame-glow);
+}
+
+.ambient-icon {
+  font-size: 0.9rem;
+}
+
+/* Popover Dropdown */
+.ambient-popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 260px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.6),
+    0 0 20px rgba(232, 168, 71, 0.05);
+}
+
+.ambient-popover__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-xs);
+}
+
+.popover-title {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  color: var(--flame);
+}
+
+.popover-close {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.popover-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-md);
+  line-height: 1.4;
+}
+
+.ambient-modes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-md);
+}
+
+.mode-btn {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.4rem var(--space-sm);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.mode-btn:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+  border-color: var(--flame-dim);
+}
+
+.mode-btn--active {
+  background: rgba(232, 168, 71, 0.12);
+  border-color: var(--flame);
+  color: var(--flame-bright);
+}
+
+.ambient-volume-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding-top: var(--space-xs);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.volume-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  width: 55px;
+}
+
+.ambient-slider {
+  flex: 1;
+  accent-color: var(--flame);
+  cursor: pointer;
+}

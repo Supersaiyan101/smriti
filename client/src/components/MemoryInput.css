@@ -137,3 +137,58 @@
   color: white;
   border-color: #E84747;
 }
+
+/* Sensory Anchors */
+.memory-action-btn--active {
+  border-color: var(--flame);
+  color: var(--flame-bright);
+}
+
+.sensory-anchors-box {
+  background: rgba(232, 168, 71, 0.04);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.sensory-hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-style: italic;
+  font-family: var(--font-heading);
+}
+
+.sensory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-sm);
+}
+
+.sensory-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.sensory-field label {
+  font-size: 0.75rem;
+  color: var(--flame-bright);
+}
+
+.sensory-field input {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.4rem 0.6rem;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+
+.sensory-field input:focus {
+  outline: none;
+  border-color: var(--flame);
+}
+

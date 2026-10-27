@@ -1,0 +1,167 @@
+/* ============================================
+   TheVigil — Silent Sanctuary Mode
+   ============================================ */
+
+.the-vigil-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #080605;
+  background-image: radial-gradient(
+    ellipse 60% 50% at 50% 40%,
+    rgba(232, 168, 71, 0.08) 0%,
+    transparent 80%
+  );
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-xl);
+  overflow: hidden;
+}
+
+.vigil-exit-btn {
+  align-self: flex-end;
+  background: rgba(28, 24, 20, 0.6);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-md);
+  padding: 0.4rem 0.9rem;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  transition: all var(--transition-fast);
+}
+
+.vigil-exit-btn:hover {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border-color: var(--flame);
+}
+
+/* Hearth */
+.vigil-hearth {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 650px;
+  width: 100%;
+}
+
+.vigil-portrait-container {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: var(--space-lg);
+}
+
+.vigil-portrait {
+  width: 140px;
+  height: 140px;
+  border-radius: var(--radius-full);
+  border: 3px solid var(--flame-dim);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-surface);
+  box-shadow: 0 0 50px var(--flame-glow);
+}
+
+.vigil-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.vigil-initials {
+  font-family: var(--font-heading);
+  font-size: 2.8rem;
+  color: var(--flame);
+}
+
+.vigil-flame {
+  margin-left: -24px;
+  margin-bottom: -10px;
+  z-index: 2;
+}
+
+.vigil-name {
+  font-size: 2.6rem;
+  font-weight: 300;
+  margin-bottom: var(--space-xs);
+  color: var(--text-primary);
+}
+
+.vigil-rel {
+  font-size: 1rem;
+  color: var(--text-muted);
+  font-style: italic;
+  font-family: var(--font-heading);
+  margin-bottom: var(--space-2xl);
+}
+
+/* Floating Ember Box */
+.vigil-ember-box {
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+  padding: 0 var(--space-lg);
+}
+
+.vigil-ember--fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.vigil-ember--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.vigil-ember--fade-out {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+.vigil-ember-text {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-style: italic;
+  color: var(--flame-bright);
+  line-height: 1.8;
+  max-width: 100%;
+  text-shadow: 0 0 25px rgba(232, 168, 71, 0.15);
+}
+
+.vigil-ember-source {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: var(--space-sm);
+  display: block;
+}
+
+/* Footer Hint */
+.vigil-footer {
+  text-align: center;
+  padding-bottom: var(--space-sm);
+}
+
+.vigil-hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-style: italic;
+  font-family: var(--font-heading);
+  letter-spacing: 0.05em;
+}

@@ -2,12 +2,15 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import CandleFlame from '../components/CandleFlame';
 import VoicePlayer from '../components/VoicePlayer';
+import TheVigil from '../components/TheVigil';
+import WriteToThemModal from '../components/WriteToThemModal';
+import AmbientSoundscape from '../components/AmbientSoundscape';
 import './Remembrance.css';
 
 /**
  * Remembrance — The sacred core experience.
  * Powered by Google Gemma & Mastra Agent Pipeline.
- * Adapts between Conversational Mode and Reflection Mode.
+ * Features: Adaptive Reflection, The Vigil Mode, Letters to Them, Sensory Anchors.
  */
 export default function Remembrance() {
   const { id } = useParams();
@@ -15,6 +18,7 @@ export default function Remembrance() {
   // Profile & Memory State
   const [profile, setProfile] = useState(null);
   const [memories, setMemories] = useState([]);
+  const [lettersToThem, setLettersToThem] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // Interaction State
@@ -23,8 +27,14 @@ export default function Remembrance() {
   const [response, setResponse] = useState(null);
   const [activeCitation, setActiveCitation] = useState(null);
 
+  // Depth Modals
+  const [isVigilOpen, setIsVigilOpen] = useState(false);
+  const [isWriteModalOpen, setIsWriteModalOpen] = useState(false);
+  const [readingLetter, setReadingLetter] = useState(null);
+
   useEffect(() => {
     fetchProfileData();
+    fetchLettersToThem();
   }, [id]);
 
   const fetchProfileData = async () => {
@@ -35,7 +45,6 @@ export default function Remembrance() {
         setProfile(data.profile);
         setMemories(data.memories || []);
 
-        // Auto-run initial gentle reflection when opening the sanctuary
         if (data.memories && data.memories.length > 0) {
           triggerInitialReflection(data.profile._id);
         }
@@ -44,6 +53,18 @@ export default function Remembrance() {
       console.warn('Could not load profile:', err.message);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const fetchLettersToThem = async () => {
+    try {
+      const res = await fetch(`/api/letters-to-them/${id}`);
+      const data = await res.json();
+      if (data.success) {
+        setLettersToThem(data.letters || []);
+      }
+    } catch (err) {
+      console.warn('Could not fetch letters to them:', err.message);
     }
   };
 
@@ -128,14 +149,40 @@ export default function Remembrance() {
 
   return (
     <div className="page remembrance-page fade-in">
-      {/* Top Nav */}
+      {/* Top Nav Cluster */}
       <nav className="remembrance-nav">
         <Link to="/" className="btn btn-ghost btn-sm">
           ← Sanctuary Shelf
         </Link>
-        <Link to={`/letter/${profile._id}`} className="btn btn-ghost btn-sm btn-letter">
-          📜 Keepsake Letter
-        </Link>
+
+        <div className="remembrance-nav-actions">
+          <button
+            type="button"
+            className="btn btn-ghost btn-sm btn-vigil-trigger"
+            onClick={() => setIsVigilOpen(true)}
+            title="Sit in silence with glowing portrait and fading embers"
+          >
+            <span>🕯️</span>
+            <span>Sit with Them (Vigil)</span>
+          </button>
+
+          <button
+            type="button"
+            className="btn btn-ghost btn-sm"
+            onClick={() => setIsWriteModalOpen(true)}
+            title="Write an unsent letter directly to them"
+          >
+            <span>✉️</span>
+            <span>Write to Them</span>
+          </button>
+
+          <Link to={`/letter/${profile._id}`} className="btn btn-ghost btn-sm btn-letter">
+            <span>📜</span>
+            <span>Keepsake Letter</span>
+          </Link>
+
+          <AmbientSoundscape />
+        </div>
       </nav>
 
       {/* Portrait Focal Point */}
@@ -234,7 +281,7 @@ export default function Remembrance() {
           </button>
         </form>
 
-        {/* Preserved Memory Ember Cards */}
+        {/* Preserved Memory Ember Cards with Sensory Anchors */}
         {memories.length > 0 && (
           <section className="remembrance-embers">
             <h4 className="embers-title">Preserved Fragments</h4>
@@ -249,6 +296,16 @@ export default function Remembrance() {
                     {mem.sourceLabel || 'Memory'}
                   </span>
                   <p className="ember-text">"{mem.content}"</p>
+
+                  {/* Sensory Anchors */}
+                  {mem.sensory && (mem.sensory.weather || mem.sensory.scent || mem.sensory.song) && (
+                    <div className="ember-sensory-tags">
+                      {mem.sensory.weather && <span>🌧️ {mem.sensory.weather}</span>}
+                      {mem.sensory.scent && <span>☕ {mem.sensory.scent}</span>}
+                      {mem.sensory.song && <span>🎵 {mem.sensory.song}</span>}
+                    </div>
+                  )}
+
                   {mem.mediaUrl && mem.type === 'voice' && (
                     <audio controls src={mem.mediaUrl} className="ember-audio" />
                   )}
@@ -257,7 +314,88 @@ export default function Remembrance() {
             </div>
           </section>
         )}
+
+        {/* Letters to Them (Unsent Letters Shelf) */}
+        {lettersToThem.length > 0 && (
+          <section className="letters-to-them-shelf">
+            <h4 className="embers-title">✉️ Letters Sealed to {profile.name}</h4>
+            <div className="envelopes-grid">
+              {lettersToThem.map((letter) => (
+                <div
+                  key={letter._id}
+                  className="sealed-envelope-card"
+                  onClick={() => setReadingLetter(letter)}
+                  title="Click to unfold letter"
+                >
+                  <div className="envelope-stamp">✉️</div>
+                  <h5 className="envelope-title">{letter.title}</h5>
+                  <span className="envelope-date">
+                    {new Date(letter.createdAt).toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                      year: 'numeric',
+                    })}
+                  </span>
+                  <span className="envelope-peek">
+                    "{letter.content.slice(0, 70)}..."
+                  </span>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
       </main>
+
+      {/* Depth Modal: Silent Vigil Mode ("Sit with Them") */}
+      {isVigilOpen && (
+        <TheVigil
+          profile={profile}
+          memories={memories}
+          onClose={() => setIsVigilOpen(false)}
+        />
+      )}
+
+      {/* Depth Modal: Write to Them */}
+      {isWriteModalOpen && (
+        <WriteToThemModal
+          profileId={profile._id}
+          personName={profile.name}
+          onClose={() => setIsWriteModalOpen(false)}
+          onLetterSaved={(newLetter) => setLettersToThem([newLetter, ...lettersToThem])}
+        />
+      )}
+
+      {/* Depth Modal: Read Unfolded Letter */}
+      {readingLetter && (
+        <div className="write-letter-overlay fade-in" onClick={() => setReadingLetter(null)}>
+          <div className="write-letter-card fade-in-up" onClick={(e) => e.stopPropagation()}>
+            <div className="write-letter-header">
+              <div className="write-letter-title-row">
+                <CandleFlame size="sm" />
+                <h3>{readingLetter.title}</h3>
+              </div>
+              <button type="button" className="close-btn" onClick={() => setReadingLetter(null)}>
+                ✕
+              </button>
+            </div>
+            <p className="envelope-date" style={{ marginBottom: '1.5rem' }}>
+              Written to {profile.name} • {new Date(readingLetter.createdAt).toLocaleDateString()}
+            </p>
+            <div className="letter-unfolded-body">
+              {readingLetter.content.split('\n\n').map((para, i) => (
+                <p key={i} style={{ marginBottom: '1rem', fontStyle: 'italic', fontFamily: 'var(--font-heading)', fontSize: '1.2rem', lineHeight: '1.8' }}>
+                  {para}
+                </p>
+              ))}
+            </div>
+            <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
+              <button type="button" className="btn btn-ghost btn-sm" onClick={() => setReadingLetter(null)}>
+                Fold & Return to Altar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

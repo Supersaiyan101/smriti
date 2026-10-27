@@ -1,0 +1,127 @@
+/* ============================================
+   WriteToThemModal — Compose Letter to Loved One
+   ============================================ */
+
+.write-letter-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(10, 8, 6, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+}
+
+.write-letter-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-lg);
+  max-width: 620px;
+  width: 100%;
+  padding: var(--space-xl);
+  box-shadow:
+    0 15px 50px rgba(0, 0, 0, 0.8),
+    0 0 40px rgba(232, 168, 71, 0.08);
+}
+
+.write-letter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-xs);
+}
+
+.write-letter-title-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.write-letter-title-row h3 {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: var(--text-primary);
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.close-btn:hover {
+  color: var(--text-primary);
+}
+
+.write-letter-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-lg);
+  line-height: 1.5;
+}
+
+.write-letter-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.letter-input-title {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.65rem var(--space-md);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+}
+
+.letter-input-title:focus {
+  outline: none;
+  border-color: var(--flame);
+}
+
+.letter-input-body {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  line-height: 1.7;
+  resize: vertical;
+}
+
+.letter-input-body:focus {
+  outline: none;
+  border-color: var(--flame);
+  box-shadow: 0 0 15px var(--flame-glow);
+}
+
+.write-letter-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-top: var(--space-xs);
+}
+
+.privacy-whisper {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.btn-seal {
+  padding: 0.65rem 1.4rem;
+  font-size: 0.9rem;
+}

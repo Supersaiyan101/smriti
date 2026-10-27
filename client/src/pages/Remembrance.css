@@ -280,6 +280,95 @@
   filter: invert(0.9) hue-rotate(180deg);
 }
 
+.ember-sensory-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-xs);
+}
+
+.ember-sensory-tags span {
+  font-size: 0.7rem;
+  background: rgba(232, 168, 71, 0.08);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.1rem 0.4rem;
+  color: var(--flame-bright);
+}
+
+/* Nav Actions Cluster */
+.remembrance-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+}
+
+.btn-vigil-trigger {
+  border-color: var(--flame-dim);
+  color: var(--flame-bright);
+}
+
+.btn-vigil-trigger:hover {
+  background: rgba(232, 168, 71, 0.15);
+  box-shadow: 0 0 15px var(--flame-glow);
+}
+
+/* Letters to Them (Unsent Letters Shelf) */
+.letters-to-them-shelf {
+  margin-top: var(--space-xl);
+  border-top: 1px solid var(--border-subtle);
+  padding-top: var(--space-lg);
+}
+
+.envelopes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-md);
+}
+
+.sealed-envelope-card {
+  background: #191410;
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.sealed-envelope-card:hover {
+  border-color: var(--flame);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(232, 168, 71, 0.1);
+}
+
+.envelope-stamp {
+  font-size: 1.2rem;
+}
+
+.envelope-title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.envelope-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.envelope-peek {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  font-family: var(--font-heading);
+}
+
 @media (max-width: 600px) {
   .remembrance-portrait {
     width: 100px;

@@ -14,7 +14,10 @@ export default function MemoryInput({
   setAudioBlob,
   photoFile,
   setPhotoFile,
+  sensory = { weather: '', scent: '', song: '' },
+  setSensory,
 }) {
+  const [showSensory, setShowSensory] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [recordSeconds, setRecordSeconds] = useState(0);
   const [audioUrl, setAudioUrl] = useState(null);
@@ -197,7 +200,53 @@ export default function MemoryInput({
             </button>
           </div>
         )}
+
+        {/* Sensory Anchor Toggle */}
+        <button
+          type="button"
+          className={`btn btn-ghost memory-action-btn ${showSensory ? 'memory-action-btn--active' : ''}`}
+          onClick={() => setShowSensory(!showSensory)}
+        >
+          <span>🌿</span>
+          <span>{showSensory ? 'Sensory Anchors (open)' : 'Add Sensory Anchors (Rain, Scent, Song)'}</span>
+        </button>
       </div>
+
+      {/* Sensory Anchor Inputs */}
+      {showSensory && setSensory && (
+        <div className="sensory-anchors-box fade-in">
+          <p className="sensory-hint">Ground this memory in physical reality (optional):</p>
+          <div className="sensory-grid">
+            <div className="sensory-field">
+              <label>🌧️ Weather / Season</label>
+              <input
+                type="text"
+                placeholder="e.g. Rainy Tuesday evening"
+                value={sensory.weather || ''}
+                onChange={(e) => setSensory({ ...sensory, weather: e.target.value })}
+              />
+            </div>
+            <div className="sensory-field">
+              <label>☕ Scent / Taste</label>
+              <input
+                type="text"
+                placeholder="e.g. Cardamom chai, old books"
+                value={sensory.scent || ''}
+                onChange={(e) => setSensory({ ...sensory, scent: e.target.value })}
+              />
+            </div>
+            <div className="sensory-field">
+              <label>🎵 Song / Sound</label>
+              <input
+                type="text"
+                placeholder="e.g. Mohit Chauhan in car"
+                value={sensory.song || ''}
+                onChange={(e) => setSensory({ ...sensory, song: e.target.value })}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

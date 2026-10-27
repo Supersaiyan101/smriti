@@ -32,12 +32,22 @@ router.post('/', upload.single('media'), async (req, res) => {
     const memoryType = type || (req.file ? (req.file.mimetype.startsWith('audio') ? 'voice' : 'photo') : 'text');
     const memoryContent = content || (req.file ? `[Attached ${memoryType} fragment]` : '');
 
+    let sensory = null;
+    if (req.body.sensory) {
+      try {
+        sensory = typeof req.body.sensory === 'string' ? JSON.parse(req.body.sensory) : req.body.sensory;
+      } catch (e) {
+        sensory = null;
+      }
+    }
+
     const memory = await dbService.addMemory({
       profileId,
       type: memoryType,
       content: memoryContent,
       mediaUrl,
       sourceLabel: sourceLabel || undefined,
+      sensory,
     });
 
     res.status(201).json({ success: true, memory });

@@ -38,10 +38,14 @@ function readLocalDb() {
   ensureDataDir();
   try {
     const raw = fs.readFileSync(LOCAL_DB_PATH, 'utf-8');
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    parsed.profiles = parsed.profiles || [];
+    parsed.memories = parsed.memories || [];
+    parsed.lettersToThem = parsed.lettersToThem || [];
+    return parsed;
   } catch (err) {
     console.error('[Database Local Fallback] Read error, resetting:', err.message);
-    return { profiles: [], memories: [] };
+    return { profiles: [], memories: [], lettersToThem: [] };
   }
 }
 
@@ -134,7 +138,7 @@ export const dbService = {
   },
 
   // --- Memories ---
-  async addMemory({ profileId, type, content, mediaUrl = null, sourceLabel = null }) {
+  async addMemory({ profileId, type, content, mediaUrl = null, sourceLabel = null, sensory = null }) {
     await connectDB();
     const embedding = await getEmbedding(content || sourceLabel || 'memory fragment');
     const doc = {
@@ -143,6 +147,7 @@ export const dbService = {
       content, // text note or transcript
       mediaUrl, // audio or photo file path if uploaded
       sourceLabel: sourceLabel || (type === 'voice' ? 'Voice fragment' : 'Memory fragment'),
+      sensory: sensory || null, // { weather, scent, song }
       embedding,
       createdAt: new Date().toISOString(),
     };
@@ -169,6 +174,41 @@ export const dbService = {
     } else {
       const local = readLocalDb();
       return local.memories.filter(m => m.profileId === pid);
+    }
+  },
+
+  // --- Letters to Them (Unsent Letters Written by the User) ---
+  async createLetterToThem({ profileId, content, title = 'Letter from the Heart' }) {
+    await connectDB();
+    const doc = {
+      profileId: profileId.toString(),
+      title: title || 'Letter from the Heart',
+      content,
+      createdAt: new Date().toISOString(),
+    };
+
+    if (isConnectedToAtlas && db) {
+      const res = await db.collection('lettersToThem').insertOne(doc);
+      return { _id: res.insertedId.toString(), ...doc };
+    } else {
+      const local = readLocalDb();
+      const id = 'lt_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+      const record = { _id: id, ...doc };
+      local.lettersToThem.push(record);
+      writeLocalDb(local);
+      return record;
+    }
+  },
+
+  async getLettersToThem(profileId) {
+    await connectDB();
+    const pid = profileId.toString();
+    if (isConnectedToAtlas && db) {
+      const docs = await db.collection('lettersToThem').find({ profileId: pid }).sort({ createdAt: -1 }).toArray();
+      return docs.map(d => ({ ...d, _id: d._id.toString() }));
+    } else {
+      const local = readLocalDb();
+      return (local.lettersToThem || []).filter(l => l.profileId === pid).reverse();
     }
   },
 };

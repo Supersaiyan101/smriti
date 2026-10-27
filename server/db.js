@@ -138,9 +138,17 @@ export const dbService = {
   },
 
   // --- Memories ---
-  async addMemory({ profileId, type, content, mediaUrl = null, sourceLabel = null, sensory = null }) {
+  async addMemory({ profileId, type, content, mediaUrl = null, sourceLabel = null, sensory = null, timePlace = null }) {
     await connectDB();
-    const embedding = await getEmbedding(content || sourceLabel || 'memory fragment');
+    const parts = [content];
+    if (timePlace?.when) parts.push(`When: ${timePlace.when}`);
+    if (timePlace?.where) parts.push(`Where: ${timePlace.where}`);
+    if (sensory?.weather) parts.push(`Weather: ${sensory.weather}`);
+    if (sensory?.scent) parts.push(`Scent: ${sensory.scent}`);
+    if (sensory?.song) parts.push(`Song: ${sensory.song}`);
+    const textToEmbed = parts.filter(Boolean).join(' | ');
+
+    const embedding = await getEmbedding(textToEmbed || sourceLabel || 'memory fragment');
     const doc = {
       profileId: profileId.toString(),
       type, // 'text' | 'voice' | 'photo'
@@ -148,6 +156,7 @@ export const dbService = {
       mediaUrl, // audio or photo file path if uploaded
       sourceLabel: sourceLabel || (type === 'voice' ? 'Voice fragment' : 'Memory fragment'),
       sensory: sensory || null, // { weather, scent, song }
+      timePlace: timePlace || null, // { when, where }
       embedding,
       createdAt: new Date().toISOString(),
     };

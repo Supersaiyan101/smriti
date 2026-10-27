@@ -423,6 +423,14 @@ export default function Remembrance() {
                     </div>
                   )}
 
+                  {/* Spacetime Pinning */}
+                  {mem.timePlace && (mem.timePlace.when || mem.timePlace.where) && (
+                    <div className="ember-timeplace-tags">
+                      {mem.timePlace.when && <span>🗓️ {mem.timePlace.when}</span>}
+                      {mem.timePlace.where && <span>📍 {mem.timePlace.where}</span>}
+                    </div>
+                  )}
+
                   {mem.mediaUrl && mem.type === 'voice' && (
                     <audio controls src={mem.mediaUrl} className="ember-audio" onClick={(e) => e.stopPropagation()} />
                   )}
@@ -490,6 +498,13 @@ export default function Remembrance() {
                 <span className="artifact-anchor-badge">
                   ⚓ {inspectedArtifact.sourceLabel || 'Original Source'}
                 </span>
+                {inspectedArtifact.timePlace && (inspectedArtifact.timePlace.when || inspectedArtifact.timePlace.where) && (
+                  <span className="artifact-timeplace-pill">
+                    {inspectedArtifact.timePlace.when && `🗓️ ${inspectedArtifact.timePlace.when}`}
+                    {inspectedArtifact.timePlace.when && inspectedArtifact.timePlace.where && ' • '}
+                    {inspectedArtifact.timePlace.where && `📍 ${inspectedArtifact.timePlace.where}`}
+                  </span>
+                )}
                 {inspectedArtifact.createdAt && (
                   <span className="artifact-date">
                     Preserved {new Date(inspectedArtifact.createdAt).toLocaleDateString()}

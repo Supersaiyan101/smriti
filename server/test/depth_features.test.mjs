@@ -57,13 +57,21 @@ async function runDepthTests() {
       scent: 'Wet earth and tulsi leaves',
       song: 'Old radio playing classical sarod',
     },
+    timePlace: {
+      when: 'Monsoon 2019',
+      where: 'Veranda in Varanasi',
+    },
   });
 
   console.log('   Saved memory status:', memoryRes.status);
   console.log('   Sensory Anchors:', memoryRes.body.memory.sensory);
+  console.log('   Spacetime Pinning:', memoryRes.body.memory.timePlace);
 
   if (!memoryRes.body.memory.sensory || memoryRes.body.memory.sensory.weather !== 'Damp July monsoon') {
     throw new Error('Sensory anchors failed to persist correctly');
+  }
+  if (!memoryRes.body.memory.timePlace || memoryRes.body.memory.timePlace.where !== 'Veranda in Varanasi') {
+    throw new Error('Spacetime pinning failed to persist correctly');
   }
 
   // 3. Write and Seal a "Letter to Them" (Unsent Letter)

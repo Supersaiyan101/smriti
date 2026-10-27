@@ -1,5 +1,5 @@
 /* ============================================
-   MemoryInput — Multimodal Fragment Collector
+   MemoryInput — Archival Linen Journal & Collector
    ============================================ */
 
 .memory-input {
@@ -8,33 +8,145 @@
   gap: var(--space-md);
 }
 
-.memory-input__label {
-  display: block;
-  font-size: 0.9rem;
-  color: var(--text-secondary);
+/* Archival Linen Journal Leaf */
+.linen-journal-card {
+  background: linear-gradient(180deg, #181310 0%, #120D0A 100%);
+  border: 1px solid rgba(232, 168, 71, 0.22);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  box-shadow:
+    inset 0 0 40px rgba(0, 0, 0, 0.5),
+    0 4px 20px rgba(0, 0, 0, 0.4);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.linen-journal-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
   margin-bottom: var(--space-xs);
 }
 
-.memory-input__textarea {
-  width: 100%;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-warm);
+.linen-journal-watermark {
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  color: var(--flame-dim);
+  text-transform: uppercase;
+}
+
+.linen-journal-rule {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(232, 168, 71, 0.2) 0%, transparent 100%);
+}
+
+.memory-input__label {
+  display: block;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-xs);
+  font-family: var(--font-heading);
+}
+
+.journal-textarea-wrapper {
+  position: relative;
+  display: flex;
+  background: rgba(10, 8, 6, 0.4);
+  border: 1px solid rgba(232, 168, 71, 0.12);
   border-radius: var(--radius-md);
-  padding: var(--space-md);
-  color: var(--text-primary);
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  line-height: 1.6;
-  resize: vertical;
+  padding: var(--space-sm);
   transition: border-color var(--transition-fast);
 }
 
-.memory-input__textarea:focus {
-  outline: none;
+.journal-textarea-wrapper:focus-within {
   border-color: var(--flame);
-  box-shadow: 0 0 12px var(--flame-glow);
+  box-shadow: 0 0 15px var(--flame-glow);
 }
 
+.journal-margin-line {
+  width: 2px;
+  background: rgba(196, 109, 32, 0.35);
+  margin-right: var(--space-md);
+  border-radius: 1px;
+}
+
+.journal-script-input {
+  flex: 1;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: var(--text-primary);
+  background: transparent;
+  border: none;
+  padding: 0;
+  resize: vertical;
+}
+
+.journal-script-input:focus {
+  outline: none;
+}
+
+/* Spacetime Pinning Row */
+.journal-pinning-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  padding-top: var(--space-sm);
+  border-top: 1px dashed rgba(232, 168, 71, 0.15);
+}
+
+.pinning-field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background: rgba(28, 22, 17, 0.6);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.45rem 0.75rem;
+  transition: border-color var(--transition-fast);
+}
+
+.pinning-field:focus-within {
+  border-color: var(--flame);
+  box-shadow: 0 0 10px var(--flame-glow);
+}
+
+.pinning-icon {
+  font-size: 1rem;
+}
+
+.pinning-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.pinning-body label {
+  font-size: 0.72rem;
+  color: var(--flame-gold);
+  margin-bottom: 2px;
+  font-family: var(--font-heading);
+  letter-spacing: 0.04em;
+}
+
+.pinning-input {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-family: var(--font-body);
+  padding: 0;
+}
+
+.pinning-input:focus {
+  outline: none;
+}
+
+/* Actions Row */
 .memory-input__actions {
   display: flex;
   flex-wrap: wrap;
@@ -138,7 +250,7 @@
   border-color: #E84747;
 }
 
-/* Sensory Anchors */
+/* Sensory Anchors Box */
 .memory-action-btn--active {
   border-color: var(--flame);
   color: var(--flame-bright);
@@ -192,3 +304,8 @@
   border-color: var(--flame);
 }
 
+@media (max-width: 600px) {
+  .journal-pinning-row {
+    grid-template-columns: 1fr;
+  }
+}

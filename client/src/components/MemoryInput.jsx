@@ -2,10 +2,12 @@ import { useState, useRef } from 'react';
 import './MemoryInput.css';
 
 /**
- * MemoryInput — Multimodal memory collector:
- * 1. Written memory / quotes
- * 2. In-browser audio recording via MediaRecorder API
- * 3. Photo or handwritten letter attachment
+ * MemoryInput — Archival Linen Journal & Multimodal Memory Collector:
+ * 1. Linen Journal Page (rich serif script, warm ink feel)
+ * 2. Time & Place Pinning ("When was this?", "Where were you?")
+ * 3. Physical Sensory Anchors (Weather, Scent, Song)
+ * 4. Audio Voice Recording via MediaRecorder API
+ * 5. Archival Photo / Handwritten Letter attachment
  */
 export default function MemoryInput({
   textContent,
@@ -16,8 +18,10 @@ export default function MemoryInput({
   setPhotoFile,
   sensory = { weather: '', scent: '', song: '' },
   setSensory,
+  timePlace = { when: '', where: '' },
+  setTimePlace,
 }) {
-  const [showSensory, setShowSensory] = useState(false);
+  const [showAnchors, setShowAnchors] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [recordSeconds, setRecordSeconds] = useState(0);
   const [audioUrl, setAudioUrl] = useState(null);
@@ -109,22 +113,70 @@ export default function MemoryInput({
 
   return (
     <div className="memory-input">
-      {/* Written Memory Area */}
-      <div className="memory-input__text-section">
-        <label htmlFor="memory-text" className="memory-input__label">
-          A memory, a story, or words they often said:
-        </label>
-        <textarea
-          id="memory-text"
-          className="memory-input__textarea"
-          rows={4}
-          placeholder="Write down something small they said, a quiet moment you shared, or advice they gave you..."
-          value={textContent}
-          onChange={(e) => setTextContent(e.target.value)}
-        />
+      {/* Archival Linen Journal Sheet */}
+      <div className="linen-journal-card">
+        <div className="linen-journal-header">
+          <span className="linen-journal-watermark">ARCHIVAL REMEMBRANCE • LINEN LEAF</span>
+          <span className="linen-journal-rule" />
+        </div>
+
+        {/* Written Recollection */}
+        <div className="memory-input__text-section">
+          <label htmlFor="memory-text" className="memory-input__label">
+            Words, advice, or a quiet moment they left with you:
+          </label>
+          <div className="journal-textarea-wrapper">
+            <div className="journal-margin-line" aria-hidden="true" />
+            <textarea
+              id="memory-text"
+              className="memory-input__textarea journal-script-input"
+              rows={5}
+              placeholder="Write down something small they said, a habit they had, or a quiet memory you never want to lose..."
+              value={textContent}
+              onChange={(e) => setTextContent(e.target.value)}
+            />
+          </div>
+        </div>
+
+        {/* Spacetime Pinning: When & Where */}
+        <div className="journal-pinning-row">
+          <div className="pinning-field">
+            <span className="pinning-icon">🗓️</span>
+            <div className="pinning-body">
+              <label htmlFor="memory-when">When was this?</label>
+              <input
+                id="memory-when"
+                type="text"
+                placeholder="e.g. Winter 2018, or After Diwali"
+                value={timePlace?.when || ''}
+                onChange={(e) =>
+                  setTimePlace && setTimePlace({ ...timePlace, when: e.target.value })
+                }
+                className="pinning-input"
+              />
+            </div>
+          </div>
+
+          <div className="pinning-field">
+            <span className="pinning-icon">📍</span>
+            <div className="pinning-body">
+              <label htmlFor="memory-where">Where were you?</label>
+              <input
+                id="memory-where"
+                type="text"
+                placeholder="e.g. Kitchen table in Shimla"
+                value={timePlace?.where || ''}
+                onChange={(e) =>
+                  setTimePlace && setTimePlace({ ...timePlace, where: e.target.value })
+                }
+                className="pinning-input"
+              />
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Multimodal Actions (Voice & Photo) */}
+      {/* Multimodal & Sensory Actions */}
       <div className="memory-input__actions">
         {/* Audio Recording */}
         {!audioBlob && !isRecording && (
@@ -134,7 +186,7 @@ export default function MemoryInput({
             onClick={startRecording}
           >
             <span>🎙️</span>
-            <span>Record Voice Note</span>
+            <span>Record Spoken Voice</span>
           </button>
         )}
 
@@ -183,7 +235,7 @@ export default function MemoryInput({
             onClick={() => fileInputRef.current?.click()}
           >
             <span>📷</span>
-            <span>Attach Portrait or Letter</span>
+            <span>Attach Photo or Handwritten Letter</span>
           </button>
         )}
 
@@ -201,27 +253,27 @@ export default function MemoryInput({
           </div>
         )}
 
-        {/* Sensory Anchor Toggle */}
+        {/* Sensory Anchors Toggle */}
         <button
           type="button"
-          className={`btn btn-ghost memory-action-btn ${showSensory ? 'memory-action-btn--active' : ''}`}
-          onClick={() => setShowSensory(!showSensory)}
+          className={`btn btn-ghost memory-action-btn ${showAnchors ? 'memory-action-btn--active' : ''}`}
+          onClick={() => setShowAnchors(!showAnchors)}
         >
           <span>🌿</span>
-          <span>{showSensory ? 'Sensory Anchors (open)' : 'Add Sensory Anchors (Rain, Scent, Song)'}</span>
+          <span>{showAnchors ? 'Physical Anchors (open)' : 'Ground in Senses (Weather, Scent, Song)'}</span>
         </button>
       </div>
 
       {/* Sensory Anchor Inputs */}
-      {showSensory && setSensory && (
+      {showAnchors && setSensory && (
         <div className="sensory-anchors-box fade-in">
-          <p className="sensory-hint">Ground this memory in physical reality (optional):</p>
+          <p className="sensory-hint">Sensory atmosphere at the time of this memory:</p>
           <div className="sensory-grid">
             <div className="sensory-field">
               <label>🌧️ Weather / Season</label>
               <input
                 type="text"
-                placeholder="e.g. Rainy Tuesday evening"
+                placeholder="e.g. Rainy monsoon evening, early snow"
                 value={sensory.weather || ''}
                 onChange={(e) => setSensory({ ...sensory, weather: e.target.value })}
               />
@@ -230,16 +282,16 @@ export default function MemoryInput({
               <label>☕ Scent / Taste</label>
               <input
                 type="text"
-                placeholder="e.g. Cardamom chai, old books"
+                placeholder="e.g. Cardamom chai, wet pine needles"
                 value={sensory.scent || ''}
                 onChange={(e) => setSensory({ ...sensory, scent: e.target.value })}
               />
             </div>
             <div className="sensory-field">
-              <label>🎵 Song / Sound</label>
+              <label>🎵 Song / Ambient Sound</label>
               <input
                 type="text"
-                placeholder="e.g. Mohit Chauhan in car"
+                placeholder="e.g. Radio playing old ghazals"
                 value={sensory.song || ''}
                 onChange={(e) => setSensory({ ...sensory, song: e.target.value })}
               />

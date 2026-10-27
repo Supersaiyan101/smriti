@@ -616,3 +616,20 @@
   );
   mix-blend-mode: screen;
 }
+
+.ember-timeplace-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  font-size: 0.72rem;
+  color: var(--flame-gold);
+  margin-top: 2px;
+}
+
+.artifact-timeplace-pill {
+  background: rgba(232, 168, 71, 0.08);
+  border: 1px dashed var(--border-warm);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-sm);
+  color: var(--flame-bright);
+}

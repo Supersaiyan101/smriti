@@ -41,6 +41,15 @@ router.post('/', upload.single('media'), async (req, res) => {
       }
     }
 
+    let timePlace = null;
+    if (req.body.timePlace) {
+      try {
+        timePlace = typeof req.body.timePlace === 'string' ? JSON.parse(req.body.timePlace) : req.body.timePlace;
+      } catch (e) {
+        timePlace = null;
+      }
+    }
+
     const memory = await dbService.addMemory({
       profileId,
       type: memoryType,
@@ -48,6 +57,7 @@ router.post('/', upload.single('media'), async (req, res) => {
       mediaUrl,
       sourceLabel: sourceLabel || undefined,
       sensory,
+      timePlace,
     });
 
     res.status(201).json({ success: true, memory });

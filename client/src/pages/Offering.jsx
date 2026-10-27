@@ -23,6 +23,7 @@ export default function Offering() {
   const [audioBlob, setAudioBlob] = useState(null);
   const [photoFile, setPhotoFile] = useState(null);
   const [sensory, setSensory] = useState({ weather: '', scent: '', song: '' });
+  const [timePlace, setTimePlace] = useState({ when: '', where: '' });
 
   // Submission State
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -66,9 +67,12 @@ export default function Offering() {
 
       const profileId = profileData.profile._id;
 
-      // Clean sensory object
+      // Clean sensory & spacetime pinning objects
       const hasSensory = sensory.weather || sensory.scent || sensory.song;
       const sensoryPayload = hasSensory ? sensory : null;
+
+      const hasTimePlace = timePlace.when || timePlace.where;
+      const timePlacePayload = hasTimePlace ? timePlace : null;
 
       // Step 2: Upload Memory Fragments (if provided)
       if (textContent.trim()) {
@@ -82,6 +86,7 @@ export default function Offering() {
             content: textContent.trim(),
             sourceLabel: 'Written memory',
             sensory: sensoryPayload,
+            timePlace: timePlacePayload,
           }),
         });
       }
@@ -95,6 +100,9 @@ export default function Offering() {
         audioFormData.append('sourceLabel', 'Spoken voice note');
         if (sensoryPayload) {
           audioFormData.append('sensory', JSON.stringify(sensoryPayload));
+        }
+        if (timePlacePayload) {
+          audioFormData.append('timePlace', JSON.stringify(timePlacePayload));
         }
 
         await fetch('/api/memories', {
@@ -178,6 +186,8 @@ export default function Offering() {
             setPhotoFile={setPhotoFile}
             sensory={sensory}
             setSensory={setSensory}
+            timePlace={timePlace}
+            setTimePlace={setTimePlace}
           />
           <GentleWhispers onSelectPrompt={handleSelectPrompt} />
         </section>

@@ -50,7 +50,7 @@ Smriti is intentionally designed with one defining aesthetic: **Quiet**. There a
        └────────────────────────────────────────────────────────┘
 ```
 
-### 🎞️ The Flagship Centerpiece: The Memory Reel (स्मृति कथा)
+### 🎞️ The Flagship Centerpiece: The Memory Reel
 The defining feature of Smriti. It weaves photographs and heartfelt stories into a cinematic slideshow set to music, kept permanently on their altar:
 
 - **Layout A (Cinematic Split):**

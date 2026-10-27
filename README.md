@@ -23,7 +23,7 @@ Commercial AI often treats this with dark voyeurism or clinical extraction: uplo
 
 ## 2. The Features & The Flagship Memory Reel
 
-### 🎞️ Flagship Centerpiece — The Memory Reel (स्मृति कथा)
+### 🎞️ Flagship Centerpiece — The Memory Reel
 The game-changing heart of Smriti. The Memory Reel weaves a loved one's preserved photographs and heartfelt written stories into a cinematic, Spotify Wrapped-style slideshow that lives permanently upon their altar.
 
 * **Layout A (Cinematic Split):**

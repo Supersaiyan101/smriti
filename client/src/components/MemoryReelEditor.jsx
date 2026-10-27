@@ -204,7 +204,7 @@ export default function MemoryReelEditor({
           <div className="reel-header-title">
             <CandleFlame size="sm" />
             <div>
-              <h3>The Memory Reel (स्मृति कथा)</h3>
+              <h3>The Memory Reel</h3>
               <p className="reel-header-sub">Curating moments of {personName}</p>
             </div>
           </div>

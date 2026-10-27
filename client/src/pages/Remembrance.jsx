@@ -352,7 +352,7 @@ export default function Remembrance() {
         <section className="altar-reel-card fade-in-up">
           <div className="altar-reel-left">
             <div className="altar-reel-badge-group">
-              <span className="altar-reel-flagship-badge">🎞️ THE MEMORY REEL • स्मृति कथा</span>
+              <span className="altar-reel-flagship-badge">🎞️ THE MEMORY REEL</span>
               {reelData.soundtrack && (
                 <span className="altar-reel-track-badge">
                   🎵 {reelData.soundtrack.title || 'Soundtrack Paired'}

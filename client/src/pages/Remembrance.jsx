@@ -5,12 +5,15 @@ import VoicePlayer from '../components/VoicePlayer';
 import TheVigil from '../components/TheVigil';
 import WriteToThemModal from '../components/WriteToThemModal';
 import AmbientSoundscape from '../components/AmbientSoundscape';
+import MemoryReel from '../components/MemoryReel';
+import MemoryReelEditor from '../components/MemoryReelEditor';
 import './Remembrance.css';
 
 /**
  * Remembrance — The sacred core experience.
  * Powered by Google Gemma & Mastra Agent Pipeline.
  * Features:
+ *  - The Memory Reel (flagship photo story slideshow + music)
  *  - Slow Ink Emergence (calm gradual writing reveal)
  *  - Citation Artifact Unfolding (inspecting original memory anchors)
  *  - The Vigil Mode (silent contemplation)
@@ -25,6 +28,11 @@ export default function Remembrance() {
   const [memories, setMemories] = useState([]);
   const [lettersToThem, setLettersToThem] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  // Flagship Feature: The Memory Reel State
+  const [reelData, setReelData] = useState({ slides: [], soundtrack: null });
+  const [isReelOpen, setIsReelOpen] = useState(false);
+  const [isReelEditorOpen, setIsReelEditorOpen] = useState(false);
 
   // Interaction State
   const [query, setQuery] = useState('');
@@ -45,7 +53,23 @@ export default function Remembrance() {
   useEffect(() => {
     fetchProfileData();
     fetchLettersToThem();
+    fetchReelData();
   }, [id]);
+
+  const fetchReelData = async () => {
+    try {
+      const res = await fetch(`/api/memories/reel/${id}`);
+      const data = await res.json();
+      if (data.success) {
+        setReelData({
+          slides: data.slides || [],
+          soundtrack: data.soundtrack || null,
+        });
+      }
+    } catch (err) {
+      console.warn('Could not fetch memory reel:', err.message);
+    }
+  };
 
   // Slow ink emergence effect when a response arrives
   useEffect(() => {
@@ -273,6 +297,22 @@ export default function Remembrance() {
             <span>Keepsake Letter</span>
           </Link>
 
+          <button
+            type="button"
+            className="btn btn-primary btn-sm btn-reel-trigger"
+            onClick={() => {
+              if (reelData.slides && reelData.slides.length > 0) {
+                setIsReelOpen(true);
+              } else {
+                setIsReelEditorOpen(true);
+              }
+            }}
+            title="Watch or curate their living Memory Reel"
+          >
+            <span>🎞️</span>
+            <span>Memory Reel {reelData.slides && reelData.slides.length > 0 ? `(${reelData.slides.length})` : '+'}</span>
+          </button>
+
           <AmbientSoundscape />
         </div>
       </nav>
@@ -308,6 +348,63 @@ export default function Remembrance() {
 
       {/* Main Sanctuary Altar Space */}
       <main className="remembrance-content">
+        {/* Flagship Centerpiece: The Memory Reel Showcase Card */}
+        <section className="altar-reel-card fade-in-up">
+          <div className="altar-reel-left">
+            <div className="altar-reel-badge-group">
+              <span className="altar-reel-flagship-badge">🎞️ THE MEMORY REEL • स्मृति कथा</span>
+              {reelData.soundtrack && (
+                <span className="altar-reel-track-badge">
+                  🎵 {reelData.soundtrack.title || 'Soundtrack Paired'}
+                </span>
+              )}
+            </div>
+            <h3 className="altar-reel-title">
+              {reelData.slides && reelData.slides.length > 0
+                ? `${profile.name}’s Living Memory Reel`
+                : `Create ${profile.name}’s Memory Reel`}
+            </h3>
+            <p className="altar-reel-desc">
+              {reelData.slides && reelData.slides.length > 0
+                ? `${reelData.slides.length} cherished ${reelData.slides.length === 1 ? 'moment' : 'moments'} woven into a cinematic Spotify Wrapped-style slideshow with music and quiet stories.`
+                : `Weave their photos and heartfelt stories into a cinematic slideshow set to their favorite melody. Kept forever on their altar.`}
+            </p>
+          </div>
+
+          <div className="altar-reel-actions">
+            {reelData.slides && reelData.slides.length > 0 ? (
+              <>
+                <button
+                  type="button"
+                  className="btn btn-primary btn-reel-watch"
+                  onClick={() => setIsReelOpen(true)}
+                  title="Watch the cinematic slideshow"
+                >
+                  <span className="play-triangle">▶</span>
+                  <span>Watch Reel</span>
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-ghost btn-sm btn-reel-config"
+                  onClick={() => setIsReelEditorOpen(true)}
+                  title="Add photos, edit stories, or change soundtrack"
+                >
+                  <span>⚙️ Curate</span>
+                </button>
+              </>
+            ) : (
+              <button
+                type="button"
+                className="btn btn-primary btn-reel-watch"
+                onClick={() => setIsReelEditorOpen(true)}
+                title="Create the first moment in their reel"
+              >
+                <span>✨ Begin Their Reel</span>
+              </button>
+            )}
+          </div>
+        </section>
+
         {/* Active Response from Gemma / Mastra */}
         {response && (
           <section className="remembrance-response-card fade-in-up">
@@ -629,6 +726,37 @@ export default function Remembrance() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Flagship Modal: Cinematic Memory Reel Viewer (Layout A Split + Spotify Wrapped Soundtrack) */}
+      {isReelOpen && (
+        <MemoryReel
+          profile={profile}
+          slides={reelData.slides}
+          soundtrack={reelData.soundtrack}
+          onClose={() => setIsReelOpen(false)}
+          onOpenEditor={() => {
+            setIsReelOpen(false);
+            setIsReelEditorOpen(true);
+          }}
+        />
+      )}
+
+      {/* Flagship Modal: Memory Reel Editor / Curator */}
+      {isReelEditorOpen && (
+        <MemoryReelEditor
+          profileId={profile._id}
+          personName={profile.name}
+          initialSoundtrack={reelData.soundtrack}
+          onClose={() => setIsReelEditorOpen(false)}
+          onSlideSaved={() => {
+            fetchReelData();
+            fetchProfileData();
+          }}
+          onSoundtrackUpdated={() => {
+            fetchReelData();
+          }}
+        />
       )}
     </div>
   );

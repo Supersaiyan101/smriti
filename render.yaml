@@ -37,7 +37,6 @@ services:
     name: smriti-sanctuary
     runtime: static
     plan: free
-    region: oregon
     rootDir: client
     buildCommand: npm install && npm run build
     staticPublishPath: dist

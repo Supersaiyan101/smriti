@@ -289,7 +289,7 @@ export default function Remembrance() {
             title="Sit in silence with glowing portrait and fading embers"
           >
             <span>🕯️</span>
-            <span>Sit with Them (Vigil)</span>
+            <span>Sit with Them</span>
           </button>
 
           <button
@@ -361,13 +361,9 @@ export default function Remembrance() {
         <h1 className="remembrance-name">{profile.name}</h1>
         <p className="remembrance-rel">{profile.relationship}</p>
 
-        {/* Mode Indicator */}
+        {/* Sacred Altar Heading */}
         <div className="remembrance-mode-badge">
-          {isSparse ? (
-            <span>🕯️ Candlelight Reflection Mode • {memories.length} {memories.length === 1 ? 'memory' : 'memories'} preserved</span>
-          ) : (
-            <span>✨ Sanctuary Conversation Mode • {memories.length} memories preserved</span>
-          )}
+          <span>A Place to Remember • {memories.length} {memories.length === 1 ? 'memory' : 'memories'} preserved</span>
         </div>
       </header>
 
@@ -435,7 +431,7 @@ export default function Remembrance() {
           <section className="remembrance-response-card fade-in-up">
             <div className="response-header">
               <span className="response-engine-tag">
-                {response.engine || 'Google Gemma Sanctuary Grounding'}
+                Gemma
               </span>
 
               <div className="response-header-right">

@@ -166,7 +166,7 @@ export default function TheVigil({ profile, memories = [], onClose }) {
           aria-label="Leave the vigil"
         >
           <span>✕</span>
-          <span>Exit Vigil</span>
+          <span>Exit</span>
         </button>
       </div>
 

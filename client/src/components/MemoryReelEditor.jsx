@@ -310,7 +310,7 @@ export default function MemoryReelEditor({
                 <input
                   id="slide-when"
                   type="text"
-                  placeholder="e.g. Winter 2016"
+                  placeholder="e.g. During Diwali, childhood, college days..."
                   value={when}
                   onChange={(e) => setWhen(e.target.value)}
                   className="reel-input"

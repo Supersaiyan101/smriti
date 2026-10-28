@@ -117,7 +117,7 @@ USER'S QUESTION:
               citations: citations.length > 0 ? citations : [chunks[0]?.sourceLabel || 'Preserved memory'],
               mode,
               grounded: true,
-              engine: `Google Gemma (${GEMMA_MODEL})`,
+              engine: 'Gemma',
             };
           }
         }
@@ -142,7 +142,7 @@ USER'S QUESTION:
         citations: [primaryChunk.sourceLabel || 'Preserved memory'],
         mode,
         grounded: true,
-        engine: `Gemma Sanctuary Grounding Engine (Fidelity Verified)`,
+        engine: 'Gemma',
       };
     }
   );

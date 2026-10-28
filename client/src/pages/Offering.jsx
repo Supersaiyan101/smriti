@@ -613,7 +613,7 @@ export default function Offering() {
                         <span className="spacetime-prefix">🗓️</span>
                         <input
                           type="text"
-                          placeholder="When? e.g. November 2018"
+                          placeholder="When? e.g. During Diwali, birth, childhood..."
                           value={moment.when}
                           onChange={(e) => handleUpdateMoment(idx, 'when', e.target.value)}
                           className="spacetime-sub-input"

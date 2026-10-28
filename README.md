@@ -126,19 +126,19 @@ One-click generation of a printable, frame-worthy archival letter:
 
 ## 4. Hacktoberfest 2026: Partner Technology Architecture
 
-Smriti was engineered from the ground up for **Hacktoberfest 2026 — Week 4: Ghost in the Machine**, integrating 7 sponsored partner technologies across the stack:
+Smriti was engineered from the ground up for **Hacktoberfest 2026 — Week 4: Ghost in the Machine**, integrating 7 open-source and partner technologies into a cohesive, production-grade memorial architecture:
 
-| Partner Category | Technology Used | Architectural Role & Implementation | Prize Exposure | Live Status |
+| Partner Category | Technology Used | Architectural Role & Implementation | Architectural Focus | Live Status |
 |---|---|---|---|:---:|
-| **Best Use of Gemma** | **Google Gemma** (Ollama / Open API) | Powers the zero-hallucination reflection engine (`server/mastra/tools/synthesize.js`). Synthesizes wisdom and comfort strictly anchored to retrieved memory chunks at temperature `0.3`. | **$200** | 🟢 **ACTIVE** |
-| **Best Use of Render** | **Render Cloud Platform** | Full-stack deployment using an Infrastructure-as-Code Blueprint (`render.yaml`) orchestrating a static CDN web service, backend Express API, environment groups, and seamless proxy rewrites. | **$200** | 🟢 **ACTIVE** |
-| **Best Use of ElevenLabs** | **ElevenLabs Voice API** | High-fidelity storytelling speech engine (`JBFqnCBsd6RMkjVDRZzb`), paired with automated citation tag stripping, analog warmth filtering, and studio audio ducking (`server/routes/voice.js`). | **$100** | 🟢 **ACTIVE** |
-| **Best Use of MongoDB Atlas** | **MongoDB Atlas + Vector Search** | Cryptographic cloud memory storage on Atlas M0 cluster (`smriti-cluster.iaaaw9a.mongodb.net`) with Atlas Vector Search for semantic chunk retrieval, backed by local JSON fallback. | **$100** | 🟢 **ACTIVE** |
-| **Best Use of Mastra** | **Mastra Framework** (TypeScript/JS) | Orchestrates the deterministic agent workflow (`server/mastra/agent.js`) across three distinct tools: `retrieveStep` (vector search), `densityGateStep` (sparse vs. conversational routing), and `synthesizeStep` (grounded reflection). | **$100** | 🟢 **ACTIVE** |
-| **Best Use of Sentry** | **Sentry Distributed Tracing** | Full OpenTelemetry tracing across all agent tools (`mastra.workflow.remembrance`, `mastra.tool.retrieve`, `mastra.tool.densityGate`, `elevenlabs.text_to_speech`) with real-time performance flamegraphs. | **$100** | 🟢 **ACTIVE** |
-| **Best Use of a .tech Domain** | **.tech Domain Registry** | Custom sovereign domain deployed at **[smriti.tech](https://smriti.tech)** for an authentic, dignified web presence. | **$100** | ⚪ **READY** |
+| **Best Use of Gemma** | **Google Gemma** (Ollama / Open API) | Powers the zero-hallucination reflection engine (`server/mastra/tools/synthesize.js`). Synthesizes wisdom and comfort strictly anchored to retrieved memory chunks at temperature `0.3`. | Cognitive Grounding & Reflection | 🟢 **ACTIVE** |
+| **Best Use of Render** | **Render Cloud Platform** | Full-stack deployment using an Infrastructure-as-Code Blueprint (`render.yaml`) orchestrating a static CDN web service, backend Express API, environment groups, and seamless proxy rewrites. | Unified Cloud Runtime & IaC | 🟢 **ACTIVE** |
+| **Best Use of ElevenLabs** | **ElevenLabs Voice API** | High-fidelity storytelling speech engine (`JBFqnCBsd6RMkjVDRZzb`), paired with automated citation tag stripping, analog warmth filtering, and studio audio ducking (`server/routes/voice.js`). | Studio Spoken Narration | 🟢 **ACTIVE** |
+| **Best Use of MongoDB Atlas** | **MongoDB Atlas + Vector Search** | Cryptographic cloud memory storage on Atlas M0 cluster (`smriti-cluster.iaaaw9a.mongodb.net`) with Atlas Vector Search for semantic chunk retrieval, backed by local JSON fallback. | Semantic Vector Storage | 🟢 **ACTIVE** |
+| **Best Use of Mastra** | **Mastra Framework** (TypeScript/JS) | Orchestrates the deterministic agent workflow (`server/mastra/agent.js`) across three distinct tools: `retrieveStep` (vector search), `densityGateStep` (sparse vs. conversational routing), and `synthesizeStep` (grounded reflection). | Deterministic Agent Routing | 🟢 **ACTIVE** |
+| **Best Use of Sentry** | **Sentry Distributed Tracing** | Full OpenTelemetry tracing across all agent tools (`mastra.workflow.remembrance`, `mastra.tool.retrieve`, `mastra.tool.densityGate`, `elevenlabs.text_to_speech`) with real-time performance flamegraphs. | Distributed Observability | 🟢 **ACTIVE** |
+| **Best Use of a .tech Domain** | **.tech Domain Registry** | Sovereign web identity deployed at **[smriti.tech](https://smriti.tech)** for an authentic, permanent memorial home. | Sovereign Web Presence | ⚪ **READY** |
 
-**Total Sponsor Prize Exposure: $900 across 7 partner categories.**
+*Every integration in Smriti is purpose-built to solve a distinct engineering challenge in digital remembrance—bridging zero-hallucination cognitive grounding, low-latency edge audio delivery, and end-to-end distributed observability.*
 
 ---
 

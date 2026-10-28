@@ -178,15 +178,15 @@ ${contextBlocks}`;
 
 ---
 
-## 5. Partner Prize Breakdowns
+## 5. Partner Technology Architecture & Track Alignments
 
-Smriti was engineered from Day 1 to meaningfully demonstrate the power of open-source AI infrastructure across **7 partner prize categories**:
+Smriti was engineered from Day 1 to meaningfully demonstrate the power of open-source and modern cloud infrastructure across **7 partner categories**:
 
-### 🏆 1. Best Use of Gemma ($200)
+### 🏆 Best Use of Gemma
 * **Role:** Core Cognitive Engine for Grounded Reflection and Keepsake Synthesis.
 * **Implementation:** Smriti connects to Google Gemma (`gemma2:9b` open weights via Ollama or API). Gemma operates under strict temperature constraints (`0.3`) and custom system prompts that forbid roleplaying as a living person. In **Reflection Mode**, Gemma acts as an empathetic mirror, echoing the user's preserved words back to them with cited integrity.
 
-### 🏆 2. Best Use of Render ($200)
+### 🏆 Best Use of Render
 * **Role:** Production Cloud Runtime and Frontend Hosting.
 * **Implementation:** Smriti defines a declarative Infrastructure-as-Code [render.yaml](file:///C:/Users/anava_auw511r/.gemini/antigravity-ide/scratch/smriti/render.yaml) blueprint:
   - An Express API web service running the Node.js Mastra agent runtime.
@@ -194,26 +194,26 @@ Smriti was engineered from Day 1 to meaningfully demonstrate the power of open-s
   - Automatic URL rewrites routing `/api/*` and `/uploads/*` requests seamlessly to the backend service.
   - Connected environment groups (`smriti-secrets`) managing credentials with zero downtime.
 
-### 🏆 3. Best Use of ElevenLabs ($100)
+### 🏆 Best Use of ElevenLabs
 * **Role:** Dignified Spoken Audio Readout for Screen-Off Listening.
 * **Implementation:** Located in `server/routes/voice.js`. When a reflection is generated, ElevenLabs streams high-fidelity speech (`audio/mpeg`) using the Multilingual v2 **George** (*Warm, Captivating Storyteller*) model (`JBFqnCBsd6RMkjVDRZzb`). Smriti strips all citation brackets (`[Source]`) and prompt echoes before passing text to the voice model to ensure natural human cadence, accompanied by an animated pulsing audio waveform in `VoicePlayer.jsx`.
 
-### 🏆 4. Best Use of MongoDB Atlas ($100)
+### 🏆 Best Use of MongoDB Atlas
 * **Role:** Scalable Vector Storage & Semantic Search Engine.
 * **Implementation:** Located in `server/db.js` and `server/vectorSearch.js`. Smriti indexes every memory fragment into a live cloud MongoDB Atlas cluster (`smriti-cluster.iaaaw9a.mongodb.net`) with 128-dimensional vector embeddings. Querying utilizes the Atlas `$vectorSearch` aggregation stage with filtering scoped by `profileId`, ensuring instant cosine semantic retrieval across years of memory fragments. Backed by offline local JSON fallback.
 
-### 🏆 5. Best Use of Mastra ($100)
+### 🏆 Best Use of Mastra
 * **Role:** Agent Workflow Orchestration.
 * **Implementation:** Located in `server/mastra/agent.js`. Built using `@mastra/core` and `@mastra/core/workflows`. Mastra coordinates the end-to-end remembrance pipeline across three formal steps:
   1. `retrieveStep` — Vector search over memory chunks.
   2. `densityGateStep` — Intelligent volume routing (Conversational vs. Reflection).
   3. `synthesizeStep` — Google Gemma contextual generation.
 
-### 🏆 6. Best Use of Sentry ($100)
+### 🏆 Best Use of Sentry
 * **Role:** OpenTelemetry Agent Tracing & Observability.
 * **Implementation:** Located in `server/sentry.js`. Every Mastra tool execution and LLM call is instrumented with custom Sentry spans (`mastra.workflow.remembrance`, `mastra.tool.retrieve`, `mastra.tool.densityGate`, `elevenlabs.text_to_speech`). Spans capture attributes including `queryLength`, `chunksCount`, and `density_mode`, providing real-time latency and error tracking in the Sentry dashboard (`smriti-sanctuary.sentry.io`).
 
-### 🏆 7. Best Use of a .tech Domain ($100)
+### 🏆 Best Use of a .tech Domain
 * **Role:** Production Custom Domain.
 * **Implementation:** Smriti is deployed to **[smriti.tech](https://smriti.tech)**, providing a clean, dignified, branded home that reinforces the open-source mission of technology in service of human memory.
 

@@ -5,7 +5,7 @@ services:
   - type: web
     name: smriti-api
     runtime: node
-    plan: starter
+    plan: free
     region: oregon
     rootDir: server
     buildCommand: npm install
@@ -36,7 +36,7 @@ services:
   - type: web
     name: smriti-sanctuary
     runtime: static
-    plan: starter
+    plan: free
     region: oregon
     rootDir: client
     buildCommand: npm install && npm run build

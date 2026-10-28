@@ -25,11 +25,26 @@ export default function MemoryReel({ profile, slides = [], soundtrack = null, on
   const [progress, setProgress] = useState(0); // 0 to 100 for current segment
   const [isMuted, setIsMuted] = useState(false);
   const [musicVolume, setMusicVolume] = useState(0.35);
+  const [imageFitMode, setImageFitMode] = useState('contain'); // 'contain' (never cuts images) | 'cover'
 
   const audioRef = useRef(null);
   const audioCtxRef = useRef(null);
   const synthTimerRef = useRef(null);
   const slideDuration = 11000; // 11s per memory slide
+
+  // Preload adjacent slides for seamless, flicker-free transitions
+  useEffect(() => {
+    if (!slides || slides.length === 0) return;
+    const nextIdx = (currentIndex + 1) % slides.length;
+    const prevIdx = (currentIndex - 1 + slides.length) % slides.length;
+    [nextIdx, prevIdx].forEach((idx) => {
+      const s = slides[idx];
+      if (s && s.mediaUrl && s.type !== 'video') {
+        const img = new Image();
+        img.src = s.mediaUrl;
+      }
+    });
+  }, [currentIndex, slides]);
 
   // Keyboard navigation (Esc to exit, Left/Right arrows)
   useEffect(() => {
@@ -198,11 +213,7 @@ export default function MemoryReel({ profile, slides = [], soundtrack = null, on
     soundtrack?.title || profile?.soundtrack?.title || 'Sanctuary Ambient Harmony';
 
   return (
-    <div
-      className="memory-reel-overlay fade-in"
-      onMouseEnter={() => setIsPlaying(false)}
-      onMouseLeave={() => setIsPlaying(true)}
-    >
+    <div className="memory-reel-overlay fade-in">
       {/* -------------------------------------------------------------
           1. Top Spotify Wrapped-Style Segmented Story Timeline
           ------------------------------------------------------------- */}
@@ -279,6 +290,15 @@ export default function MemoryReel({ profile, slides = [], soundtrack = null, on
         {/* Left: Breathing Heirloom Photograph or Video */}
         <section className="reel-photo-side">
           <div className="reel-photo-frame">
+            {/* Ambient Blurred Aura matching photo colors so uncropped photo never looks bare */}
+            {currentSlide.mediaUrl && currentSlide.type !== 'video' && (
+              <div
+                className="reel-photo-backdrop"
+                style={{ backgroundImage: `url(${currentSlide.mediaUrl})` }}
+                aria-hidden="true"
+              />
+            )}
+
             {currentSlide.type === 'video' ? (
               <video
                 key={currentSlide._id || currentIndex}
@@ -287,14 +307,14 @@ export default function MemoryReel({ profile, slides = [], soundtrack = null, on
                 loop
                 muted
                 playsInline
-                className="reel-breathing-photo reel-video-player"
+                className={`reel-breathing-photo reel-video-player fit-${imageFitMode}`}
               />
             ) : (
               <img
                 key={currentSlide._id || currentIndex}
                 src={currentSlide.mediaUrl}
                 alt={currentSlide.sourceLabel || 'Memory Moment'}
-                className="reel-breathing-photo"
+                className={`reel-breathing-photo fit-${imageFitMode}`}
               />
             )}
             {/* Ambient Candlelight Bounce Glass Reflection */}
@@ -304,12 +324,27 @@ export default function MemoryReel({ profile, slides = [], soundtrack = null, on
             <div className="reel-corner-flame">
               <CandleFlame size="sm" />
             </div>
+
+            {/* Fit / Fill Toggle */}
+            <button
+              type="button"
+              className="reel-fit-toggle"
+              onClick={() => setImageFitMode((prev) => (prev === 'contain' ? 'cover' : 'contain'))}
+              title={imageFitMode === 'contain' ? 'Expand to fill frame' : 'Show full uncropped photo'}
+            >
+              <span>{imageFitMode === 'contain' ? '⛶ Fill' : '⊡ Full'}</span>
+            </button>
           </div>
         </section>
 
         {/* Right: The Quiet Heartfelt Written Story */}
         <section className="reel-story-side">
-          <div className="reel-story-card fade-in">
+          <div
+            className="reel-story-card fade-in"
+            onMouseEnter={() => setIsPlaying(false)}
+            onMouseLeave={() => setIsPlaying(true)}
+            title="Hovering pauses slideshow"
+          >
             {/* Spacetime Pinning */}
             <div className="reel-spacetime-badge">
               {currentSlide.timePlace?.when && (

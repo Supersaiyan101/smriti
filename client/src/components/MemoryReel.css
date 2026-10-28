@@ -10,16 +10,18 @@
   height: 100vh;
   background-color: #070504;
   background-image: radial-gradient(
-    ellipse 60% 50% at 50% 40%,
-    rgba(232, 168, 71, 0.07) 0%,
+    ellipse 70% 60% at 50% 40%,
+    rgba(232, 168, 71, 0.08) 0%,
     transparent 80%
   );
   z-index: 1200;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: var(--space-lg) var(--space-xl);
-  overflow: hidden;
+  padding: var(--space-md) var(--space-xl);
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 /* -------------------------------------------------------------
@@ -172,11 +174,14 @@
   grid-template-columns: 1fr 1.15fr;
   align-items: center;
   gap: var(--space-2xl);
-  max-width: 1100px;
+  max-width: 1120px;
   width: 100%;
   margin: auto;
   z-index: 1;
-  padding: var(--space-md) 0;
+  padding: var(--space-xs) 0;
+  flex: 1;
+  min-height: 0;
+  max-height: calc(100vh - 140px);
 }
 
 /* Left: Breathing Heirloom Photograph */
@@ -185,14 +190,15 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  height: 100%;
+  min-height: 0;
 }
 
 .reel-photo-frame {
   position: relative;
   width: 100%;
-  max-width: 440px;
-  aspect-ratio: 4 / 3;
-  max-height: 480px;
+  max-width: 480px;
+  height: min(56vh, 440px);
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow:
@@ -200,15 +206,82 @@
     0 0 0 5px #19130F,
     0 0 0 6px rgba(232, 168, 71, 0.2),
     0 16px 48px rgba(0, 0, 0, 0.85);
-  background: #120D0A;
+  background: #0A0705;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ambient Blurred Aura Layer */
+.reel-photo-backdrop {
+  position: absolute;
+  inset: -25px;
+  background-size: cover;
+  background-position: center;
+  filter: blur(28px) brightness(0.38) saturate(1.25);
+  transform: scale(1.15);
+  opacity: 0.85;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .reel-breathing-photo {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  animation: kenBurnsDrift 11s ease-out forwards;
+  max-height: 100%;
+  position: relative;
+  z-index: 1;
+  animation: kenBurnsDrift 11s ease-out forwards, reelFadeIn 0.35s ease-out;
   will-change: transform;
+}
+
+.reel-breathing-photo.fit-contain {
+  object-fit: contain;
+  filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.75));
+}
+
+.reel-breathing-photo.fit-cover {
+  object-fit: cover;
+}
+
+@keyframes reelFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.reel-fit-toggle {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 5;
+  background: rgba(18, 14, 11, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(232, 168, 71, 0.35);
+  border-radius: var(--radius-full);
+  padding: 0.25rem 0.65rem;
+  font-size: 0.72rem;
+  font-family: var(--font-body);
+  color: var(--flame-bright);
+  cursor: pointer;
+  opacity: 0.7;
+  transition: all var(--transition-fast);
+}
+
+.reel-photo-frame:hover .reel-fit-toggle {
+  opacity: 1;
+}
+
+.reel-fit-toggle:hover {
+  background: rgba(28, 22, 17, 0.95);
+  border-color: var(--flame);
+  transform: scale(1.05);
+  opacity: 1;
 }
 
 @keyframes kenBurnsDrift {
@@ -247,6 +320,22 @@
   flex-direction: column;
   justify-content: center;
   width: 100%;
+  max-height: min(58vh, 480px);
+  overflow-y: auto;
+  padding-right: var(--space-xs);
+}
+
+.reel-story-side::-webkit-scrollbar {
+  width: 4px;
+}
+
+.reel-story-side::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.reel-story-side::-webkit-scrollbar-thumb {
+  background: rgba(232, 168, 71, 0.25);
+  border-radius: 4px;
 }
 
 .reel-story-card {
@@ -254,6 +343,7 @@
   flex-direction: column;
   gap: var(--space-md);
   padding: 0 var(--space-md);
+  transition: opacity var(--transition-fast);
 }
 
 .reel-spacetime-badge {

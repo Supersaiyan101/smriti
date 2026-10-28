@@ -479,6 +479,12 @@ export default function Offering() {
                         className="moment-media-preview-container"
                         onClick={() => document.getElementById(`media-input-${moment.id}`)?.click()}
                       >
+                        {/* Ambient aura so tall or wide photos never look awkwardly cropped */}
+                        <div
+                          className="moment-preview-backdrop"
+                          style={{ backgroundImage: `url(${moment.mediaPreview})` }}
+                          aria-hidden="true"
+                        />
                         {moment.isVideo ? (
                           <video
                             src={moment.mediaPreview}

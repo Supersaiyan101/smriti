@@ -6,9 +6,8 @@ dotenv.config();
 
 const router = express.Router();
 
-// Default calm, warm ElevenLabs voice ID (e.g. Rachel / George / Adam)
-// Rachel (21m00Tcm4TlvDq8ikWAM) is an acclaimed warm, empathetic narration voice
-const DEFAULT_VOICE_ID = process.env.ELEVENLABS_VOICE_ID || '21m00Tcm4TlvDq8ikWAM';
+// Default calm, warm ElevenLabs voice ID (George - Warm, Captivating Storyteller)
+const DEFAULT_VOICE_ID = process.env.ELEVENLABS_VOICE_ID || 'JBFqnCBsd6RMkjVDRZzb';
 const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY;
 
 /**

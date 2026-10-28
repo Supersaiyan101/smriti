@@ -18,7 +18,7 @@ router.get('/reel/:profileId', async (req, res) => {
 // POST upload or configure a soundtrack for the Memory Reel
 router.post('/reel/soundtrack', upload.single('soundtrack'), async (req, res) => {
   try {
-    const { profileId, title, presetType } = req.body;
+    const { profileId, title, presetType, spotifyUrl } = req.body;
     if (!profileId) {
       return res.status(400).json({ success: false, error: 'Profile ID is required' });
     }
@@ -28,10 +28,18 @@ router.post('/reel/soundtrack', upload.single('soundtrack'), async (req, res) =>
       audioUrl = `/uploads/${req.file.filename}`;
     }
 
+    let spotifyTrackId = null;
+    if (spotifyUrl) {
+      const match = spotifyUrl.match(/track\/([a-zA-Z0-9]+)/);
+      if (match) spotifyTrackId = match[1];
+    }
+
     const soundtrack = {
-      title: title || (presetType ? `Sanctuary: ${presetType}` : 'Their Favorite Song'),
+      title: title || (spotifyUrl ? 'Spotify Track' : presetType ? `Sanctuary: ${presetType}` : 'Their Favorite Song'),
       url: audioUrl || req.body.url || null,
-      presetType: presetType || (audioUrl ? 'upload' : 'ambient'),
+      spotifyUrl: spotifyUrl || null,
+      spotifyTrackId: spotifyTrackId || null,
+      presetType: presetType || (audioUrl ? 'upload' : spotifyUrl ? 'spotify' : 'ambient'),
       updatedAt: new Date().toISOString(),
     };
 
@@ -43,10 +51,10 @@ router.post('/reel/soundtrack', upload.single('soundtrack'), async (req, res) =>
   }
 });
 
-// POST add a dedicated slide to the Memory Reel (photo + heartfelt story + time/place)
+// POST add a dedicated slide to the Memory Reel (photo/video + heartfelt story + time/place)
 router.post('/reel', upload.single('media'), async (req, res) => {
   try {
-    const { profileId, story, content, title, sourceLabel, order } = req.body;
+    const { profileId, story, content, title, sourceLabel, order, type } = req.body;
 
     if (!profileId) {
       return res.status(400).json({ success: false, error: 'Profile ID is required' });
@@ -58,8 +66,10 @@ router.post('/reel', upload.single('media'), async (req, res) => {
     }
 
     if (!mediaUrl) {
-      return res.status(400).json({ success: false, error: 'A photograph is required for the Memory Reel' });
+      return res.status(400).json({ success: false, error: 'A photograph or video is required for the Memory Reel' });
     }
+
+    const mediaType = type || (req.file ? (req.file.mimetype.startsWith('video') ? 'video' : 'photo') : 'photo');
 
     let timePlace = null;
     if (req.body.timePlace) {
@@ -70,12 +80,12 @@ router.post('/reel', upload.single('media'), async (req, res) => {
       }
     }
 
-    const slideContent = story || content || 'A cherished photograph in the Memory Reel.';
+    const slideContent = story || content || 'A cherished moment in the Memory Reel.';
     const slideLabel = title || sourceLabel || 'Memory Reel Moment';
 
     const memory = await dbService.addMemory({
       profileId,
-      type: 'photo',
+      type: mediaType,
       content: slideContent,
       mediaUrl,
       sourceLabel: slideLabel,

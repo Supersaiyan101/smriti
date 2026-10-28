@@ -17,7 +17,8 @@ const storage = multer.diskStorage({
     cb(null, UPLOADS_DIR);
   },
   filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname) || (file.mimetype.startsWith('audio') ? '.webm' : '.jpg');
+    const ext = path.extname(file.originalname) || 
+      (file.mimetype.startsWith('audio') ? '.webm' : file.mimetype.startsWith('video') ? '.mp4' : '.jpg');
     const unique = `${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`;
     cb(null, unique);
   },
@@ -26,6 +27,6 @@ const storage = multer.diskStorage({
 export const upload = multer({
   storage,
   limits: {
-    fileSize: 25 * 1024 * 1024, // 25 MB max
+    fileSize: 50 * 1024 * 1024, // 50 MB max for videos/photos/audio
   },
 });

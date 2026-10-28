@@ -231,20 +231,33 @@ export default function MemoryReel({ profile, slides = [], soundtrack = null, on
 
         {/* Top Header Controls: Music Badge + Exit */}
         <div className="reel-header-controls">
-          {/* Spotify Soundtrack Pill */}
+          {/* Spotify / Audio Soundtrack Pill */}
           <div className="reel-soundtrack-badge" title="Soundtrack playing softly">
             <span className={`vinyl-disc ${isPlaying && !isMuted ? 'vinyl-disc--spinning' : ''}`}>
               💿
             </span>
             <span className="soundtrack-name">{activeTrackTitle}</span>
-            <button
-              type="button"
-              className="soundtrack-mute-btn"
-              onClick={() => setIsMuted(!isMuted)}
-              title={isMuted ? 'Unmute music' : 'Mute music'}
-            >
-              {isMuted ? '🔇' : '🔊'}
-            </button>
+            {soundtrack?.spotifyTrackId ? (
+              <a
+                href={soundtrack.spotifyUrl || `https://open.spotify.com/track/${soundtrack.spotifyTrackId}`}
+                target="_blank"
+                rel="noreferrer"
+                className="soundtrack-spotify-link"
+                title="Open track on Spotify"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <span>Spotify ↗</span>
+              </a>
+            ) : (
+              <button
+                type="button"
+                className="soundtrack-mute-btn"
+                onClick={() => setIsMuted(!isMuted)}
+                title={isMuted ? 'Unmute music' : 'Mute music'}
+              >
+                {isMuted ? '🔇' : '🔊'}
+              </button>
+            )}
           </div>
 
           <button
@@ -263,15 +276,27 @@ export default function MemoryReel({ profile, slides = [], soundtrack = null, on
           2. Layout A: Cinematic Split Altar
           ------------------------------------------------------------- */}
       <main className="reel-cinema-split">
-        {/* Left: Breathing Heirloom Photograph */}
+        {/* Left: Breathing Heirloom Photograph or Video */}
         <section className="reel-photo-side">
           <div className="reel-photo-frame">
-            <img
-              key={currentSlide._id || currentIndex}
-              src={currentSlide.mediaUrl}
-              alt={currentSlide.sourceLabel || 'Memory Moment'}
-              className="reel-breathing-photo"
-            />
+            {currentSlide.type === 'video' ? (
+              <video
+                key={currentSlide._id || currentIndex}
+                src={currentSlide.mediaUrl}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="reel-breathing-photo reel-video-player"
+              />
+            ) : (
+              <img
+                key={currentSlide._id || currentIndex}
+                src={currentSlide.mediaUrl}
+                alt={currentSlide.sourceLabel || 'Memory Moment'}
+                className="reel-breathing-photo"
+              />
+            )}
             {/* Ambient Candlelight Bounce Glass Reflection */}
             <div className="reel-glass-reflection" aria-hidden="true" />
 

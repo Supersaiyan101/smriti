@@ -122,6 +122,27 @@
   opacity: 1;
 }
 
+.soundtrack-spotify-link {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.72rem;
+  background: #1DB954;
+  color: #000;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  transition: opacity var(--transition-fast);
+}
+
+.soundtrack-spotify-link:hover {
+  opacity: 0.9;
+}
+
+.reel-video-player {
+  object-fit: cover;
+}
+
 .reel-exit-btn {
   background: rgba(28, 22, 17, 0.7);
   border: 1px solid var(--border-warm);

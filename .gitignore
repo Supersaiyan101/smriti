@@ -8,10 +8,12 @@ dist
 dist-ssr
 *.local
 
-# Environment variables
+# Environment variables & Local Credentials
 .env
 .env.local
 .env.*.local
+*.credentials
+credentials.local.md
 
 # Logs
 npm-debug.log*

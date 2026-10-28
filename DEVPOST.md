@@ -11,7 +11,6 @@ description: "A universal, privacy-first sanctuary of remembrance. Powered by Go
 > **Hacktoberfest 2026 — Week 4: Ghost in the Machine**  
 > **Repository:** [github.com/Supersaiyan101/smriti](https://github.com/Supersaiyan101/smriti)  
 > **Production Sanctuary:** [https://smriti-sanctuary.onrender.com](https://smriti-sanctuary.onrender.com)  
-> **Custom Domain:** [https://smriti.tech](https://smriti.tech)  
 > **License:** MIT (Free & Open Source forever)
 
 ---
@@ -179,7 +178,7 @@ ${contextBlocks}`;
 
 ## 5. Partner Technology Architecture & Track Alignments
 
-Smriti was engineered from Day 1 to meaningfully demonstrate the power of open-source and modern cloud infrastructure across **7 partner categories**:
+Smriti was engineered from Day 1 to meaningfully demonstrate the power of open-source and modern cloud infrastructure across **6 partner categories**:
 
 ### 🏆 Best Use of Gemma
 * **Role:** Core Cognitive Engine for Grounded Reflection and Keepsake Synthesis.
@@ -211,10 +210,6 @@ Smriti was engineered from Day 1 to meaningfully demonstrate the power of open-s
 ### 🏆 Best Use of Sentry
 * **Role:** OpenTelemetry Agent Tracing & Observability.
 * **Implementation:** Located in `server/sentry.js`. Every Mastra tool execution and LLM call is instrumented with custom Sentry spans (`mastra.workflow.remembrance`, `mastra.tool.retrieve`, `mastra.tool.densityGate`, `elevenlabs.text_to_speech`). Spans capture attributes including `queryLength`, `chunksCount`, and `density_mode`, providing real-time latency and error tracking in the Sentry dashboard (`smriti-sanctuary.sentry.io`).
-
-### 🏆 Best Use of a .tech Domain
-* **Role:** Production Custom Domain.
-* **Implementation:** Smriti is deployed to **[smriti.tech](https://smriti.tech)**, providing a clean, dignified, branded home that reinforces the open-source mission of technology in service of human memory.
 
 ---
 
@@ -268,5 +263,4 @@ It provides a sanctuary where your loved one’s memory belongs only to you. No 
 ### Links & Resources
 - **GitHub Repository:** [github.com/Supersaiyan101/smriti](https://github.com/Supersaiyan101/smriti)
 - **Live Sanctuary Demo:** [https://smriti-sanctuary.onrender.com](https://smriti-sanctuary.onrender.com)
-- **Custom Domain:** [https://smriti.tech](https://smriti.tech)
 - **License:** [MIT License](LICENSE)

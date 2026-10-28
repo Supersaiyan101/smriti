@@ -39,11 +39,13 @@ The game-changing heart of Smriti. The Memory Reel weaves a loved one's preserve
 ### Feature 1 — The Sanctuary (Living Altar Shelf)
 The home screen is a quiet room at dusk. Each remembered person rests as a softly glowing portrait beside a living candle flame on an uncluttered shelf. Shipped with 3 pristine seed profiles (*Arjun Mehta*, *Ananya Bose*, *David Miller*) with immediate Memory Reel playback and a built-in seed utility (`npm run seed`).
 
-### Feature 2 — The Offering & Archival Journal
-A tender 3-step memory drop for text, voice, and photographs:
-- **Archival Linen Journal Leaf:** Warm serif script with margin rules and dimensional Sanskrit wax seal stamp (`स्मृ`).
-- **Sensory Inspiration Quick-Chips:** One-tap chips for Weather (*Monsoon rain*, *Golden hour sunset*, *Winter frost*), Scent (*Cardamom chai*, *Woodsmoke & pine*, *Jasmine*), and Song (*Acoustic guitar*, *Late night radio*, *Slow piano*).
-- **Quiet Local Draft Auto-Save:** Automatically preserves in-progress reflections to local browser storage so not a single word is lost to tab closures or interruptions.
+### Feature 2 — The Offering (Reel-First Creator & Ceremony)
+Transforming the act of memorial creation into weaving a living Memory Reel from moment one:
+- **Who Are We Honoring:** Name, relationship, and circular altar portrait upload with live preview.
+- **Dynamic Moments Filmstrip:** Add unlimited photos and videos (up to 50MB) with heartfelt stories written in *Cormorant Garamond*, moment titles, and spacetime pinning (`When was this?`, `Where were you?`).
+- **Triple-Dock Soundtrack:** Choose between curated acoustic sanctuary presets (*Piano Dusk*, *Classical Sarod*, *Temple Dawn*), offline MP3 audio upload, or direct Spotify song links.
+- **Sacred Hold-to-Light Flame Ceremony:** Holding to light the ceremonial flame creates their profile, weaves all moment slides and soundtracks into their reel, and seamlessly launches the Memory Reel slideshow finale upon their newly lit altar.
+- **Quiet Local Draft Auto-Save:** Automatically preserves in-progress moments and stories in local storage so not a single memory is lost.
 
 ### Feature 3 — The Remembrance (Adaptive Grounding & Slow Ink)
 Clicking a portrait brings full focus to their hearth:
@@ -57,12 +59,16 @@ A dedicated meditation sanctuary for wordless presence:
 - **Mindful 4-7-8 Breathing Guide:** Expanding and contracting golden ring guiding inhale, hold, and release.
 - **Tap-to-Tend 432Hz Chime:** Soft Web Audio chime tuned to 432Hz that replenishes embers.
 
-### Feature 5 — The Voice & Ambient Soundscapes
-- **Studio Audio Ducking:** Ambient rain/tanpura automatically ducks (-65%) whenever voice recordings or ElevenLabs readouts play.
+### Feature 5 — Clean Acoustic Soundscapes & Voice
+- **Pure Acoustic Sanctuary Engine:** Completely free of harsh radio hiss or white/pink noise static. Features pure 432Hz harmonic pentatonic temple chimes with natural exponential decay, warm sine wave rain droplets, and gentle sub-octave sine breeze drones (108Hz/216Hz).
+- **Studio Audio Ducking:** Ambient soundscapes automatically duck (-65%) whenever voice recordings or ElevenLabs readouts play.
 - **Analog Warmth Filter:** Web Audio low-pass filter (6800Hz) that softens digital harshness into vintage vinyl warmth.
 
-### Feature 6 — The Keepsake Letter (Heirloom Export)
-One-click generation of a single printable, frame-worthy archival letter featuring deckled paper borders, their featured quote, a Gemma-penned reflection, and a dimensional Sanskrit wax seal stamp.
+### Feature 6 — The Keepsake Letter (Story-Extracted Heirloom Export)
+One-click generation of a single printable, frame-worthy archival letter:
+- **Story-Extracted Wisdom:** Directly pulls preserved quotes, moments, and spacetime coordinates from their Memory Reel photo stories into Gemma's synthesis.
+- **Archival Deckled Parchment:** Renders with authentic torn paper edges, fold crease lines, moment thumbnails, and a dimensional crimson/gold Sanskrit wax seal stamp (`स्मृ`).
+- **High-Resolution Print Layout:** Custom `@media print` styling removes dark backgrounds and prepares crisp typography for physical framing.
 
 ---
 

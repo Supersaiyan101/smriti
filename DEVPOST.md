@@ -63,12 +63,13 @@ The defining feature of Smriti. It weaves photographs and heartfelt stories into
 ### Feature 1 — The Sanctuary (Living Hearth)
 The home screen is a quiet room at dusk. Each remembered person appears as a softly framed portrait resting beside a living, flickering candle flame. The shelf features 3 clean sample profiles (*Arjun Mehta*, *Ananya Bose*, *David Miller*) with immediate Memory Reel playback and a built-in seed utility (`npm run seed`).
 
-### Feature 2 — The Offering & Archival Journal
-A dead-simple 3-step memory drop:
-1. **Who were they?** (Name and relationship).
-2. **Archival Linen Journal Leaf:** Margin rule, warm script font, dimensional Sanskrit wax seal stamp (`स्मृ`), spacetime pinning (`When was this?`, `Where were you?`).
-3. **Sensory Inspiration Quick-Chips:** 1-tap chips for Weather (*Monsoon rain*, *Golden hour*), Scent (*Cardamom chai*, *Woodsmoke*), and Song (*Acoustic guitar*, *Old radio*).
-4. **Quiet Local Draft Auto-Save:** In-progress reflections are automatically preserved locally so no heartfelt words are lost.
+### Feature 2 — The Offering (Reel-First Creator & Ceremony)
+Transforming the act of memorial creation into weaving a living Memory Reel from moment one:
+1. **Who Are We Honoring:** Name, relationship, and circular altar portrait upload with live preview.
+2. **Dynamic Moments Filmstrip:** Add unlimited photos and videos (up to 50MB) with heartfelt stories written in *Cormorant Garamond*, moment titles, and spacetime pinning (`When was this?`, `Where were you?`).
+3. **Triple-Dock Soundtrack:** Choose between curated acoustic sanctuary presets (*Piano Dusk*, *Classical Sarod*, *Temple Dawn*), offline MP3 audio upload, or direct Spotify song links.
+4. **Sacred Hold-to-Light Flame Ceremony:** Holding to light the ceremonial flame creates their profile, weaves all moment slides and soundtracks into their reel, and seamlessly launches the Memory Reel slideshow finale upon their newly lit altar.
+5. **Quiet Local Draft Auto-Save:** Automatically preserves in-progress moments and stories in local storage so not a single memory is lost.
 
 #### 💡 The Sparse Memory Dilemma: "What if I only have one memory?"
 One of the most tender realities of grief is that we often have very little preserved data. For a childhood friend who passed young, you might only have **one sentence** they always said.
@@ -86,11 +87,16 @@ Clicking a portrait brings full focus to their hearth:
 ### Feature 4 — The Vigil ("Sit with Them")
 A dedicated meditation sanctuary for wordless presence with an expanding 4-7-8 mindful breathing ring and a tap-to-tend 432Hz bronze chime.
 
-### Feature 5 — The Voice & Ambient Soundscapes
-ElevenLabs speech readout with studio audio ducking (-65%) and an analog warmth filter (6800Hz low-pass) for vintage vinyl warmth.
+### Feature 5 — Clean Acoustic Soundscapes & Voice
+- **Pure Acoustic Sanctuary Engine:** Completely free of harsh radio hiss or white/pink noise static. Features pure 432Hz harmonic pentatonic temple chimes with natural exponential decay, warm sine wave rain droplets, and gentle sub-octave sine breeze drones (108Hz/216Hz).
+- **Studio Audio Ducking:** Ambient soundscapes automatically duck (-65%) whenever voice recordings or ElevenLabs readouts play.
+- **Analog Warmth Filter:** Web Audio low-pass filter (6800Hz) that softens digital harshness into vintage vinyl warmth.
 
-### Feature 6 — The Keepsake Letter (Physical Archival Export)
-One tap on *"📜 Keepsake Letter"* generates a printable, framed heirloom document with deckled paper borders, their featured quote, a Gemma reflection, and a Sanskrit wax seal stamp. Hitting `Ctrl+P` triggers a custom `@media print` layout.
+### Feature 6 — The Keepsake Letter (Story-Extracted Heirloom Export)
+One tap on *"📜 Keepsake Letter"* generates a printable, framed heirloom document:
+- **Story-Extracted Wisdom:** Directly pulls preserved quotes, moments, and spacetime coordinates from their Memory Reel photo stories into Gemma's synthesis.
+- **Archival Deckled Parchment:** Renders with authentic torn paper edges, fold crease lines, moment thumbnails, and a dimensional crimson/gold Sanskrit wax seal stamp (`स्मृ`).
+- **High-Resolution Print Layout:** Custom `@media print` styling removes dark backgrounds and prepares crisp typography for physical framing.
 
 ---
 

@@ -236,6 +236,13 @@ npm run test -w server
 ✔ Testing ElevenLabs Voice Endpoint & Citation Stripping ... PASSED
 ✔ Testing Keepsake Letter Generation ... PASSED
 [Smriti Phase 4 Voice & Letter Test] ALL TESTS PASSED (100% OK)
+
+[Smriti Depth Features Test] Starting verification...
+✔ Testing Sensory Anchors (weather, scent, song) & Spacetime Pinning ... PASSED
+✔ Testing Unsent Letters to Them on the Hearth ... PASSED
+✔ Testing Memory Reel Slide Photo Stories & Heirloom Lightbox Framing ... PASSED
+✔ Testing Soundtrack Modes (Offline MP3, Spotify Embed, Curated 432Hz Presets) ... PASSED
+[Smriti Depth Features Test] ALL DEPTH TESTS PASSED (100% OK)
 ```
 
 ---

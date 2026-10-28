@@ -11,7 +11,8 @@ description: "A universal, privacy-first sanctuary of remembrance. Powered by Go
 
 > **Hacktoberfest 2026 — Week 4: Ghost in the Machine**  
 > **Repository:** [github.com/Supersaiyan101/smriti](https://github.com/Supersaiyan101/smriti)  
-> **Live Sanctuary:** [https://smriti.tech](https://smriti.tech) (Hosted on Render)  
+> **Production Sanctuary:** [https://smriti-sanctuary.onrender.com](https://smriti-sanctuary.onrender.com)  
+> **Custom Domain:** [https://smriti.tech](https://smriti.tech)  
 > **License:** MIT (Free & Open Source forever)
 
 ---
@@ -28,7 +29,7 @@ In recent years, commercial AI companies have begun packaging grief. They ask yo
 
 In ancient Sanskrit, **Smriti** (स्मृति) means *Remembrance*—that which is preserved in living memory. But the practice of remembering is universal across all human geography. Whether it is lighting a vigil candle in a quiet European chapel, setting a paper lantern adrift on water in Japan, or gathering around a family table, humans have always remembered the departed with a **gentle light in the dark**.
 
-I built Smriti as an open-source, privacy-first sanctuary. It does not pretend the dead are still alive. It does not hallucinate false memories. Instead, it gathers scattered fragments of words, voice, and wisdom, preserves them with cryptographic custody, and lets you sit quietly beside their flame.
+I built Smriti as an open-source, privacy-first sanctuary. It does not pretend the dead are still alive. It does not hallucinate false memories. Instead, it gathers scattered fragments of words, voice, and wisdom, preserves them with cryptographic cloud custody, and lets you sit quietly beside their flame.
 
 ---
 
@@ -54,14 +55,17 @@ Smriti is intentionally designed with one defining aesthetic: **Quiet**. There a
 The defining feature of Smriti. It weaves photographs and heartfelt stories into a cinematic slideshow set to music, kept permanently on their altar:
 
 - **Layout A (Cinematic Split):**
-  - **Left Half:** High-resolution portrait framed in an archival brass & dark wood bezel with subtle Ken Burns drift (1.0 to 1.04 zoom over 11s), realistic glass reflections, and a corner living flame.
+  - **Left Half:** High-resolution portrait framed in an archival brass & dark wood bezel with subtle Ken Burns drift (`1.0` to `1.04` zoom over 11s), realistic glass reflections, and a corner living flame. Adaptive contain framing guarantees **zero image clipping** on vertical smartphone photos, square shots, or landscape portraits.
   - **Right Half:** Spacetime pinning badge (`🗓️ [When] • 📍 [Where]`), moment title, and the quiet written narrative in large, elegant *Cormorant Garamond* serif prose.
-- **Spotify Wrapped-Style Story Bars:** Segmented top progress bars (`▬▬ ▬▬ ▬▬`), auto-advancing, clickable to jump, keyboard controls (`←`/`→`/`Esc`/`Space`), and pause-on-hover.
-- **Sanctuary Soundtrack Engine:** Custom MP3 audio upload ("Their Song") or procedural sanctuary acoustic melodies (*Peaceful Piano Dusk*, *Twilight Sarod*, *Warm Acoustic Strings*, *Rain & Wind Chimes*), with spinning vinyl badge and mute control.
+- **Spotify Wrapped-Style Story Bars:** Segmented top progress bars (`▬▬ ▬▬ ▬▬`), auto-advancing every 11 seconds, clickable to jump, keyboard controls (`←`/`→`/`Esc`/`Space`), and pause-on-hover.
+- **Sanctuary Soundtrack Engine:** Custom MP3 audio upload ("Their Song"), direct Spotify web streaming embeds, or procedural sanctuary acoustic melodies (*Peaceful Piano Dusk*, *Twilight Sarod*, *Warm Acoustic Strings*, *Rain & Wind Chimes*), with spinning vinyl badge and mute control.
 - **Read-Only Reverence:** Strictly human heartfelt stories with zero robotic TTS narration over the slideshow.
 
 ### Feature 1 — The Sanctuary (Living Hearth)
-The home screen is a quiet room at dusk. Each remembered person appears as a softly framed portrait resting beside a living, flickering candle flame. The shelf features 3 clean sample profiles (*Arjun Mehta*, *Rekha Sharma*, *David Miller*) with immediate Memory Reel playback and a built-in seed utility (`npm run seed`).
+The home screen is a quiet room at dusk. Each remembered person appears as a softly framed portrait resting beside a living, flickering candle flame. The shelf features 3 clean sample profiles:
+- **Arjun Mehta:** College best friend (*Monsoon chai, Solan road trip, graduation smile*), paired with *Peaceful Piano Dusk*.
+- **Rekha Sharma:** Beloved grandmother (*Balcony Tagore readings, brass hearth sandesh, silver coin blessing*), paired with *Twilight Sarod*.
+- **David Miller:** High school debate mentor (*The unsharpened pencil, library rebuttal prep, brass championship trophy*), paired with *Warm Acoustic Strings*.
 
 ### Feature 2 — The Offering (Reel-First Creator & Ceremony)
 Transforming the act of memorial creation into weaving a living Memory Reel from moment one:
@@ -87,10 +91,12 @@ Clicking a portrait brings full focus to their hearth:
 ### Feature 4 — The Vigil ("Sit with Them")
 A dedicated meditation sanctuary for wordless presence with an expanding 4-7-8 mindful breathing ring and a tap-to-tend 432Hz bronze chime.
 
-### Feature 5 — Clean Acoustic Soundscapes & Voice
-- **Pure Acoustic Sanctuary Engine:** Completely free of harsh radio hiss or white/pink noise static. Features pure 432Hz harmonic pentatonic temple chimes with natural exponential decay, warm sine wave rain droplets, and gentle sub-octave sine breeze drones (108Hz/216Hz).
-- **Studio Audio Ducking:** Ambient soundscapes automatically duck (-65%) whenever voice recordings or ElevenLabs readouts play.
-- **Analog Warmth Filter:** Web Audio low-pass filter (6800Hz) that softens digital harshness into vintage vinyl warmth.
+### Feature 5 — Studio AI Audio Narration (ElevenLabs + Natural Fallback)
+- **ElevenLabs Studio Streaming:** Powered by ElevenLabs' **George** (*Warm, Captivating Storyteller*) model (`JBFqnCBsd6RMkjVDRZzb`) streaming live `audio/mpeg` speech.
+- **Poetic Text Preprocessing:** Automatically strips prompt echoes, citation brackets, and harsh quotes before synthesis, ensuring natural human storytelling.
+- **Analog Warmth Filter:** Routes speech through a Web Audio `BiquadFilterNode` lowpass filter (6800Hz) and vocal warmth boost (2400Hz), softening digital sibilance into vintage vinyl warmth.
+- **Studio Audio Ducking:** Automatically ducks ambient background soundscapes by 65% whenever spoken reflections play, gently swelling back up when finished.
+- **Natural Neural Browser Fallback:** If an ElevenLabs key is not present, auto-selects modern Microsoft Online Natural (*Jenny / Aria*) and Google Neural voices with sentence-by-sentence 320ms human breath pauses, skipping robotic 2000s desktop voices.
 
 ### Feature 6 — The Keepsake Letter (Story-Extracted Heirloom Export)
 One tap on *"📜 Keepsake Letter"* generates a printable, framed heirloom document:
@@ -111,9 +117,10 @@ Smriti is built as an open-source monorepo combining a modern React + Vite front
   └─ Photo / Scanned Letter
          │
          ▼
-  [ MongoDB Atlas ]
-  ├─ profiles collection (metadata, relations)
-  └─ memories collection (chunks + Atlas Vector Search Index)
+  [ MongoDB Atlas Cloud Cluster ]
+  ├─ profiles collection (metadata, relations, soundtracks)
+  ├─ memories collection (chunks + Atlas Vector Search Index)
+  └─ lettersToThem collection (sealed heirloom envelopes)
          │
   USER ASKS: "What did they tell me about patience?"
          │
@@ -139,6 +146,7 @@ Smriti is built as an open-source monorepo combining a modern React + Vite front
   [ Text Response + Citations ]   [ ElevenLabs TTS API ]
   UI renders clickable pills      Streams audio/mpeg for
   ⚓ [Chai stall memory, 2018]     screen-off quiet listening
+                                  (George Storyteller Voice)
 ```
 
 ---
@@ -182,16 +190,17 @@ Smriti was engineered from Day 1 to meaningfully demonstrate the power of open-s
 * **Role:** Production Cloud Runtime and Frontend Hosting.
 * **Implementation:** Smriti defines a declarative Infrastructure-as-Code [render.yaml](file:///C:/Users/anava_auw511r/.gemini/antigravity-ide/scratch/smriti/render.yaml) blueprint:
   - An Express API web service running the Node.js Mastra agent runtime.
-  - A static web service hosting the React + Vite Single Page Application.
+  - A static web service hosting the React + Vite Single Page Application on Render's global edge CDN.
   - Automatic URL rewrites routing `/api/*` and `/uploads/*` requests seamlessly to the backend service.
+  - Connected environment groups (`smriti-secrets`) managing credentials with zero downtime.
 
 ### 🏆 3. Best Use of ElevenLabs ($100)
 * **Role:** Dignified Spoken Audio Readout for Screen-Off Listening.
-* **Implementation:** Located in `server/routes/voice.js`. When a reflection is generated, ElevenLabs streams high-fidelity speech (`audio/mpeg`) using the Multilingual v2 model. Smriti strips all citation brackets (`[Source]`) before passing text to the voice model to ensure natural human cadence, accompanied by an animated pulsing audio waveform in `VoicePlayer.jsx`.
+* **Implementation:** Located in `server/routes/voice.js`. When a reflection is generated, ElevenLabs streams high-fidelity speech (`audio/mpeg`) using the Multilingual v2 **George** (*Warm, Captivating Storyteller*) model (`JBFqnCBsd6RMkjVDRZzb`). Smriti strips all citation brackets (`[Source]`) and prompt echoes before passing text to the voice model to ensure natural human cadence, accompanied by an animated pulsing audio waveform in `VoicePlayer.jsx`.
 
 ### 🏆 4. Best Use of MongoDB Atlas ($100)
 * **Role:** Scalable Vector Storage & Semantic Search Engine.
-* **Implementation:** Located in `server/db.js` and `server/vectorSearch.js`. Smriti indexes every memory fragment into MongoDB Atlas with 128-dimensional vector embeddings. Querying utilizes the Atlas `$vectorSearch` aggregation stage with filtering scoped by `profileId`, ensuring instant cosine semantic retrieval across years of memory fragments.
+* **Implementation:** Located in `server/db.js` and `server/vectorSearch.js`. Smriti indexes every memory fragment into a live cloud MongoDB Atlas cluster (`smriti-cluster.iaaaw9a.mongodb.net`) with 128-dimensional vector embeddings. Querying utilizes the Atlas `$vectorSearch` aggregation stage with filtering scoped by `profileId`, ensuring instant cosine semantic retrieval across years of memory fragments. Backed by offline local JSON fallback.
 
 ### 🏆 5. Best Use of Mastra ($100)
 * **Role:** Agent Workflow Orchestration.
@@ -202,7 +211,7 @@ Smriti was engineered from Day 1 to meaningfully demonstrate the power of open-s
 
 ### 🏆 6. Best Use of Sentry ($100)
 * **Role:** OpenTelemetry Agent Tracing & Observability.
-* **Implementation:** Located in `server/sentry.js`. Every Mastra tool execution and LLM call is instrumented with custom Sentry spans (`mastra.workflow.remembrance`, `mastra.tool.retrieve`, `mastra.tool.densityGate`, `elevenlabs.text_to_speech`). Spans capture attributes including `queryLength`, `chunksCount`, and `density_mode`, providing real-time latency and error tracking in the Sentry dashboard.
+* **Implementation:** Located in `server/sentry.js`. Every Mastra tool execution and LLM call is instrumented with custom Sentry spans (`mastra.workflow.remembrance`, `mastra.tool.retrieve`, `mastra.tool.densityGate`, `elevenlabs.text_to_speech`). Spans capture attributes including `queryLength`, `chunksCount`, and `density_mode`, providing real-time latency and error tracking in the Sentry dashboard (`smriti-sanctuary.sentry.io`).
 
 ### 🏆 7. Best Use of a .tech Domain ($100)
 * **Role:** Production Custom Domain.
@@ -259,5 +268,6 @@ It provides a sanctuary where your loved one’s memory belongs only to you. No 
 
 ### Links & Resources
 - **GitHub Repository:** [github.com/Supersaiyan101/smriti](https://github.com/Supersaiyan101/smriti)
-- **Live Demo:** [smriti.tech](https://smriti.tech)
-- **License:** [MIT License](file:///C:/Users/anava_auw511r/.gemini/antigravity-ide/scratch/smriti/LICENSE)
+- **Live Sanctuary Demo:** [https://smriti-sanctuary.onrender.com](https://smriti-sanctuary.onrender.com)
+- **Custom Domain:** [https://smriti.tech](https://smriti.tech)
+- **License:** [MIT License](LICENSE)

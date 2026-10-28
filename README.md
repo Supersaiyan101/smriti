@@ -5,11 +5,14 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-amber.svg?style=for-the-badge)](LICENSE)
 [![Google Gemma](https://img.shields.io/badge/AI-Google%20Gemma-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/gemma)
 [![Mastra](https://img.shields.io/badge/Orchestration-Mastra-8B5CF6?style=for-the-badge)](https://mastra.ai/)
+[![MongoDB Atlas](https://img.shields.io/badge/Database-MongoDB%20Atlas-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/atlas)
+[![ElevenLabs](https://img.shields.io/badge/Audio-ElevenLabs%20Studio-FF6B6B?style=for-the-badge)](https://elevenlabs.io/)
 [![Sentry](https://img.shields.io/badge/Observability-Sentry-362D59?style=for-the-badge&logo=sentry&logoColor=white)](https://sentry.io/)
+[![Render](https://img.shields.io/badge/Cloud-Render%20Blueprint-46E3B7?style=for-the-badge&logo=render&logoColor=black)](https://render.com/)
 
 > **Hacktoberfest 2026 — Week 4: Ghost in the Machine**  
 > **Repository:** [github.com/Supersaiyan101/smriti](https://github.com/Supersaiyan101/smriti)  
-> **Production Sanctuary:** [https://smriti.tech](https://smriti.tech) (Hosted on Render)  
+> **Production Sanctuary:** [https://smriti-sanctuary.onrender.com](https://smriti-sanctuary.onrender.com)  
 > **License:** MIT (Free & Open Source Forever)
 
 ---
@@ -35,7 +38,7 @@ Smriti is an open-source, privacy-first sanctuary. It does not attempt to "resur
 
 ## 2. The Flagship Centerpiece: The Memory Reel
 
-The game-changing heart of Smriti. The **Memory Reel** weaves a loved one's preserved photographs, video clips, and heartfelt written stories into a cinematic, Spotify Wrapped-style slideshow that lives permanently upon their altar.
+The defining centerpiece of Smriti. The **Memory Reel** weaves a loved one's preserved photographs, video clips, and heartfelt written stories into a cinematic, Spotify Wrapped-style slideshow that lives permanently upon their altar.
 
 ```
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
@@ -71,7 +74,7 @@ The game-changing heart of Smriti. The **Memory Reel** weaves a loved one's pres
    * **Curated Procedural Presets:** Choose from built-in acoustic compositions (*Peaceful Piano Dusk*, *Twilight Sarod*, *Warm Acoustic Strings*, *Rain & Wind Chimes*).
    * Features a softly spinning vinyl record badge and a one-click mute/pause toggle.
 4. **Read-Only Reverent Dignity:**
-   * Strictly human heartfelt stories with **zero** robotic AI speech readout over the slideshow, preserving the authenticity and emotional purity of each remembered moment.
+   * Strictly human heartfelt stories with **zero** robotic AI speech readout over the slideshow, preserving the emotional purity of each remembered moment.
 5. **Interactive Heirloom Lightbox:**
    * Clicking any photograph during the slideshow pauses the reel and opens the image in a full-screen, high-definition inspection modal with ambient backdrop aura, spacetime metadata, and the complete narrative.
 
@@ -80,12 +83,15 @@ The game-changing heart of Smriti. The **Memory Reel** weaves a loved one's pres
 ## 3. Comprehensive Sanctuary Features
 
 ### 🕯️ Feature 1 — The Sanctuary (Living Altar Shelf)
-The home screen is a quiet room at dusk. Each remembered person rests as a softly glowing portrait beside a living candle flame on an uncluttered shelf. Shipped with 3 pristine seed profiles (*Arjun Mehta*, *Rekha Sharma*, *David Miller*) with immediate Memory Reel playback and a built-in seed utility (`npm run seed`).
+The home screen is a quiet room at dusk. Each remembered person rests as a softly glowing portrait beside a living candle flame on an uncluttered shelf. Shipped with 3 pristine seed profiles:
+* **Arjun Mehta:** Best friend from college (*Monsoon chai in Old Delhi, Solan road trip, graduation smile*), paired with *Peaceful Piano Dusk*.
+* **Rekha Sharma:** Beloved grandmother (*Balcony Tagore readings, brass hearth sandesh, silver coin blessing*), paired with *Twilight Sarod*.
+* **David Miller:** High school debate mentor (*The unsharpened pencil, library rebuttal prep, brass championship trophy*), paired with *Warm Acoustic Strings*.
 
 ### 🌸 Feature 2 — The Offering (Reel-First Creator & Ceremony)
 Transforms memorial creation into crafting a living Memory Reel from moment one:
 * **Who Are We Honoring:** Name, relationship, and circular altar portrait upload with live inspection and a dedicated *"Change Photo"* control.
-* **Dynamic Moments Builder:** Add unlimited photos and videos (up to 50MB) with heartfelt stories written in *Cormorant Garamond*, moment titles, and generalized spacetime pinning (`When? e.g. During Diwali, childhood, college days...`).
+* **Dynamic Moments Builder:** Add unlimited photos and videos (up to 50MB) with heartfelt stories written in *Cormorant Garamond*, moment titles, and generalized spacetime pinning (`When? e.g. Monsoon 2018, Diwali morning...`).
 * **Interactive Media Controls:** Preview dropzone features hover zoom indicators, full-screen inspect buttons, and quick media replacement.
 * **Sacred Hold-to-Light Flame Ceremony:** Holding the ceremonial button for 1.8 seconds ignites their flame, persists all moments and soundtracks, and launches their Memory Reel slideshow finale.
 * **Quiet Local Draft Auto-Save:** Automatically saves in-progress drafts in browser storage so no memory is lost to an accidental tab refresh.
@@ -95,7 +101,7 @@ Selecting a loved one's portrait opens their personal altar:
 * **Google Gemma Grounding:** Synthesizes deeply comforting reflections anchored **strictly** to uploaded fragments with zero hallucinations. Minimal, reverent attribution labeled simply as **Gemma**.
 * **Slow Ink Emergence:** Gentle, typewriter-paced writing reveal with a glowing ink quill cursor.
 * **Citation Artifact Unfolding:** Clicking any bracketed citation (`[Chai stall memory, 2018]`) unfolds the original preserved artifact modal with its exact spacetime coordinates and sensory anchors.
-* **"A Place to Remember" Header:** Replaces robotic AI mode labels with dignified, human presence tracking (`A Place to Remember • 3 memories preserved`).
+* **"A Place to Remember" Header:** Replaces robotic AI mode labels with dignified, human presence tracking (`A Place to Remember • 5 memories preserved`).
 
 ### 🕊️ Feature 4 — Sit with Them (Silent Meditation Hearth)
 A dedicated sanctuary for wordless presence:
@@ -103,13 +109,12 @@ A dedicated sanctuary for wordless presence:
 * **Tap-to-Tend 432Hz Chime:** Soft Web Audio chime tuned to 432Hz that gently flares the hearth embers.
 * **Clean Experience:** Free of artificial AI jargon or robotic labels.
 
-### 🎵 Feature 5 — Pure Acoustic Sanctuary Engine
-* **Zero Annoying Hiss / Radio Static:** Replaces harsh white/pink noise filters with mathematically harmonic frequencies.
-* **Procedural Pentatonic Chimes:** Synthesizes 432Hz fundamental frequencies (`[432, 486, 576, 648, 729]` Hz) with natural exponential gain decay.
-* **Warm Rain Droplets:** Filtered sine droplets (1800Hz - 2400Hz) with 45ms burst decay.
-* **Sub-Octave Breeze:** Dual sine oscillators tuned to 108Hz and 216Hz for a warm, grounding presence.
-* **Analog Warmth Filter:** Web Audio `BiquadFilterNode` configured as a low-pass filter at 6800Hz, softening digital edges into vintage vinyl warmth.
-* **Studio Audio Ducking:** Automatically ducks ambient soundscapes by 65% whenever voice recordings or ElevenLabs readouts play.
+### 🎙️ Feature 5 — Studio AI Audio Narration (ElevenLabs + Natural Fallback)
+* **ElevenLabs Studio Streaming:** Powered by ElevenLabs' **George** (*Warm, Captivating Storyteller*) model (`JBFqnCBsd6RMkjVDRZzb`) streaming live `audio/mpeg` speech.
+* **Poetic Text Preprocessing:** Automatically strips prompt echoes, citation brackets, and harsh quotes before synthesis, ensuring natural human storytelling.
+* **Analog Warmth Filter:** Routes speech through a Web Audio `BiquadFilterNode` lowpass filter (6800Hz) and vocal warmth boost (2400Hz), softening digital sibilance into vintage vinyl warmth.
+* **Studio Audio Ducking:** Automatically ducks ambient background soundscapes by 65% whenever spoken reflections play, gently swelling back up when finished.
+* **Natural Neural Browser Fallback:** If an ElevenLabs key is not present, auto-selects modern Microsoft Online Natural (*Jenny / Aria*) and Google Neural voices with sentence-by-sentence 320ms human breath pauses, skipping robotic 2000s desktop voices.
 
 ### ✉️ Feature 6 — The Keepsake Letter (Story-Extracted Heirloom Export)
 One-click generation of a printable, frame-worthy archival letter:
@@ -123,15 +128,15 @@ One-click generation of a printable, frame-worthy archival letter:
 
 Smriti was engineered from the ground up for **Hacktoberfest 2026 — Week 4: Ghost in the Machine**, integrating 7 sponsored partner technologies across the stack:
 
-| Partner Category | Technology Used | Architectural Role & Implementation | Prize Exposure |
-|---|---|---|---|
-| **Best Use of Gemma** | **Google Gemma** (Ollama / Cloud API) | Powers the zero-hallucination reflection engine (`server/mastra/tools/synthesize.js`). Synthesizes wisdom and comfort strictly anchored to retrieved memory chunks at temperature `0.3`. | **$200** |
-| **Best Use of Mastra** | **Mastra Framework** (TypeScript/JS) | Orchestrates the deterministic agent workflow (`server/mastra/agent.js`) across three distinct tools: `retrieveStep` (vector search), `densityGateStep` (sparse vs. conversational routing), and `synthesizeStep` (grounded reflection). | **$100** |
-| **Best Use of MongoDB Atlas** | **MongoDB Atlas + Vector Search** | Cryptographic cloud memory storage with Atlas Vector Search for semantic chunk retrieval, backed by an offline local JSON fallback (`server/data/sanctuary_db.json`). | **$100** |
-| **Best Use of ElevenLabs** | **ElevenLabs Voice API** | High-fidelity, respectful voice synthesis engine for preserved wisdom notes, paired with automated citation tag stripping and studio audio ducking (`server/routes/voice.js`). | **$100** |
-| **Best Use of Sentry** | **Sentry Distributed Tracing** | Full OpenTelemetry tracing across all agent tools (`mastra.tool.retrieve`, `mastra.tool.densityGate`, `gemma.synthesize`, `elevenlabs.speech`) with sanitized privacy parameters (`server/sentry.js`). | **$100** |
-| **Best Use of Render** | **Render Cloud Platform** | Zero-downtime full-stack deployment using an Infrastructure-as-Code Blueprint (`render.yaml`) orchestrating client and server services. | **$200** |
-| **Best Use of a .tech Domain** | **.tech Domain Registry** | Custom sovereign domain deployed at **[smriti.tech](https://smriti.tech)** for an authentic, dignified web presence. | **$100** |
+| Partner Category | Technology Used | Architectural Role & Implementation | Prize Exposure | Live Status |
+|---|---|---|---|:---:|
+| **Best Use of Gemma** | **Google Gemma** (Ollama / Open API) | Powers the zero-hallucination reflection engine (`server/mastra/tools/synthesize.js`). Synthesizes wisdom and comfort strictly anchored to retrieved memory chunks at temperature `0.3`. | **$200** | 🟢 **ACTIVE** |
+| **Best Use of Render** | **Render Cloud Platform** | Full-stack deployment using an Infrastructure-as-Code Blueprint (`render.yaml`) orchestrating a static CDN web service, backend Express API, environment groups, and seamless proxy rewrites. | **$200** | 🟢 **ACTIVE** |
+| **Best Use of ElevenLabs** | **ElevenLabs Voice API** | High-fidelity storytelling speech engine (`JBFqnCBsd6RMkjVDRZzb`), paired with automated citation tag stripping, analog warmth filtering, and studio audio ducking (`server/routes/voice.js`). | **$100** | 🟢 **ACTIVE** |
+| **Best Use of MongoDB Atlas** | **MongoDB Atlas + Vector Search** | Cryptographic cloud memory storage on Atlas M0 cluster (`smriti-cluster.iaaaw9a.mongodb.net`) with Atlas Vector Search for semantic chunk retrieval, backed by local JSON fallback. | **$100** | 🟢 **ACTIVE** |
+| **Best Use of Mastra** | **Mastra Framework** (TypeScript/JS) | Orchestrates the deterministic agent workflow (`server/mastra/agent.js`) across three distinct tools: `retrieveStep` (vector search), `densityGateStep` (sparse vs. conversational routing), and `synthesizeStep` (grounded reflection). | **$100** | 🟢 **ACTIVE** |
+| **Best Use of Sentry** | **Sentry Distributed Tracing** | Full OpenTelemetry tracing across all agent tools (`mastra.workflow.remembrance`, `mastra.tool.retrieve`, `mastra.tool.densityGate`, `elevenlabs.text_to_speech`) with real-time performance flamegraphs. | **$100** | 🟢 **ACTIVE** |
+| **Best Use of a .tech Domain** | **.tech Domain Registry** | Custom sovereign domain deployed at **[smriti.tech](https://smriti.tech)** for an authentic, dignified web presence. | **$100** | ⚪ **READY** |
 
 **Total Sponsor Prize Exposure: $900 across 7 partner categories.**
 
@@ -150,10 +155,10 @@ Smriti was engineered from the ground up for **Hacktoberfest 2026 — Week 4: Gh
          Vector Embedding Pipeline (Cosine Similarity)
                                 │
                                 ▼
-    Storage Engine: Local JSON (sanctuary_db.json) / Mongo Atlas
+     Storage Engine: MongoDB Atlas Cloud Cluster / sanctuary_db.json
                                 │
                                 ▼
-               User Enters Altar or Plays Reel
+                User Enters Altar or Plays Reel
                                 │
             ┌───────────────────┴───────────────────┐
             ▼                                       ▼
@@ -163,9 +168,13 @@ Smriti was engineered from the ground up for **Hacktoberfest 2026 — Week 4: Gh
   - Spotify Wrapped Bars                    2. Density Gate (Sparse/Dense)
   - 432Hz Sanctuary Audio                   3. Gemma Grounded Synthesis
   - Clickable Lightbox                      4. Slow Ink Quill Reveal
-            │                                       │
-            ▼                                       ▼
-  Permanent Altar Placement              Frame-Ready Keepsake Letter
+            │                             - ElevenLabs Studio Narration:
+            │                               1. Poetic Text Preprocessing
+            │                               2. George Storyteller Stream
+            │                               3. Analog Warmth + Ducking
+            ▼                                       │
+  Permanent Altar Placement                         ▼
+                                         Frame-Ready Keepsake Letter
 ```
 
 ---
@@ -244,6 +253,5 @@ npm run build -w client
 
 * **Project Title:** *Smriti: When someone you love passes away, their words scatter. Gemma and local speech gathered them into an open-source altar.*
 * **Event:** Hacktoberfest 2026 — Week 4: Ghost in the Machine
-* **Developer Guide:** See [`DEV.md`](DEV.md) for full architecture and engineering specifications.
 * **Submission Draft:** See [`DEVPOST.md`](DEVPOST.md) for the Devpost/DEV.to story submission.
 * **License:** [MIT License](LICENSE) — Free, universal, and open source forever.

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useSearchParams, Link } from 'react-router-dom';
 import CandleFlame from '../components/CandleFlame';
 import VoicePlayer from '../components/VoicePlayer';
 import TheVigil from '../components/TheVigil';
@@ -22,6 +22,7 @@ import './Remembrance.css';
  */
 export default function Remembrance() {
   const { id } = useParams();
+  const [searchParams] = useSearchParams();
 
   // Profile & Memory State
   const [profile, setProfile] = useState(null);
@@ -55,6 +56,13 @@ export default function Remembrance() {
     fetchLettersToThem();
     fetchReelData();
   }, [id]);
+
+  // Auto-launch Memory Reel if navigating from offering ceremony
+  useEffect(() => {
+    if (searchParams.get('autoplayReel') === 'true' && reelData.slides && reelData.slides.length > 0) {
+      setIsReelOpen(true);
+    }
+  }, [searchParams, reelData.slides]);
 
   const fetchReelData = async () => {
     try {

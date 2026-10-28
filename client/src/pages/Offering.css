@@ -1,9 +1,9 @@
 /* ============================================
-   Offering — 3-Step Memorial Form
+   Offering — The Living Memory Reel Creator
    ============================================ */
 
 .offering-page {
-  max-width: 760px;
+  max-width: 820px;
   margin: 0 auto;
   width: 100%;
 }
@@ -11,7 +11,8 @@
 .offering-nav {
   width: 100%;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: var(--space-md);
 }
 
@@ -31,24 +32,131 @@
   flex-direction: column;
   gap: var(--space-md);
   position: relative;
-  transition: border-color var(--transition-medium);
+  transition: border-color var(--transition-medium), box-shadow var(--transition-medium);
 }
 
 .offering-section:focus-within {
-  border-color: var(--border-warm);
+  border-color: rgba(232, 168, 71, 0.4);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+
+.section-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-md);
+  flex-wrap: wrap;
 }
 
 .section-badge {
   font-family: var(--font-heading);
-  font-size: 1.15rem;
-  color: var(--flame);
+  font-size: 1.25rem;
+  color: var(--flame-bright);
   letter-spacing: 0.02em;
 }
 
-.form-row {
+.section-subtext {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-top: 2px;
+}
+
+.moments-counter-pill {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--flame);
+  background: rgba(232, 168, 71, 0.1);
+  border: 1px solid rgba(232, 168, 71, 0.3);
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* ============================================
+   Step 1: Who Are We Honoring (Portrait + Names)
+   ============================================ */
+
+.offering-who-layout {
   display: flex;
-  gap: var(--space-md);
+  align-items: center;
+  gap: var(--space-xl);
   flex-wrap: wrap;
+}
+
+.offering-portrait-col {
+  flex-shrink: 0;
+}
+
+.offering-portrait-bezel {
+  width: 105px;
+  height: 105px;
+  border-radius: var(--radius-full);
+  border: 2px dashed rgba(232, 168, 71, 0.4);
+  background: rgba(232, 168, 71, 0.04);
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-medium);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+}
+
+.offering-portrait-bezel:hover {
+  border-color: var(--flame-bright);
+  box-shadow: 0 0 20px rgba(232, 168, 71, 0.25);
+  transform: scale(1.02);
+}
+
+.portrait-img-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portrait-empty-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.portrait-empty-icon {
+  font-size: 1.3rem;
+}
+
+.portrait-empty-text {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-align: center;
+  font-weight: 500;
+}
+
+.portrait-hover-hint {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  color: var(--flame-bright);
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.offering-portrait-bezel:hover .portrait-hover-hint {
+  opacity: 1;
+}
+
+.offering-fields-col {
+  flex: 1;
+  min-width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
 }
 
 .form-group {
@@ -59,12 +167,12 @@
 
 .flex-1 {
   flex: 1;
-  min-width: 240px;
 }
 
 .form-group label {
   font-size: 0.85rem;
   color: var(--text-secondary);
+  font-weight: 500;
 }
 
 .form-input {
@@ -84,7 +192,355 @@
   box-shadow: 0 0 12px var(--flame-glow);
 }
 
-/* Submit Section */
+/* ============================================
+   Step 2: The Moments Builder (Filmstrip)
+   ============================================ */
+
+.reel-moments-builder {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  margin-top: var(--space-xs);
+}
+
+.builder-moment-card {
+  background: linear-gradient(135deg, rgba(28, 22, 17, 0.7) 0%, rgba(20, 16, 12, 0.85) 100%);
+  border: 1px solid rgba(232, 168, 71, 0.25);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  position: relative;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  transition: border-color var(--transition-medium);
+}
+
+.builder-moment-card:hover {
+  border-color: rgba(232, 168, 71, 0.45);
+}
+
+.builder-moment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: var(--space-xs);
+}
+
+.moment-index-pill {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: 0.82rem;
+  color: var(--flame-bright);
+}
+
+.moment-num {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.moment-preview-title {
+  color: var(--text-secondary);
+  font-style: italic;
+  font-family: var(--font-heading);
+}
+
+.btn-remove-moment {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.btn-remove-moment:hover {
+  color: #e84747;
+  background: rgba(232, 71, 71, 0.1);
+}
+
+.builder-moment-body {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+/* Moment Media Dropzone */
+.moment-media-zone {
+  width: 100%;
+}
+
+.moment-media-dropzone {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: 2px dashed rgba(232, 168, 71, 0.35);
+  border-radius: var(--radius-md);
+  background: rgba(232, 168, 71, 0.03);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: var(--space-md);
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-medium);
+}
+
+.moment-media-dropzone:hover {
+  border-color: var(--flame);
+  background: rgba(232, 168, 71, 0.08);
+  transform: translateY(-1px);
+}
+
+.dropzone-icon {
+  font-size: 1.8rem;
+}
+
+.dropzone-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--flame-bright);
+}
+
+.dropzone-hint {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.moment-media-preview-container {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-warm);
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.moment-preview-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.media-change-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  color: var(--flame-bright);
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.moment-media-preview-container:hover .media-change-overlay {
+  opacity: 1;
+}
+
+/* Moment Story Textarea */
+.moment-text-zone {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.moment-story-textarea {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-style: italic;
+  line-height: 1.7;
+  color: var(--text-primary);
+  background: rgba(13, 10, 8, 0.7);
+  resize: vertical;
+  min-height: 110px;
+}
+
+.moment-spacetime-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+}
+
+.spacetime-input-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.35rem 0.6rem;
+}
+
+.spacetime-prefix {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+.spacetime-sub-input {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  width: 100%;
+}
+
+.spacetime-sub-input:focus {
+  outline: none;
+}
+
+.btn-add-another-moment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: 0.9rem;
+  background: rgba(232, 168, 71, 0.05);
+  border: 1px dashed rgba(232, 168, 71, 0.4);
+  color: var(--flame-bright);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-medium);
+}
+
+.btn-add-another-moment:hover {
+  background: rgba(232, 168, 71, 0.12);
+  border-color: var(--flame-bright);
+  transform: translateY(-1px);
+}
+
+.add-moment-icon {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+/* ============================================
+   Step 3: Soundtrack Dock
+   ============================================ */
+
+.soundtrack-dock {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.soundtrack-tab-nav {
+  display: flex;
+  border-bottom: 1px solid var(--border-subtle);
+  background: rgba(13, 10, 8, 0.6);
+  flex-wrap: wrap;
+}
+
+.soundtrack-tab-btn {
+  flex: 1;
+  min-width: 170px;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border-bottom: 2px solid transparent;
+}
+
+.soundtrack-tab-btn:hover {
+  color: var(--text-primary);
+}
+
+.soundtrack-tab-btn--active {
+  color: var(--flame-bright);
+  border-bottom-color: var(--flame);
+  background: rgba(232, 168, 71, 0.06);
+}
+
+.soundtrack-tab-content {
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.soundtrack-help {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin: 0;
+}
+
+.soundtrack-presets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: var(--space-sm);
+}
+
+.preset-pill {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 0.55rem 0.8rem;
+  background: rgba(232, 168, 71, 0.04);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.preset-pill:hover {
+  background: rgba(232, 168, 71, 0.1);
+  border-color: var(--border-warm);
+  color: var(--text-primary);
+}
+
+.preset-pill--active {
+  background: rgba(232, 168, 71, 0.2);
+  border-color: var(--flame);
+  color: var(--flame-bright);
+}
+
+.preset-pill-icon {
+  font-size: 1rem;
+}
+
+.song-file-picker-row,
+.spotify-input-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.spotify-input-row {
+  background: var(--bg-surface);
+  border: 1px solid rgba(29, 185, 84, 0.4);
+  border-radius: var(--radius-md);
+  padding: 0.4rem 0.8rem;
+}
+
+.spotify-icon {
+  font-size: 1.2rem;
+}
+
+/* ============================================
+   Step 4: Hold-to-Light Ceremony
+   ============================================ */
+
 .offering-section--submit {
   align-items: center;
   text-align: center;
@@ -93,24 +549,18 @@
   padding: var(--space-md) 0;
 }
 
-.btn-light-flame {
-  padding: 1rem 2.5rem;
-  font-size: 1.05rem;
-  border-radius: var(--radius-lg);
-  gap: var(--space-md);
-  cursor: pointer;
-}
-
-.btn-light-flame:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  box-shadow: none;
+.offering-status-msg {
+  color: var(--flame-bright);
+  font-style: italic;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  margin-top: var(--space-md);
 }
 
 .offering-privacy-note {
   font-size: 0.75rem;
   color: var(--text-muted);
-  max-width: 50ch;
+  max-width: 55ch;
   margin-top: var(--space-sm);
 }
 
@@ -141,8 +591,16 @@
   color: #e84747;
 }
 
-@media (max-width: 600px) {
-  .offering-section {
-    padding: var(--space-lg);
+/* Responsive */
+@media (max-width: 700px) {
+  .builder-moment-body {
+    grid-template-columns: 1fr;
+  }
+  .moment-spacetime-grid {
+    grid-template-columns: 1fr;
+  }
+  .offering-who-layout {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

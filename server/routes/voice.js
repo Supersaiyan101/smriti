@@ -7,8 +7,35 @@ dotenv.config();
 const router = express.Router();
 
 // Default calm, warm ElevenLabs voice ID (e.g. Rachel / George / Adam)
+// Rachel (21m00Tcm4TlvDq8ikWAM) is an acclaimed warm, empathetic narration voice
 const DEFAULT_VOICE_ID = process.env.ELEVENLABS_VOICE_ID || '21m00Tcm4TlvDq8ikWAM';
 const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY;
+
+/**
+ * Strips robotic prompt echoes, bracketed citations, and unnatural syntax
+ * to produce dignified, human-sounding narrative prose for speech synthesis.
+ */
+export function cleanSpeechText(raw) {
+  if (!raw) return '';
+  return raw
+    // Strip citation tags like [Source Label] or [Sunday kitchen, 2015]
+    .replace(/\[.*?\]/g, '')
+    // Strip boilerplate intro phrases from reflection prompts
+    .replace(/^Looking back at what.*?left with you:\s*/i, '')
+    .replace(/^In the quiet of this flame, here is what you carry.*?:\s*/i, '')
+    // Strip repetitive transitional phrases
+    .replace(/They also shared:\s*/gi, '')
+    // Strip closing boilerplate echoes
+    .replace(/These words remain rooted and true\.?/gi, '')
+    .replace(/Even when words are few, holding onto this truth.*?\.?/gi, '')
+    // Replace multiple line breaks with gentle natural spacing
+    .replace(/\n+/g, ' ')
+    // Remove harsh quotation marks that cause TTS models to say "quote" or pause awkwardly
+    .replace(/["“”'‘’]/g, '')
+    // Collapse excess whitespace
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+}
 
 /**
  * POST /api/voice
@@ -23,8 +50,7 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ success: false, error: 'Text is required for voice readout' });
     }
 
-    // Strip citation tags like [Source Label] for clean spoken audio
-    const cleanText = text.replace(/\[.*?\]/g, '').trim();
+    const cleanText = cleanSpeechText(text);
 
     return await traceSpan(
       'elevenlabs.text_to_speech',
@@ -46,9 +72,9 @@ router.post('/', async (req, res) => {
               text: cleanText,
               model_id: 'eleven_multilingual_v2',
               voice_settings: {
-                stability: 0.65,
-                similarity_boost: 0.75,
-                style: 0.2,
+                stability: 0.55,
+                similarity_boost: 0.85,
+                style: 0.35,
                 use_speaker_boost: true,
               },
             }),
@@ -61,7 +87,7 @@ router.post('/', async (req, res) => {
               success: true,
               fallback: true,
               text: cleanText,
-              provider: 'Browser Speech Synthesis (ElevenLabs API quota/key notice)',
+              provider: 'Browser Speech Synthesis (ElevenLabs quota notice)',
             });
           }
 

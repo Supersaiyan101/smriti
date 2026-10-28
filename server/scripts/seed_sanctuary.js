@@ -11,13 +11,15 @@ const profiles = [
     name: 'Arjun Mehta',
     relationship: 'Best friend from college',
     photoUrl: '/arjun_portrait.jpg',
+    soundtrack: { title: 'Peaceful Piano Dusk', trackId: 'dusk_piano', presetType: 'piano_dusk' },
     createdAt: '2026-10-27T10:00:00.000Z'
   },
   {
-    _id: 'p_savitri_devi',
-    name: 'Savitri Devi',
+    _id: 'p_rekha_sharma',
+    name: 'Rekha Sharma',
     relationship: 'Grandmother',
-    photoUrl: '/savitri_portrait.jpg',
+    photoUrl: '/rekha_portrait.jpg',
+    soundtrack: { title: 'Twilight Sarod', trackId: 'twilight_sarod', presetType: 'classical_sarod' },
     createdAt: '2026-10-27T11:00:00.000Z'
   },
   {
@@ -25,6 +27,7 @@ const profiles = [
     name: 'David Miller',
     relationship: 'High school debate mentor',
     photoUrl: '/david_portrait.jpg',
+    soundtrack: { title: 'Warm Acoustic Strings', trackId: 'acoustic_strings', presetType: 'acoustic_strings' },
     createdAt: '2026-10-27T12:00:00.000Z'
   }
 ];
@@ -95,12 +98,12 @@ const memories = [
     createdAt: '2026-10-27T10:30:00.000Z'
   },
 
-  // Savitri Devi
+  // Rekha Sharma (Grandmother)
   {
-    _id: 'm_savitri_1',
-    profileId: 'p_savitri_devi',
+    _id: 'm_rekha_1',
+    profileId: 'p_rekha_sharma',
     type: 'text',
-    content: 'Savitri Devi made cardamom sandesh every Sunday morning in her brass pot. The whole courtyard smelled of roasted milk and warm saffron.',
+    content: 'Rekha Sharma made cardamom sandesh every Sunday morning in her brass pot. The whole courtyard smelled of roasted milk and warm saffron.',
     mediaUrl: null,
     sourceLabel: 'Sunday kitchen, 2015',
     sensory: { weather: 'Warm Sunday morning', scent: 'Cardamom sandesh & roasted milk', song: null },
@@ -109,8 +112,8 @@ const memories = [
     createdAt: '2026-10-27T11:10:00.000Z'
   },
   {
-    _id: 'm_savitri_2',
-    profileId: 'p_savitri_devi',
+    _id: 'm_rekha_2',
+    profileId: 'p_rekha_sharma',
     type: 'text',
     content: 'She taught me how to read Tagore poetry sitting on the balcony as the evening crows flew back to the trees. "Patience is a tree whose roots are bitter, but the fruit is very sweet."',
     mediaUrl: null,
@@ -121,10 +124,10 @@ const memories = [
     createdAt: '2026-10-27T11:15:00.000Z'
   },
   {
-    _id: 'm_savitri_reel_1',
-    profileId: 'p_savitri_devi',
+    _id: 'm_rekha_reel_1',
+    profileId: 'p_rekha_sharma',
     type: 'photo',
-    content: 'Every afternoon when the sun dipped behind the red brick chimneys, Dida sat in her wooden cane chair with Tagore\'s Gitanjali. She didn\'t just read the verses; she hummed them like an old lullaby that kept the whole house sheltered.',
+    content: 'Every afternoon when the sun dipped behind the red brick chimneys, Dadi sat in her wooden cane chair with Tagore\'s Gitanjali. She didn\'t just read the verses; she hummed them like an old lullaby that kept the whole house sheltered.',
     mediaUrl: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=1200&q=80',
     sourceLabel: 'Sunday Balcony & Gitanjali',
     sensory: { weather: 'Golden hour twilight', scent: 'Antique paper & jasmine incense', song: 'Ami Chini Go Chini' },
@@ -134,8 +137,8 @@ const memories = [
     createdAt: '2026-10-27T11:20:00.000Z'
   },
   {
-    _id: 'm_savitri_reel_2',
-    profileId: 'p_savitri_devi',
+    _id: 'm_rekha_reel_2',
+    profileId: 'p_rekha_sharma',
     type: 'photo',
     content: 'Her hands were always steady and tender, stirring the sweetened curd over a low flame in the brass vessel that had belonged to her mother. She would slide a warm silver bowl toward me before anyone else woke up.',
     mediaUrl: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1200&q=80',
@@ -146,8 +149,21 @@ const memories = [
     order: 1,
     createdAt: '2026-10-27T11:25:00.000Z'
   },
+  {
+    _id: 'm_rekha_reel_3',
+    profileId: 'p_rekha_sharma',
+    type: 'photo',
+    content: 'On the morning of my college departure, she pressed a silver coin wrapped in red betel silk into my palm. She said: "Go with courage, beta. Wherever you wander, this home is carried in your chest."',
+    mediaUrl: 'https://images.unsplash.com/photo-1607344645866-009c320c5ab8?auto=format&fit=crop&w=1200&q=80',
+    sourceLabel: 'The Silver Coin Blessing',
+    sensory: { weather: 'Clear morning sunshine', scent: 'Marigolds and sandalwood', song: null },
+    timePlace: { when: 'August 2021', where: 'Front Threshold' },
+    isReelSlide: true,
+    order: 2,
+    createdAt: '2026-10-27T11:30:00.000Z'
+  },
 
-  // David Miller
+  // David Miller (Debate Mentor)
   {
     _id: 'm_david_1',
     profileId: 'p_david_miller',
@@ -161,6 +177,18 @@ const memories = [
     createdAt: '2026-10-27T12:10:00.000Z'
   },
   {
+    _id: 'm_david_2',
+    profileId: 'p_david_miller',
+    type: 'text',
+    content: 'Whenever our team lost a round, he would take everyone to the 24-hour diner for hot blueberry pancakes. "Defeat is merely data," he would say with a warm smile, sketching arguments on paper napkins.',
+    mediaUrl: null,
+    sourceLabel: 'Midnight diner debriefs',
+    sensory: { weather: 'Chilly autumn midnight', scent: 'Maple syrup and diner coffee', song: null },
+    timePlace: { when: 'November 2018', where: 'Starlight Diner, Booth 4' },
+    isReelSlide: false,
+    createdAt: '2026-10-27T12:15:00.000Z'
+  },
+  {
     _id: 'm_david_reel_1',
     profileId: 'p_david_miller',
     type: 'photo',
@@ -172,13 +200,39 @@ const memories = [
     isReelSlide: true,
     order: 0,
     createdAt: '2026-10-27T12:20:00.000Z'
+  },
+  {
+    _id: 'm_david_reel_2',
+    profileId: 'p_david_miller',
+    type: 'photo',
+    content: 'He spent four hours on a freezing Saturday helping me rewrite an opening rebuttal. He never gave the answer away; he just kept asking questions until the argument clicked like a lock falling into place.',
+    mediaUrl: 'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1200&q=80',
+    sourceLabel: 'Saturday in the Library Stacks',
+    sensory: { weather: 'Gray overcast winter morning', scent: 'Leather bindings & rain on stone', song: null },
+    timePlace: { when: 'December 2018', where: 'Lincoln Hall Library Stacks' },
+    isReelSlide: true,
+    order: 1,
+    createdAt: '2026-10-27T12:25:00.000Z'
+  },
+  {
+    _id: 'm_david_reel_3',
+    profileId: 'p_david_miller',
+    type: 'photo',
+    content: 'When we brought home the brass state trophy, he wouldn\'t keep it on his desk. He placed it right in the middle of our team table, saying: "This belongs to the collective courage of all of you."',
+    mediaUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80',
+    sourceLabel: 'The Team Trophy Table',
+    sensory: { weather: 'Crisp spring twilight', scent: 'Polished brass and pine', song: null },
+    timePlace: { when: 'April 2019', where: 'Room 204 Mentorship Table' },
+    isReelSlide: true,
+    order: 2,
+    createdAt: '2026-10-27T12:30:00.000Z'
   }
 ];
 
 const reelSoundtracks = {
-  'p_arjun_mehta': { title: 'Peaceful Piano Dusk', trackId: 'dusk_piano' },
-  'p_savitri_devi': { title: 'Twilight Sarod', trackId: 'twilight_sarod' },
-  'p_david_miller': { title: 'Warm Acoustic Strings', trackId: 'acoustic_strings' }
+  'p_arjun_mehta': { title: 'Peaceful Piano Dusk', trackId: 'dusk_piano', presetType: 'piano_dusk' },
+  'p_rekha_sharma': { title: 'Twilight Sarod', trackId: 'twilight_sarod', presetType: 'classical_sarod' },
+  'p_david_miller': { title: 'Warm Acoustic Strings', trackId: 'acoustic_strings', presetType: 'acoustic_strings' }
 };
 
 const lettersToThem = [
@@ -186,7 +240,22 @@ const lettersToThem = [
     _id: 'l_arjun_1',
     profileId: 'p_arjun_mehta',
     title: 'To the boy who believed in stars',
+    content: 'Bhai, whenever it pours in Delhi and the roads fill with amber reflections of streetlamps, I still look for a tea stall with cutting chai. You were right about everything working out in the end. I carry your dog-eared Shantaram on every journey. Rest easy under the stars.',
     createdAt: '2026-10-27T10:45:00.000Z'
+  },
+  {
+    _id: 'l_rekha_1',
+    profileId: 'p_rekha_sharma',
+    title: 'To Dadi, with the sweetness of sandesh',
+    content: 'Dadi, every time autumn arrives and the air turns cool at dusk, I remember your hands stirring the brass pot. We still keep your silver bowl on the highest shelf. You taught us that love is not something you say—it is something you pour quietly until everyone is full.',
+    createdAt: '2026-10-27T11:45:00.000Z'
+  },
+  {
+    _id: 'l_david_1',
+    profileId: 'p_david_miller',
+    title: 'To Mr. Miller, regarding the quiet truth',
+    content: 'Mr. Miller, I gave a keynote speech last Thursday to three hundred people. Before walking out, my hands trembled just like they did at Lincoln Hall in 2017. I touched the yellow pencil in my jacket pocket, remembered your voice, and spoke with calm clarity. Thank you for teaching me how to stand up for the truth.',
+    createdAt: '2026-10-27T12:35:00.000Z'
   }
 ];
 
@@ -201,8 +270,12 @@ export function getSeedData() {
 
 export function seed() {
   const data = getSeedData();
+  const dir = path.dirname(dbPath);
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
   fs.writeFileSync(dbPath, JSON.stringify(data, null, 2), 'utf-8');
-  console.log('Sanctuary DB successfully cleaned to exactly 3 pristine profiles!');
+  console.log('Sanctuary DB successfully cleaned to exactly 3 pristine profiles (Arjun Mehta, Rekha Sharma, David Miller)!');
 }
 
 if (process.argv[1] && process.argv[1].endsWith('seed_sanctuary.js')) {

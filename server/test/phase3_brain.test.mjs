@@ -88,13 +88,13 @@ async function runBrainTests() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
   }, {
-    name: 'Savitri Devi',
+    name: 'Rekha Sharma',
     relationship: 'Grandmother',
   });
     denseProfileId = denseProfileRes.body.profile._id;
 
     const memoriesList = [
-      { content: 'Savitri Devi made cardamom sandesh every Sunday morning in her brass pot.', label: 'Sunday kitchen, 2015' },
+      { content: 'Rekha Sharma made cardamom sandesh every Sunday morning in her brass pot.', label: 'Sunday kitchen, 2015' },
       { content: 'She taught me how to read Tagore poetry sitting on the balcony.', label: 'Balcony readings' },
       { content: 'Her favorite advice: "Patience is a tree whose roots are bitter, but the fruit is very sweet."', label: 'Tagore notebook quote' },
       { content: 'She wore a white cotton sari with a thin red border on festival days.', label: 'Diwali 2019 photo' },

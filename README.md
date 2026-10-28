@@ -80,7 +80,7 @@ The game-changing heart of Smriti. The **Memory Reel** weaves a loved one's pres
 ## 3. Comprehensive Sanctuary Features
 
 ### 🕯️ Feature 1 — The Sanctuary (Living Altar Shelf)
-The home screen is a quiet room at dusk. Each remembered person rests as a softly glowing portrait beside a living candle flame on an uncluttered shelf. Shipped with 3 pristine seed profiles (*Arjun Mehta*, *Savitri Devi*, *David Miller*) with immediate Memory Reel playback and a built-in seed utility (`npm run seed`).
+The home screen is a quiet room at dusk. Each remembered person rests as a softly glowing portrait beside a living candle flame on an uncluttered shelf. Shipped with 3 pristine seed profiles (*Arjun Mehta*, *Rekha Sharma*, *David Miller*) with immediate Memory Reel playback and a built-in seed utility (`npm run seed`).
 
 ### 🌸 Feature 2 — The Offering (Reel-First Creator & Ceremony)
 Transforms memorial creation into crafting a living Memory Reel from moment one:
@@ -203,7 +203,7 @@ npm run dev
 Visit **[http://localhost:5173](http://localhost:5173)** to open the sanctuary.
 
 ### 7.3 Database Seed Script
-To restore the 3 pristine seed profiles (*Arjun Mehta*, *Savitri Devi*, *David Miller*) with Memory Reels and stories:
+To restore the 3 pristine seed profiles (*Arjun Mehta*, *Rekha Sharma*, *David Miller*) with Memory Reels and stories:
 ```bash
 npm run seed
 ```

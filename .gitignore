@@ -20,11 +20,14 @@ yarn-error.log*
 pnpm-debug.log*
 
 # Uploads & Storage (local fallback)
-uploads/
-storage/
-server/data/
-server/uploads/
-data/
+/uploads/
+/storage/
+server/data/*
+!server/data/sanctuary_db.json
+server/uploads/*
+!server/uploads/*.jpg
+!server/uploads/*.png
+/data/
 
 # Editor & OS files
 .DS_Store

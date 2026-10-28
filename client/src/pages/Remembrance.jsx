@@ -263,12 +263,15 @@ export default function Remembrance() {
     );
   }
 
-  const initials = profile.name
-    .split(' ')
-    .map((w) => w[0])
-    .slice(0, 2)
-    .join('')
-    .toUpperCase();
+  const initials = profile?.name
+    ? profile.name
+        .split(' ')
+        .filter(Boolean)
+        .map((w) => w[0])
+        .slice(0, 2)
+        .join('')
+        .toUpperCase()
+    : 'SM';
 
   const isSparse = memories.length <= 3;
   const currentDisplayedText = response?.message ? response.message.slice(0, revealedLength) : '';
@@ -541,7 +544,7 @@ export default function Remembrance() {
                         setLightboxMedia({
                           url: mem.mediaUrl,
                           title: mem.sourceLabel || 'Preserved Photograph',
-                          subtitle: [mem.timePlace?.when, mem.timePlace?.where].filter(Boolean).join(' • ') || `${profile.name}’s Memory`,
+                          subtitle: [mem.timePlace?.when, mem.timePlace?.where].filter(Boolean).join(' • ') || `${profile.name}'s Memory`,
                           caption: mem.content,
                           isVideo: mem.type === 'video',
                         });
@@ -605,7 +608,7 @@ export default function Remembrance() {
                     })}
                   </span>
                   <span className="envelope-peek">
-                    "{letter.content.slice(0, 70)}..."
+                    "{(letter.content || 'A sealed letter held in remembrance...').slice(0, 70)}..."
                   </span>
                 </div>
               ))}
@@ -707,7 +710,7 @@ export default function Remembrance() {
                       setLightboxMedia({
                         url: inspectedArtifact.mediaUrl,
                         title: inspectedArtifact.sourceLabel || 'Memory Artifact',
-                        subtitle: [inspectedArtifact.timePlace?.when, inspectedArtifact.timePlace?.where].filter(Boolean).join(' • ') || `${profile.name}’s Memory`,
+                        subtitle: [inspectedArtifact.timePlace?.when, inspectedArtifact.timePlace?.where].filter(Boolean).join(' • ') || `${profile.name}'s Memory`,
                         caption: inspectedArtifact.content,
                         isVideo: inspectedArtifact.type === 'video',
                       });
@@ -780,7 +783,7 @@ export default function Remembrance() {
               Written to {profile.name} • {new Date(readingLetter.createdAt).toLocaleDateString()}
             </p>
             <div className="letter-unfolded-body">
-              {readingLetter.content.split('\n\n').map((para, i) => (
+              {(readingLetter.content || 'A quiet letter sealed in living memory.').split('\n\n').map((para, i) => (
                 <p key={i} style={{ marginBottom: '1rem', fontStyle: 'italic', fontFamily: 'var(--font-heading)', fontSize: '1.2rem', lineHeight: '1.8' }}>
                   {para}
                 </p>

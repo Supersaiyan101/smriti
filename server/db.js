@@ -199,7 +199,8 @@ export const dbService = {
     await connectDB();
     const pid = profileId.toString();
     const profile = await this.getProfileById(pid);
-    const soundtrack = profile?.soundtrack || null;
+    const local = !isConnectedToAtlas ? readLocalDb() : null;
+    const soundtrack = profile?.soundtrack || (local?.reelSoundtracks && local.reelSoundtracks[pid]) || null;
 
     if (isConnectedToAtlas && db) {
       const docs = await db.collection('memories').find({

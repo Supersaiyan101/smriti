@@ -1,8 +1,7 @@
 ---
 title: "Smriti: When someone you love passes away, their words scatter. Gemma and local speech gathered them into an open-source altar."
-published: true
+published: false
 tags: devchallenge, hf26challenge, gemma, opensource
-cover_image: https://raw.githubusercontent.com/smriti-memorial/smriti/main/assets/cover.png
 description: "A universal, privacy-first sanctuary of remembrance. Powered by Google Gemma, Mastra, MongoDB Atlas, ElevenLabs, and Sentry."
 ---
 

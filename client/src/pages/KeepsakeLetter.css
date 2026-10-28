@@ -217,6 +217,104 @@
   max-width: 100%;
 }
 
+/* Preserved Stories from Memory Reel */
+.letter-stories-section {
+  width: 100%;
+  max-width: 620px;
+  margin-bottom: var(--space-2xl);
+  text-align: left;
+}
+
+.letter-stories-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+  color: var(--flame);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  border-top: 1px solid rgba(232, 168, 71, 0.15);
+  border-bottom: 1px solid rgba(232, 168, 71, 0.15);
+  padding: var(--space-xs) 0;
+}
+
+.stories-ornament {
+  font-size: 0.65rem;
+  color: var(--flame);
+  opacity: 0.7;
+}
+
+.letter-stories-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.letter-story-item {
+  display: flex;
+  gap: var(--space-md);
+  align-items: flex-start;
+  padding: var(--space-md);
+  background: rgba(232, 168, 71, 0.03);
+  border: 1px solid rgba(232, 168, 71, 0.12);
+  border-radius: var(--radius-sm);
+}
+
+.letter-story-frame {
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid rgba(232, 168, 71, 0.3);
+  background: #000;
+}
+
+.letter-story-frame img,
+.letter-story-frame video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.letter-story-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.letter-story-heading {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  color: var(--flame-bright);
+  margin-bottom: 0.2rem;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.letter-story-meta {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: normal;
+}
+
+.letter-story-narrative {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
 /* Footer & Dimensional Wax Seal */
 .letter-footer {
   display: flex;
@@ -392,5 +490,36 @@
 
   .seal-text {
     color: #555555 !important;
+  }
+
+  .letter-stories-section {
+    max-width: 100% !important;
+  }
+
+  .letter-stories-header {
+    color: #8A6D3B !important;
+    border-color: #C5A059 !important;
+  }
+
+  .letter-story-item {
+    background: #FDFBF7 !important;
+    border: 1pt solid #D9C8A9 !important;
+    page-break-inside: avoid;
+  }
+
+  .letter-story-frame {
+    border-color: #8A6D3B !important;
+  }
+
+  .letter-story-heading {
+    color: #111111 !important;
+  }
+
+  .letter-story-meta {
+    color: #666666 !important;
+  }
+
+  .letter-story-narrative {
+    color: #333333 !important;
   }
 }

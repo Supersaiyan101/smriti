@@ -64,7 +64,7 @@ export default function KeepsakeLetter() {
     );
   }
 
-  const { profile, featuredQuote, passage, closing, date } = letterData;
+  const { profile, featuredQuote, passage, closing, date, stories } = letterData;
 
   const initials = profile.name
     .split(' ')
@@ -134,6 +134,43 @@ export default function KeepsakeLetter() {
               <p key={i}>{paragraph}</p>
             ))}
           </div>
+
+          {/* Preserved Stories from their Memory Reel */}
+          {stories && stories.length > 0 && (
+            <div className="letter-stories-section">
+              <div className="letter-stories-header">
+                <span className="stories-ornament">✦</span>
+                <span className="stories-label">STORIES EMBODIED IN THEIR MEMORY REEL</span>
+                <span className="stories-ornament">✦</span>
+              </div>
+              <div className="letter-stories-list">
+                {stories.map((story, i) => (
+                  <div key={i} className="letter-story-item">
+                    {story.mediaUrl && (
+                      <div className="letter-story-frame">
+                        {story.type === 'video' ? (
+                          <video src={story.mediaUrl} muted preload="metadata" />
+                        ) : (
+                          <img src={story.mediaUrl} alt={story.title} />
+                        )}
+                      </div>
+                    )}
+                    <div className="letter-story-content">
+                      <h4 className="letter-story-heading">
+                        {story.title}
+                        {(story.when || story.where) && (
+                          <span className="letter-story-meta">
+                            {[story.when, story.where].filter(Boolean).join(' • ')}
+                          </span>
+                        )}
+                      </h4>
+                      <p className="letter-story-narrative">“{story.story}”</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Closing & Dimensional Sanskrit Wax Seal Stamp */}
           <div className="letter-footer">

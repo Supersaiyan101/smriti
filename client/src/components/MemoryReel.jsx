@@ -149,7 +149,7 @@ export default function MemoryReel({ profile, slides = [], soundtrack = null, on
         const osc = ctx.createOscillator();
         const noteGain = ctx.createGain();
 
-        osc.type = presetKey === 'classical_sarod' ? 'sawtooth' : 'sine';
+        osc.type = 'sine';
         osc.frequency.setValueAtTime(freq, ctx.currentTime);
 
         noteGain.gain.setValueAtTime(0.001, ctx.currentTime);

@@ -68,7 +68,13 @@ export default function AmbientSoundscape() {
     }
   };
 
+  const intervalTimerRef = useRef(null);
+
   const stopCurrentSound = () => {
+    if (intervalTimerRef.current) {
+      clearInterval(intervalTimerRef.current);
+      intervalTimerRef.current = null;
+    }
     activeSourcesRef.current.forEach((src) => {
       try {
         src.stop();
@@ -76,22 +82,6 @@ export default function AmbientSoundscape() {
       } catch (e) {}
     });
     activeSourcesRef.current = [];
-  };
-
-  const createNoiseBuffer = (ctx, seconds = 4) => {
-    const bufferSize = ctx.sampleRate * seconds;
-    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-    const data = buffer.getChannelData(0);
-    let lastOut = 0.0;
-
-    // Pink / brown noise generator for natural rain/wind texture
-    for (let i = 0; i < bufferSize; i++) {
-      const white = Math.random() * 2 - 1;
-      data[i] = (lastOut + 0.02 * white) / 1.02;
-      lastOut = data[i];
-      data[i] *= 3.5; // Gain boost
-    }
-    return buffer;
   };
 
   const startSound = (soundType) => {
@@ -106,53 +96,82 @@ export default function AmbientSoundscape() {
       return;
     }
 
-    const noiseBuffer = createNoiseBuffer(ctx, 4);
-    const noiseSource = ctx.createBufferSource();
-    noiseSource.buffer = noiseBuffer;
-    noiseSource.loop = true;
+    if (soundType === 'chimes') {
+      // 🎐 Pure Sanctuary Temple Chimes (432Hz harmonic pentatonic bells)
+      const chimeFreqs = [432, 540, 648, 864, 972];
+      const ringChime = () => {
+        if (!ctx || ctx.state === 'closed') return;
+        const freq = chimeFreqs[Math.floor(Math.random() * chimeFreqs.length)];
+        const osc = ctx.createOscillator();
+        const chimeGain = ctx.createGain();
 
-    if (soundType === 'rain') {
-      // Gentle Rain: Low-pass filter + subtle droplet variations
-      const filter = ctx.createBiquadFilter();
-      filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(700, ctx.currentTime);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
 
-      noiseSource.connect(filter);
-      filter.connect(gainNodeRef.current);
-      noiseSource.start();
-      activeSourcesRef.current.push(noiseSource);
+        chimeGain.gain.setValueAtTime(0.0001, ctx.currentTime);
+        chimeGain.gain.linearRampToValueAtTime(0.06, ctx.currentTime + 0.08);
+        chimeGain.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + 4.5);
+
+        osc.connect(chimeGain);
+        chimeGain.connect(gainNodeRef.current);
+
+        osc.start();
+        osc.stop(ctx.currentTime + 4.6);
+      };
+
+      ringChime();
+      intervalTimerRef.current = setInterval(ringChime, 3200);
+    } else if (soundType === 'rain') {
+      // 🌧️ Gentle Rain Drops (warm sine-based droplets, zero radio hiss)
+      const dropFreqs = [800, 1100, 1400, 950, 1250];
+      const playDrop = () => {
+        if (!ctx || ctx.state === 'closed') return;
+        const freq = dropFreqs[Math.floor(Math.random() * dropFreqs.length)];
+        const osc = ctx.createOscillator();
+        const dropGain = ctx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(freq * 0.5, ctx.currentTime + 0.12);
+
+        dropGain.gain.setValueAtTime(0.0001, ctx.currentTime);
+        dropGain.gain.linearRampToValueAtTime(0.025, ctx.currentTime + 0.015);
+        dropGain.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + 0.12);
+
+        osc.connect(dropGain);
+        dropGain.connect(gainNodeRef.current);
+
+        osc.start();
+        osc.stop(ctx.currentTime + 0.13);
+      };
+
+      playDrop();
+      intervalTimerRef.current = setInterval(() => {
+        playDrop();
+        if (Math.random() > 0.4) setTimeout(playDrop, 80 + Math.random() * 120);
+      }, 260);
     } else if (soundType === 'breeze') {
-      // Night Breeze: Deep resonant bandpass
-      const filter = ctx.createBiquadFilter();
-      filter.type = 'bandpass';
-      filter.frequency.setValueAtTime(220, ctx.currentTime);
-      filter.Q.setValueAtTime(3, ctx.currentTime);
+      // 🌙 Night Breeze (warm, sacred low drone pad at 108Hz and 216Hz, zero noise)
+      const osc1 = ctx.createOscillator();
+      const osc2 = ctx.createOscillator();
+      const droneGain = ctx.createGain();
 
-      noiseSource.connect(filter);
-      filter.connect(gainNodeRef.current);
-      noiseSource.start();
-      activeSourcesRef.current.push(noiseSource);
-    } else if (soundType === 'tape') {
-      // Warm Tape Hiss: High-pass + slight warm hum
-      const filter = ctx.createBiquadFilter();
-      filter.type = 'bandpass';
-      filter.frequency.setValueAtTime(1200, ctx.currentTime);
+      osc1.type = 'sine';
+      osc1.frequency.setValueAtTime(108, ctx.currentTime); // Sacred sub-octave
 
-      // Low 50Hz hum
-      const osc = ctx.createOscillator();
-      const oscGain = ctx.createGain();
-      osc.frequency.setValueAtTime(55, ctx.currentTime);
-      oscGain.gain.setValueAtTime(0.04, ctx.currentTime);
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(216, ctx.currentTime);
 
-      noiseSource.connect(filter);
-      filter.connect(gainNodeRef.current);
+      droneGain.gain.setValueAtTime(0.001, ctx.currentTime);
+      droneGain.gain.linearRampToValueAtTime(0.05, ctx.currentTime + 1.2);
 
-      osc.connect(oscGain);
-      oscGain.connect(gainNodeRef.current);
+      osc1.connect(droneGain);
+      osc2.connect(droneGain);
+      droneGain.connect(gainNodeRef.current);
 
-      noiseSource.start();
-      osc.start();
-      activeSourcesRef.current.push(noiseSource, osc);
+      osc1.start();
+      osc2.start();
+      activeSourcesRef.current.push(osc1, osc2);
     }
 
     setMode(soundType);
@@ -160,9 +179,9 @@ export default function AmbientSoundscape() {
 
   const modeLabels = {
     off: 'Room Silence',
-    rain: '🌧️ Rain on Window',
+    chimes: '🎐 Temple Chimes',
+    rain: '🌧️ Gentle Drops',
     breeze: '🌙 Night Breeze',
-    tape: '📻 Warm Tape Hiss',
   };
 
   return (
@@ -174,7 +193,7 @@ export default function AmbientSoundscape() {
         title="Sanctuary Ambient Audio"
       >
         <span className="ambient-icon">
-          {mode === 'off' ? '🔇' : mode === 'rain' ? '🌧️' : mode === 'breeze' ? '🌙' : '📻'}
+          {mode === 'off' ? '🔇' : mode === 'chimes' ? '🎐' : mode === 'rain' ? '🌧️' : '🌙'}
         </span>
         <span className="ambient-label">
           {mode === 'off' ? 'Quiet Room' : isDucked ? `${modeLabels[mode]} (Ducked)` : modeLabels[mode]}
@@ -208,10 +227,17 @@ export default function AmbientSoundscape() {
             </button>
             <button
               type="button"
+              className={`mode-btn ${mode === 'chimes' ? 'mode-btn--active' : ''}`}
+              onClick={() => startSound('chimes')}
+            >
+              🎐 Temple Chimes
+            </button>
+            <button
+              type="button"
               className={`mode-btn ${mode === 'rain' ? 'mode-btn--active' : ''}`}
               onClick={() => startSound('rain')}
             >
-              🌧️ Rain on Window
+              🌧️ Gentle Drops
             </button>
             <button
               type="button"
@@ -219,13 +245,6 @@ export default function AmbientSoundscape() {
               onClick={() => startSound('breeze')}
             >
               🌙 Night Breeze
-            </button>
-            <button
-              type="button"
-              className={`mode-btn ${mode === 'tape' ? 'mode-btn--active' : ''}`}
-              onClick={() => startSound('tape')}
-            >
-              📻 Tape Hiss
             </button>
           </div>
 

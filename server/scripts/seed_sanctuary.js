@@ -10,21 +10,21 @@ const profiles = [
     _id: 'p_arjun_mehta',
     name: 'Arjun Mehta',
     relationship: 'Best friend from college',
-    photoUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80',
+    photoUrl: '/arjun_portrait.jpg',
     createdAt: '2026-10-27T10:00:00.000Z'
   },
   {
     _id: 'p_ananya_bose',
     name: 'Ananya Bose',
     relationship: 'Grandmother',
-    photoUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80',
+    photoUrl: '/ananya_portrait.jpg',
     createdAt: '2026-10-27T11:00:00.000Z'
   },
   {
     _id: 'p_david_miller',
     name: 'David Miller',
     relationship: 'High school debate mentor',
-    photoUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80',
+    photoUrl: '/david_portrait.jpg',
     createdAt: '2026-10-27T12:00:00.000Z'
   }
 ];

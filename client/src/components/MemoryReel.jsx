@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import CandleFlame from './CandleFlame';
+import HeirloomLightbox from './HeirloomLightbox';
 import './MemoryReel.css';
 
 /**
@@ -26,6 +27,7 @@ export default function MemoryReel({ profile, slides = [], soundtrack = null, on
   const [isMuted, setIsMuted] = useState(false);
   const [musicVolume, setMusicVolume] = useState(0.35);
   const [imageFitMode, setImageFitMode] = useState('contain'); // 'contain' (never cuts images) | 'cover'
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
   const audioRef = useRef(null);
   const audioCtxRef = useRef(null);
@@ -289,7 +291,14 @@ export default function MemoryReel({ profile, slides = [], soundtrack = null, on
       <main className="reel-cinema-split">
         {/* Left: Breathing Heirloom Photograph or Video */}
         <section className="reel-photo-side">
-          <div className="reel-photo-frame">
+          <div
+            className="reel-photo-frame reel-photo-frame--interactive"
+            onClick={() => {
+              setIsPlaying(false);
+              setIsLightboxOpen(true);
+            }}
+            title="Click to view full photograph"
+          >
             {/* Ambient Blurred Aura matching photo colors so uncropped photo never looks bare */}
             {currentSlide.mediaUrl && currentSlide.type !== 'video' && (
               <div
@@ -329,7 +338,10 @@ export default function MemoryReel({ profile, slides = [], soundtrack = null, on
             <button
               type="button"
               className="reel-fit-toggle"
-              onClick={() => setImageFitMode((prev) => (prev === 'contain' ? 'cover' : 'contain'))}
+              onClick={(e) => {
+                e.stopPropagation();
+                setImageFitMode((prev) => (prev === 'contain' ? 'cover' : 'contain'));
+              }}
               title={imageFitMode === 'contain' ? 'Expand to fill frame' : 'Show full uncropped photo'}
             >
               <span>{imageFitMode === 'contain' ? '⛶ Fill' : '⊡ Full'}</span>
@@ -416,6 +428,20 @@ export default function MemoryReel({ profile, slides = [], soundtrack = null, on
           <span>›</span>
         </button>
       </footer>
+
+      {/* Lightbox for inspecting the full uncropped photograph */}
+      <HeirloomLightbox
+        isOpen={isLightboxOpen}
+        mediaUrl={currentSlide.mediaUrl}
+        title={currentSlide.sourceLabel || `Moment #${currentIndex + 1}`}
+        subtitle={[currentSlide.timePlace?.when, currentSlide.timePlace?.where].filter(Boolean).join(' • ') || `Memory of ${profile.name}`}
+        caption={currentSlide.content}
+        isVideo={currentSlide.type === 'video'}
+        onClose={() => {
+          setIsLightboxOpen(false);
+          setIsPlaying(true);
+        }}
+      />
     </div>
   );
 }

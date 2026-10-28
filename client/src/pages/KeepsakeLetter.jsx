@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import CandleFlame from '../components/CandleFlame';
+import HeirloomLightbox from '../components/HeirloomLightbox';
 import './KeepsakeLetter.css';
 
 /**
@@ -17,6 +18,7 @@ export default function KeepsakeLetter() {
   const [letterData, setLetterData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [lightboxMedia, setLightboxMedia] = useState(null);
 
   useEffect(() => {
     fetchLetterData();
@@ -106,7 +108,21 @@ export default function KeepsakeLetter() {
 
           {/* Portrait & Person Info */}
           <div className="letter-person">
-            <div className="letter-portrait">
+            <div
+              className={`letter-portrait ${profile.photoUrl ? 'letter-portrait--clickable' : ''}`}
+              onClick={() => {
+                if (profile.photoUrl) {
+                  setLightboxMedia({
+                    url: profile.photoUrl,
+                    title: profile.name,
+                    subtitle: `${profile.relationship} • Keepsake Portrait`,
+                    caption: `In loving remembrance of ${profile.name}.`,
+                    isVideo: false,
+                  });
+                }
+              }}
+              title={profile.photoUrl ? 'Click to inspect full portrait' : profile.name}
+            >
               {profile.photoUrl ? (
                 <img src={profile.photoUrl} alt={profile.name} />
               ) : (
@@ -147,12 +163,25 @@ export default function KeepsakeLetter() {
                 {stories.map((story, i) => (
                   <div key={i} className="letter-story-item">
                     {story.mediaUrl && (
-                      <div className="letter-story-frame">
+                      <div
+                        className="letter-story-frame letter-story-frame--clickable"
+                        onClick={() => {
+                          setLightboxMedia({
+                            url: story.mediaUrl,
+                            title: story.title || 'Memory Reel Moment',
+                            subtitle: [story.when, story.where].filter(Boolean).join(' • ') || `${profile.name}’s Memory`,
+                            caption: story.story,
+                            isVideo: story.type === 'video',
+                          });
+                        }}
+                        title="Click to view full photograph"
+                      >
                         {story.type === 'video' ? (
                           <video src={story.mediaUrl} muted preload="metadata" />
                         ) : (
                           <img src={story.mediaUrl} alt={story.title} />
                         )}
+                        <span className="story-frame-zoom-hint">🔍</span>
                       </div>
                     )}
                     <div className="letter-story-content">
@@ -189,6 +218,17 @@ export default function KeepsakeLetter() {
           </div>
         </div>
       </article>
+
+      {/* Lightbox for High-Resolution Photo and DP Inspection */}
+      <HeirloomLightbox
+        isOpen={!!lightboxMedia}
+        mediaUrl={lightboxMedia?.url}
+        title={lightboxMedia?.title}
+        subtitle={lightboxMedia?.subtitle}
+        caption={lightboxMedia?.caption}
+        isVideo={lightboxMedia?.isVideo}
+        onClose={() => setLightboxMedia(null)}
+      />
     </div>
   );
 }

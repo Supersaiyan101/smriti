@@ -143,6 +143,21 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 22%;
+}
+
+.letter-portrait--clickable {
+  cursor: zoom-in;
+  transition: transform var(--transition-medium), box-shadow var(--transition-medium), border-color var(--transition-medium);
+}
+
+.letter-portrait--clickable:hover {
+  transform: scale(1.04);
+  border-color: var(--flame-bright);
+  box-shadow:
+    0 0 0 3px #181310,
+    0 0 0 4px rgba(232, 168, 71, 0.4),
+    0 8px 24px rgba(232, 168, 71, 0.2);
 }
 
 .letter-initials {
@@ -278,6 +293,39 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.letter-story-frame--clickable {
+  cursor: zoom-in;
+  position: relative;
+  transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.letter-story-frame--clickable:hover {
+  transform: scale(1.05);
+  border-color: var(--flame-bright);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+}
+
+.story-frame-zoom-hint {
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+  background: rgba(14, 11, 8, 0.85);
+  border-radius: var(--radius-full);
+  width: 18px;
+  height: 18px;
+  font-size: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  pointer-events: none;
+}
+
+.letter-story-frame--clickable:hover .story-frame-zoom-hint {
+  opacity: 1;
 }
 
 .letter-story-content {

@@ -212,6 +212,20 @@
   justify-content: center;
 }
 
+.reel-photo-frame--interactive {
+  cursor: zoom-in;
+  transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+}
+
+.reel-photo-frame--interactive:hover {
+  transform: scale(1.015);
+  box-shadow:
+    0 0 0 1px rgba(232, 168, 71, 0.45),
+    0 0 0 5px #1F1712,
+    0 0 0 7px rgba(232, 168, 71, 0.3),
+    0 20px 60px rgba(0, 0, 0, 0.95);
+}
+
 /* Ambient Blurred Aura Layer */
 .reel-photo-backdrop {
   position: absolute;

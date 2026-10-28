@@ -618,6 +618,119 @@
   mix-blend-mode: screen;
 }
 
+/* Clickable Altar Portrait DP */
+.remembrance-portrait--clickable {
+  cursor: pointer;
+  transition: transform var(--transition-medium), box-shadow var(--transition-medium), border-color var(--transition-medium);
+  position: relative;
+}
+
+.remembrance-portrait--clickable:hover {
+  transform: scale(1.04);
+  border-color: var(--flame-bright);
+  box-shadow: 0 0 45px rgba(232, 168, 71, 0.45);
+}
+
+.portrait-zoom-badge {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  background: rgba(18, 14, 11, 0.85);
+  border: 1px solid rgba(232, 168, 71, 0.4);
+  border-radius: var(--radius-full);
+  width: 26px;
+  height: 26px;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  pointer-events: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.remembrance-portrait--clickable:hover .portrait-zoom-badge {
+  opacity: 1;
+}
+
+/* Ember Card Clickable Photo Thumbnail */
+.ember-photo-thumb {
+  position: relative;
+  width: 100%;
+  height: 140px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-top: var(--space-xs);
+  background: #0D0A08;
+  border: 1px solid var(--border-subtle);
+  cursor: pointer;
+}
+
+.ember-photo-thumb img,
+.ember-photo-thumb video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-medium), filter var(--transition-medium);
+}
+
+.ember-photo-thumb:hover img,
+.ember-photo-thumb:hover video {
+  transform: scale(1.04);
+  filter: brightness(1.08);
+}
+
+.thumb-zoom-hint {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  background: rgba(14, 11, 8, 0.85);
+  border: 1px solid rgba(232, 168, 71, 0.35);
+  border-radius: var(--radius-sm);
+  padding: 2px 8px;
+  font-size: 0.7rem;
+  color: var(--flame-bright);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  pointer-events: none;
+}
+
+.ember-photo-thumb:hover .thumb-zoom-hint {
+  opacity: 1;
+}
+
+/* Artifact Media Clickable Expand */
+.artifact-media--clickable {
+  cursor: pointer;
+  position: relative;
+}
+
+.artifact-media--clickable:hover .artifact-img-preview,
+.artifact-media--clickable:hover video {
+  filter: brightness(1.06);
+}
+
+.artifact-zoom-pill {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(14, 11, 8, 0.85);
+  border: 1px solid var(--flame);
+  border-radius: var(--radius-full);
+  padding: 0.3rem 0.8rem;
+  font-size: 0.75rem;
+  color: var(--flame-bright);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  transition: all var(--transition-fast);
+  pointer-events: none;
+}
+
+.artifact-media--clickable:hover .artifact-zoom-pill {
+  background: var(--bg-card);
+  transform: scale(1.05);
+}
+
 .ember-timeplace-tags {
   display: flex;
   flex-wrap: wrap;

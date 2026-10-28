@@ -1,0 +1,143 @@
+/* ============================================
+   HeirloomLightbox — Archival Photo & DP Viewer
+   ============================================ */
+
+.heirloom-lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(6, 4, 3, 0.92);
+  backdrop-filter: blur(14px);
+  z-index: 1500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+  box-sizing: border-box;
+}
+
+.heirloom-lightbox-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 900px;
+  width: 100%;
+  max-height: 94vh;
+  background: linear-gradient(180deg, #17120F 0%, #100C09 100%);
+  border: 1px solid rgba(232, 168, 71, 0.3);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 0 0 1px rgba(232, 168, 71, 0.15),
+    0 24px 60px rgba(0, 0, 0, 0.9),
+    0 0 40px rgba(232, 168, 71, 0.12);
+  overflow: hidden;
+  position: relative;
+}
+
+.lightbox-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid rgba(232, 168, 71, 0.18);
+  background: rgba(14, 11, 8, 0.6);
+}
+
+.lightbox-title-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.lightbox-title {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  color: var(--flame-bright);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.lightbox-subtitle {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  letter-spacing: 0.04em;
+  margin: 2px 0 0;
+  text-transform: uppercase;
+}
+
+.lightbox-close-btn {
+  background: rgba(28, 22, 17, 0.8);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-full);
+  width: 34px;
+  height: 34px;
+  color: var(--text-muted);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.lightbox-close-btn:hover {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border-color: var(--flame);
+  transform: scale(1.05);
+}
+
+/* Media Frame */
+.lightbox-media-frame {
+  position: relative;
+  width: 100%;
+  height: min(65vh, 600px);
+  background: #080605;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.lightbox-blurred-aura {
+  position: absolute;
+  inset: -30px;
+  background-size: cover;
+  background-position: center;
+  filter: blur(35px) brightness(0.35) saturate(1.2);
+  transform: scale(1.15);
+  opacity: 0.85;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.lightbox-media-element {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 8px 30px rgba(0, 0, 0, 0.8));
+}
+
+/* Caption */
+.lightbox-caption-box {
+  padding: var(--space-md) var(--space-lg);
+  border-top: 1px solid rgba(232, 168, 71, 0.15);
+  background: rgba(14, 11, 8, 0.8);
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.lightbox-caption-text {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: var(--flame-bright);
+  margin: 0;
+  text-align: center;
+}

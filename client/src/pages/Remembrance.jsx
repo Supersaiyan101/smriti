@@ -7,6 +7,7 @@ import WriteToThemModal from '../components/WriteToThemModal';
 import AmbientSoundscape from '../components/AmbientSoundscape';
 import MemoryReel from '../components/MemoryReel';
 import MemoryReelEditor from '../components/MemoryReelEditor';
+import HeirloomLightbox from '../components/HeirloomLightbox';
 import './Remembrance.css';
 
 /**
@@ -50,6 +51,7 @@ export default function Remembrance() {
   const [isWriteModalOpen, setIsWriteModalOpen] = useState(false);
   const [readingLetter, setReadingLetter] = useState(null);
   const [inspectedArtifact, setInspectedArtifact] = useState(null);
+  const [lightboxMedia, setLightboxMedia] = useState(null);
 
   useEffect(() => {
     fetchProfileData();
@@ -328,13 +330,28 @@ export default function Remembrance() {
       {/* Portrait Focal Point */}
       <header className="remembrance-header">
         <div className="remembrance-hearth">
-          <div className="remembrance-portrait">
+          <div
+            className={`remembrance-portrait ${profile.photoUrl ? 'remembrance-portrait--clickable' : ''}`}
+            onClick={() => {
+              if (profile.photoUrl) {
+                setLightboxMedia({
+                  url: profile.photoUrl,
+                  title: profile.name,
+                  subtitle: `${profile.relationship} • Altar Portrait`,
+                  caption: `Carried in living memory of ${profile.name}.`,
+                  isVideo: false,
+                });
+              }
+            }}
+            title={profile.photoUrl ? 'Click to inspect full altar portrait' : profile.name}
+          >
             {profile.photoUrl ? (
               <img src={profile.photoUrl} alt={profile.name} />
             ) : (
               <span className="remembrance-initials">{initials}</span>
             )}
             <div className="remembrance-portrait__reflection" aria-hidden="true" />
+            {profile.photoUrl && <span className="portrait-zoom-badge" aria-hidden="true">🔍</span>}
           </div>
           <div className="remembrance-hearth__flame">
             <CandleFlame size="lg" />
@@ -514,10 +531,35 @@ export default function Remembrance() {
                   style={{ cursor: 'pointer' }}
                 >
                   <span className="ember-label">
-                    {mem.type === 'voice' ? '🎤 ' : '📝 '}
+                    {mem.type === 'voice' ? '🎤 ' : (mem.type === 'photo' || mem.mediaUrl ? '📷 ' : '📝 ')}
                     {mem.sourceLabel || 'Memory'}
                   </span>
                   <p className="ember-text">"{mem.content}"</p>
+
+                  {/* Clickable Photo or Video Fragment */}
+                  {mem.mediaUrl && mem.type !== 'voice' && (
+                    <div
+                      className="ember-photo-thumb"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setLightboxMedia({
+                          url: mem.mediaUrl,
+                          title: mem.sourceLabel || 'Preserved Photograph',
+                          subtitle: [mem.timePlace?.when, mem.timePlace?.where].filter(Boolean).join(' • ') || `${profile.name}’s Memory`,
+                          caption: mem.content,
+                          isVideo: mem.type === 'video',
+                        });
+                      }}
+                      title="Click to view full photograph"
+                    >
+                      {mem.type === 'video' ? (
+                        <video src={mem.mediaUrl} muted preload="metadata" />
+                      ) : (
+                        <img src={mem.mediaUrl} alt={mem.sourceLabel || 'Memory photo'} />
+                      )}
+                      <span className="thumb-zoom-hint">🔍 View Photo</span>
+                    </div>
+                  )}
 
                   {/* Sensory Anchors */}
                   {mem.sensory && (mem.sensory.weather || mem.sensory.scent || mem.sensory.song) && (
@@ -662,11 +704,32 @@ export default function Remembrance() {
 
               {/* Media or Voice player if present */}
               {inspectedArtifact.mediaUrl && (
-                <div className="artifact-media-container">
+                <div
+                  className="artifact-media-container artifact-media--clickable"
+                  onClick={() => {
+                    if (inspectedArtifact.type !== 'voice') {
+                      setLightboxMedia({
+                        url: inspectedArtifact.mediaUrl,
+                        title: inspectedArtifact.sourceLabel || 'Memory Artifact',
+                        subtitle: [inspectedArtifact.timePlace?.when, inspectedArtifact.timePlace?.where].filter(Boolean).join(' • ') || `${profile.name}’s Memory`,
+                        caption: inspectedArtifact.content,
+                        isVideo: inspectedArtifact.type === 'video',
+                      });
+                    }
+                  }}
+                  title={inspectedArtifact.type !== 'voice' ? 'Click to expand to full size' : undefined}
+                >
                   {inspectedArtifact.type === 'voice' ? (
-                    <audio controls src={inspectedArtifact.mediaUrl} className="artifact-audio-player" />
+                    <audio controls src={inspectedArtifact.mediaUrl} className="artifact-audio-player" onClick={(e) => e.stopPropagation()} />
                   ) : (
-                    <img src={inspectedArtifact.mediaUrl} alt="Memory artifact" className="artifact-img-preview" />
+                    <>
+                      {inspectedArtifact.type === 'video' ? (
+                        <video src={inspectedArtifact.mediaUrl} controls autoPlay muted loop />
+                      ) : (
+                        <img src={inspectedArtifact.mediaUrl} alt="Memory artifact" className="artifact-img-preview" />
+                      )}
+                      <span className="artifact-zoom-pill">🔍 Expand to Full Size</span>
+                    </>
                   )}
                 </div>
               )}
@@ -766,6 +829,17 @@ export default function Remembrance() {
           }}
         />
       )}
+
+      {/* Archival Lightbox for High-Resolution DP and Memory Photo Inspection */}
+      <HeirloomLightbox
+        isOpen={!!lightboxMedia}
+        mediaUrl={lightboxMedia?.url}
+        title={lightboxMedia?.title}
+        subtitle={lightboxMedia?.subtitle}
+        caption={lightboxMedia?.caption}
+        isVideo={lightboxMedia?.isVideo}
+        onClose={() => setLightboxMedia(null)}
+      />
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import CandleFlame from '../components/CandleFlame';
 import HoldToLightFlame from '../components/HoldToLightFlame';
 import AmbientSoundscape from '../components/AmbientSoundscape';
+import HeirloomLightbox from '../components/HeirloomLightbox';
 import './Offering.css';
 
 /**
@@ -20,6 +21,7 @@ export default function Offering() {
   const [relationship, setRelationship] = useState('');
   const [portraitFile, setPortraitFile] = useState(null);
   const [portraitPreview, setPortraitPreview] = useState(null);
+  const [lightboxMedia, setLightboxMedia] = useState(null);
 
   // Step 2: Moments (Reel Slides)
   const [moments, setMoments] = useState([
@@ -380,8 +382,20 @@ export default function Offering() {
               />
               <div
                 className="offering-portrait-bezel"
-                onClick={() => portraitInputRef.current?.click()}
-                title="Click to choose a portrait for their altar"
+                onClick={() => {
+                  if (portraitPreview) {
+                    setLightboxMedia({
+                      url: portraitPreview,
+                      title: name.trim() || 'Altar Portrait',
+                      subtitle: relationship.trim() || 'Display Picture Preview',
+                      caption: 'Altar portrait preview for their memorial sanctuary.',
+                      isVideo: false,
+                    });
+                  } else {
+                    portraitInputRef.current?.click();
+                  }
+                }}
+                title={portraitPreview ? 'Click to inspect full portrait' : 'Click to choose a portrait for their altar'}
               >
                 {portraitPreview ? (
                   <img src={portraitPreview} alt="Altar portrait" className="portrait-img-preview" />
@@ -391,8 +405,20 @@ export default function Offering() {
                     <span className="portrait-empty-text">Altar Portrait</span>
                   </div>
                 )}
-                <div className="portrait-hover-hint">Change</div>
+                <div className="portrait-hover-hint">
+                  {portraitPreview ? '🔍 View Full' : 'Upload'}
+                </div>
               </div>
+              {portraitPreview && (
+                <button
+                  type="button"
+                  className="btn-change-portrait-link"
+                  onClick={() => portraitInputRef.current?.click()}
+                  title="Choose a different photograph"
+                >
+                  Change Photo
+                </button>
+              )}
             </div>
 
             {/* Name & Relationship Fields */}
@@ -475,33 +501,73 @@ export default function Offering() {
                     />
 
                     {moment.mediaPreview ? (
-                      <div
-                        className="moment-media-preview-container"
-                        onClick={() => document.getElementById(`media-input-${moment.id}`)?.click()}
-                      >
-                        {/* Ambient aura so tall or wide photos never look awkwardly cropped */}
+                      <div className="moment-media-preview-wrapper">
                         <div
-                          className="moment-preview-backdrop"
-                          style={{ backgroundImage: `url(${moment.mediaPreview})` }}
-                          aria-hidden="true"
-                        />
-                        {moment.isVideo ? (
-                          <video
-                            src={moment.mediaPreview}
-                            autoPlay
-                            loop
-                            muted
-                            playsInline
-                            className="moment-preview-media"
+                          className="moment-media-preview-container"
+                          onClick={() => {
+                            setLightboxMedia({
+                              url: moment.mediaPreview,
+                              title: moment.title.trim() || `Moment ${idx + 1}`,
+                              subtitle: [moment.when, moment.where].filter(Boolean).join(' • ') || (name.trim() ? `${name}'s Memory` : 'Memory Fragment'),
+                              caption: moment.story.trim() || 'A sacred moment captured for their memory reel.',
+                              isVideo: moment.isVideo,
+                            });
+                          }}
+                          title="Click to inspect photograph in full resolution"
+                        >
+                          {/* Ambient aura so tall or wide photos never look awkwardly cropped */}
+                          <div
+                            className="moment-preview-backdrop"
+                            style={{ backgroundImage: `url(${moment.mediaPreview})` }}
+                            aria-hidden="true"
                           />
-                        ) : (
-                          <img
-                            src={moment.mediaPreview}
-                            alt="Moment preview"
-                            className="moment-preview-media"
-                          />
-                        )}
-                        <span className="media-change-overlay">Change Photo/Video</span>
+                          {moment.isVideo ? (
+                            <video
+                              src={moment.mediaPreview}
+                              autoPlay
+                              loop
+                              muted
+                              playsInline
+                              className="moment-preview-media"
+                            />
+                          ) : (
+                            <img
+                              src={moment.mediaPreview}
+                              alt="Moment preview"
+                              className="moment-preview-media"
+                            />
+                          )}
+                          <div className="media-preview-zoom-overlay">
+                            <span className="media-zoom-badge">🔍 View Full</span>
+                          </div>
+                        </div>
+
+                        <div className="media-preview-actions">
+                          <button
+                            type="button"
+                            className="btn-media-action btn-inspect-media"
+                            onClick={() => {
+                              setLightboxMedia({
+                                url: moment.mediaPreview,
+                                title: moment.title.trim() || `Moment ${idx + 1}`,
+                                subtitle: [moment.when, moment.where].filter(Boolean).join(' • ') || (name.trim() ? `${name}'s Memory` : 'Memory Fragment'),
+                                caption: moment.story.trim() || 'A sacred moment captured for their memory reel.',
+                                isVideo: moment.isVideo,
+                              });
+                            }}
+                            title="Inspect in full resolution"
+                          >
+                            🔍 Inspect
+                          </button>
+                          <button
+                            type="button"
+                            className="btn-media-action btn-change-media"
+                            onClick={() => document.getElementById(`media-input-${moment.id}`)?.click()}
+                            title="Choose another photo or video"
+                          >
+                            Change Photo
+                          </button>
+                        </div>
                       </div>
                     ) : (
                       <div
@@ -730,6 +796,18 @@ export default function Offering() {
           </p>
         </section>
       </form>
+
+      {/* Heirloom Lightbox for Full-Resolution Photo & DP Inspection */}
+      {lightboxMedia && (
+        <HeirloomLightbox
+          mediaUrl={lightboxMedia.url}
+          title={lightboxMedia.title}
+          subtitle={lightboxMedia.subtitle}
+          caption={lightboxMedia.caption}
+          isVideo={lightboxMedia.isVideo}
+          onClose={() => setLightboxMedia(null)}
+        />
+      )}
     </div>
   );
 }

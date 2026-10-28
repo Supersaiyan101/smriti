@@ -43,10 +43,10 @@ services:
       # Proxy API requests to the backend service
       - type: rewrite
         source: /api/*
-        destination: https://smriti-api.onrender.com/api/*
+        destination: https://smriti-api-otpb.onrender.com/api/*
       - type: rewrite
         source: /uploads/*
-        destination: https://smriti-api.onrender.com/uploads/*
+        destination: https://smriti-api-otpb.onrender.com/uploads/*
       # Single-Page Application (SPA) catch-all
       - type: rewrite
         source: /*

@@ -14,10 +14,10 @@ const profiles = [
     createdAt: '2026-10-27T10:00:00.000Z'
   },
   {
-    _id: 'p_ananya_bose',
-    name: 'Ananya Bose',
+    _id: 'p_savitri_devi',
+    name: 'Savitri Devi',
     relationship: 'Grandmother',
-    photoUrl: '/ananya_portrait.jpg',
+    photoUrl: '/savitri_portrait.jpg',
     createdAt: '2026-10-27T11:00:00.000Z'
   },
   {
@@ -95,12 +95,12 @@ const memories = [
     createdAt: '2026-10-27T10:30:00.000Z'
   },
 
-  // Ananya Bose
+  // Savitri Devi
   {
-    _id: 'm_ananya_1',
-    profileId: 'p_ananya_bose',
+    _id: 'm_savitri_1',
+    profileId: 'p_savitri_devi',
     type: 'text',
-    content: 'Ananya made cardamom sandesh every Sunday morning in her brass pot. The whole courtyard smelled of roasted milk and warm saffron.',
+    content: 'Savitri Devi made cardamom sandesh every Sunday morning in her brass pot. The whole courtyard smelled of roasted milk and warm saffron.',
     mediaUrl: null,
     sourceLabel: 'Sunday kitchen, 2015',
     sensory: { weather: 'Warm Sunday morning', scent: 'Cardamom sandesh & roasted milk', song: null },
@@ -109,8 +109,8 @@ const memories = [
     createdAt: '2026-10-27T11:10:00.000Z'
   },
   {
-    _id: 'm_ananya_2',
-    profileId: 'p_ananya_bose',
+    _id: 'm_savitri_2',
+    profileId: 'p_savitri_devi',
     type: 'text',
     content: 'She taught me how to read Tagore poetry sitting on the balcony as the evening crows flew back to the trees. "Patience is a tree whose roots are bitter, but the fruit is very sweet."',
     mediaUrl: null,
@@ -121,8 +121,8 @@ const memories = [
     createdAt: '2026-10-27T11:15:00.000Z'
   },
   {
-    _id: 'm_ananya_reel_1',
-    profileId: 'p_ananya_bose',
+    _id: 'm_savitri_reel_1',
+    profileId: 'p_savitri_devi',
     type: 'photo',
     content: 'Every afternoon when the sun dipped behind the red brick chimneys, Dida sat in her wooden cane chair with Tagore\'s Gitanjali. She didn\'t just read the verses; she hummed them like an old lullaby that kept the whole house sheltered.',
     mediaUrl: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=1200&q=80',
@@ -134,8 +134,8 @@ const memories = [
     createdAt: '2026-10-27T11:20:00.000Z'
   },
   {
-    _id: 'm_ananya_reel_2',
-    profileId: 'p_ananya_bose',
+    _id: 'm_savitri_reel_2',
+    profileId: 'p_savitri_devi',
     type: 'photo',
     content: 'Her hands were always steady and tender, stirring the sweetened curd over a low flame in the brass vessel that had belonged to her mother. She would slide a warm silver bowl toward me before anyone else woke up.',
     mediaUrl: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1200&q=80',
@@ -177,7 +177,7 @@ const memories = [
 
 const reelSoundtracks = {
   'p_arjun_mehta': { title: 'Peaceful Piano Dusk', trackId: 'dusk_piano' },
-  'p_ananya_bose': { title: 'Twilight Sarod', trackId: 'twilight_sarod' },
+  'p_savitri_devi': { title: 'Twilight Sarod', trackId: 'twilight_sarod' },
   'p_david_miller': { title: 'Warm Acoustic Strings', trackId: 'acoustic_strings' }
 };
 

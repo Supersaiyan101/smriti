@@ -42,7 +42,7 @@ Smriti is intentionally designed with one defining aesthetic: **Quiet**. There a
        │                                                        │
        │               🕯️  [ Living Candle Flame ]               │
        │                                                        │
-       │         [ Arjun Mehta ]            [ Ananya Bose ]     │
+       │         [ Arjun Mehta ]            [ Savitri Devi ]    │
        │        "Best friend, college"       "Grandmother"      │
        │               🕯️                         🕯️           │
        │                                                        │
@@ -61,7 +61,7 @@ The defining feature of Smriti. It weaves photographs and heartfelt stories into
 - **Read-Only Reverence:** Strictly human heartfelt stories with zero robotic TTS narration over the slideshow.
 
 ### Feature 1 — The Sanctuary (Living Hearth)
-The home screen is a quiet room at dusk. Each remembered person appears as a softly framed portrait resting beside a living, flickering candle flame. The shelf features 3 clean sample profiles (*Arjun Mehta*, *Ananya Bose*, *David Miller*) with immediate Memory Reel playback and a built-in seed utility (`npm run seed`).
+The home screen is a quiet room at dusk. Each remembered person appears as a softly framed portrait resting beside a living, flickering candle flame. The shelf features 3 clean sample profiles (*Arjun Mehta*, *Savitri Devi*, *David Miller*) with immediate Memory Reel playback and a built-in seed utility (`npm run seed`).
 
 ### Feature 2 — The Offering (Reel-First Creator & Ceremony)
 Transforming the act of memorial creation into weaving a living Memory Reel from moment one:

@@ -154,7 +154,7 @@ const memories = [
     profileId: 'p_rekha_sharma',
     type: 'photo',
     content: 'On the morning of my college departure, she pressed a silver coin wrapped in red betel silk into my palm. She said: "Go with courage, beta. Wherever you wander, this home is carried in your chest."',
-    mediaUrl: 'https://images.unsplash.com/photo-1607344645866-009c320c5ab8?auto=format&fit=crop&w=1200&q=80',
+    mediaUrl: '/silver_coin_blessing.jpg',
     sourceLabel: 'The Silver Coin Blessing',
     sensory: { weather: 'Clear morning sunshine', scent: 'Marigolds and sandalwood', song: null },
     timePlace: { when: 'August 2021', where: 'Front Threshold' },

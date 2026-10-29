@@ -11,7 +11,10 @@ description: "A universal, privacy-first sanctuary of remembrance. Powered by Go
 > **Hacktoberfest 2026 — Week 4: Ghost in the Machine**  
 > **Repository:** [github.com/Supersaiyan101/smriti](https://github.com/Supersaiyan101/smriti)  
 > **Production Sanctuary:** [https://smriti-sanctuary.onrender.com](https://smriti-sanctuary.onrender.com)  
+> **Video Demonstration:** [https://youtu.be/2EsRZSqnxPs](https://youtu.be/2EsRZSqnxPs)  
 > **License:** MIT (Free & Open Source forever)
+
+{% youtube 2EsRZSqnxPs %}
 
 ---
 
@@ -263,4 +266,5 @@ It provides a sanctuary where your loved one’s memory belongs only to you. No 
 ### Links & Resources
 - **GitHub Repository:** [github.com/Supersaiyan101/smriti](https://github.com/Supersaiyan101/smriti)
 - **Live Sanctuary Demo:** [https://smriti-sanctuary.onrender.com](https://smriti-sanctuary.onrender.com)
+- **Video Walkthrough:** [https://youtu.be/2EsRZSqnxPs](https://youtu.be/2EsRZSqnxPs)
 - **License:** [MIT License](LICENSE)

@@ -13,6 +13,7 @@
 > **Hacktoberfest 2026 — Week 4: Ghost in the Machine**  
 > **Repository:** [github.com/Supersaiyan101/smriti](https://github.com/Supersaiyan101/smriti)  
 > **Production Sanctuary:** [https://smriti-sanctuary.onrender.com](https://smriti-sanctuary.onrender.com)  
+> **Video Demonstration:** [https://youtu.be/2EsRZSqnxPs](https://youtu.be/2EsRZSqnxPs)  
 > **License:** MIT (Free & Open Source Forever)
 
 ---
